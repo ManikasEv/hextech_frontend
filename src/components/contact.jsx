@@ -45,7 +45,7 @@ const Contact = () => {
             const formDataToSend = new FormData();
             
             // Add your access key - replace with your actual key from web3forms.com
-            formDataToSend.append('access_key', import.meta.env.VITE_WEB3FORMS_ACCESS_KEY);
+            formDataToSend.append('access_key', import.meta.env.VITE_WEB_FORM);
             
             // Add form fields
             formDataToSend.append('name', formData.name);
