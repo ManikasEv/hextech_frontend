@@ -14,8 +14,11 @@ const Hero = () => {
     const [isDeleting, setIsDeleting] = useState(false);
     const [loopNum, setLoopNum] = useState(0);
     const [typingSpeed, setTypingSpeed] = useState(150);
+    const [currentImageIndex, setCurrentImageIndex] = useState(0);
+    const [isVisible, setIsVisible] = useState(true);
 
     const phrases = ["Web Development", "Mobile Development", "UI/UX Design"];
+    const images = [ux, innovation];
 
     useEffect(() => {
         const currentPhrase = phrases[loopNum % phrases.length];
@@ -42,7 +45,20 @@ const Hero = () => {
         return () => clearTimeout(timeout);
     }, [text, isDeleting, loopNum, typingSpeed, phrases]);
 
-    const techIcons = [wordpress, html, react,  tailwind, css, node,wordpress, html, react,  tailwind, css, node,wordpress, html, react,  tailwind, css, node,wordpress, html, react,  tailwind, css, node,wordpress, html, react,  tailwind, css, node,wordpress, html, react,  tailwind, css, node,wordpress, html, react,  tailwind, css, node,wordpress, html, react,  tailwind, css, node,wordpress, html, react,  tailwind, css, node,wordpress, html, react,  tailwind, css, node,wordpress, html, react,  tailwind, css, node,wordpress, html, react,  tailwind, css, node,wordpress, html, react,  tailwind, css, node,wordpress, html, react,  tailwind, css, node,wordpress, html, react,  tailwind, css, node,];
+    // Image transition effect for mobile
+    useEffect(() => {
+        const interval = setInterval(() => {
+            setIsVisible(false);
+            setTimeout(() => {
+                setCurrentImageIndex((prevIndex) => (prevIndex + 1) % images.length);
+                setIsVisible(true);
+            }, 500); // Wait for fade out before changing image
+        }, 5000); // Change image every 5 seconds
+
+        return () => clearInterval(interval);
+    }, []);
+
+    const techIcons = [wordpress, html, react, tailwind, css, node,wordpress, html, react, tailwind, css, node,wordpress, html, react, tailwind, css, node,wordpress, html, react, tailwind, css, node,wordpress, html, react, tailwind, css, node,wordpress, html, react, tailwind, css, node,wordpress, html, react, tailwind, css, node,wordpress, html, react, tailwind, css, node,wordpress, html, react, tailwind, css, node,wordpress, html, react, tailwind, css, node,wordpress, html, react, tailwind, css, node,wordpress, html, react, tailwind, css, node,wordpress, html, react, tailwind, css, node,wordpress, html, react, tailwind, css, node,wordpress, html, react, tailwind, css, node,wordpress, html, react, tailwind, css, node,];
 
     return (
         <div className="w-full h-auto flex flex-col items-center bg-secondary">
@@ -50,24 +66,33 @@ const Hero = () => {
                 {text}
                 <span>_</span>
             </div>
-            <div className="flex gap-8 h-[45vh] px-8 my-4">
+            <div className="hidden md:flex gap-8 h-[45vh] px-8 my-4">
                 <img src={ux} alt="ux" className="h-full object-contain hover:scale-90 transition-all duration-300" />
                 <img src={innovation} alt="Inovate" className="h-full object-contain hover:scale-90 transition-all duration-300" />
+            </div>
+            <div className="flex md:hidden h-[45vh] px-8 my-4">
+                <div className={`transition-opacity duration-500 ${isVisible ? 'opacity-100' : 'opacity-0'}`}>
+                    <img 
+                        src={images[currentImageIndex]} 
+                        alt={currentImageIndex === 0 ? "ux" : "Innovate"} 
+                        className="h-full object-contain hover:scale-90 transition-all duration-300" 
+                    />
+                </div>
             </div>
             <p className="text-white text-center max-w-2xl mx-auto mb-8 px-4 mt-4">
                 We are a team of experienced developers and designers who are passionate about creating beautiful and functional websites and mobile apps.
             </p>
-                    <div className="bg-secondary py-4 flex justify-center mb-4">
-                        <div className="w-[55vh] overflow-hidden relative">
-                            <div className="flex animate-marquee min-w-max whitespace-nowrap">
-                                {techIcons.map((icon, index) => (
-                                    <div key={index} className="mx-4">
-                                        <img src={icon} alt={`Tech ${index}`} className="h-[5vh] w-auto object-contain" />
-                                    </div>
-                                ))}
+            <div className="bg-secondary py-4 flex justify-center mb-4">
+                <div className="w-[35vh] md:w-[55vh] overflow-hidden relative">
+                    <div className="flex animate-marquee min-w-max whitespace-nowrap">
+                        {techIcons.map((icon, index) => (
+                            <div key={index} className="mx-4">
+                                <img src={icon} alt={`Tech ${index}`} className="h-[5vh] w-auto object-contain" />
                             </div>
-                        </div>
+                        ))}
                     </div>
+                </div>
+            </div>
             <style jsx>{`
                 @keyframes marquee {
                     0% {
