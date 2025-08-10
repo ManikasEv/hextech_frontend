@@ -48,7 +48,7 @@ export const contactInfoItems = [
     {
         id: 'email',
         title: 'Email Address',
-        content: 'info@hextech.com',
+        content: 'info@hextech-it.ch',
         iconType: 'email'
     }
 ]; 
