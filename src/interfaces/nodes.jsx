@@ -25,9 +25,15 @@ const serviceNodes = [
     },
     {
         number: '05',
-        title: 'AI Solutions',
-        description: 'We leverage artificial intelligence and machine learning to create innovative solutions that automate processes, provide insights, and transform your business operations.',
-        image: 'https://images.unsplash.com/photo-1677442135701-6fab20ae81ed?q=80&w=800&auto=format&fit=crop'
+        title: 'Logo Design',
+        description: 'We create unique, memorable logos that capture your brand essence and make a lasting impression. Our designs are scalable, versatile, and perfectly tailored to your identity.',
+        image: 'https://images.unsplash.com/photo-1626785774573-4b799315345d?q=80&w=800&auto=format&fit=crop'
+    },
+    {
+        number: '06',
+        title: 'QR Code Solutions',
+        description: 'We design custom QR codes for marketing, business cards, menus, and more. Our solutions include tracking, analytics, and seamless integration with your digital presence.',
+        image: 'https://images.unsplash.com/photo-1523961131990-5ea7c61b2107?q=80&w=800&auto=format&fit=crop'
     }
 ];
 
