@@ -1,25 +1,18 @@
-import { useState } from 'react'
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import './App.css'
-import Navbar from './components/navbar'
-import Hero from './components/hero'
-import AboutUs from './components/aboutus'
-import Services from './components/services'
-import Contact from './components/contact'
-import Footer from './components/footer'
+import Home from './pages/Home'
+import ServiceDetail from './components/ServiceDetail'
+import ScrollToTop from './components/ScrollToTop'
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
-    <>
-      <Navbar />
-      <Hero />
-      <AboutUs />
-      <Services />
-      <Contact />
-      <Footer />
-
-    </>
+    <Router>
+      <ScrollToTop />
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/services/:slug" element={<ServiceDetail />} />
+      </Routes>
+    </Router>
   )
 }
 

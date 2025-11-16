@@ -103,7 +103,7 @@ const Contact = () => {
             className="py-20 bg-secondary"
             initial="hidden"
             whileInView="visible"
-            viewport={{ once: true }}
+            viewport={{ once: false, amount: 0.1 }}
             variants={sectionVariants}
         >
             <div className="container mx-auto ">
