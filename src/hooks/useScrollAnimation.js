@@ -38,6 +38,46 @@ export function useLineGrowthOnScroll() {
     return { lineHeight, containerRef };
 }
 
+export function useHorizontalLineGrowth() {
+    const [lineWidth, setLineWidth] = useState(0);
+    const containerRef = useRef(null);
+    const maxWidthReachedRef = useRef(0);
+
+    useEffect(() => {
+        const handleScroll = () => {
+            if (!containerRef.current) return;
+            
+            const container = containerRef.current;
+            const scrollLeft = container.scrollLeft;
+            const scrollWidth = container.scrollWidth - container.clientWidth;
+            
+            // Calculate the line width as a percentage of how far we've scrolled
+            const percentage = scrollWidth > 0 ? (scrollLeft / scrollWidth) * 100 : 0;
+            
+            // Only update if the new width is larger than the previous maximum
+            if (percentage > maxWidthReachedRef.current) {
+                maxWidthReachedRef.current = percentage;
+                setLineWidth(Math.min(96, percentage));
+            }
+        };
+        
+        const container = containerRef.current;
+        if (container) {
+            container.addEventListener('scroll', handleScroll);
+            // Initial calculation
+            handleScroll();
+        }
+        
+        return () => {
+            if (container) {
+                container.removeEventListener('scroll', handleScroll);
+            }
+        };
+    }, []);
+
+    return { lineWidth, containerRef };
+}
+
 export function useElementVisibility(count = 1) {
     const [visibleElements, setVisibleElements] = useState(Array(count).fill(false));
     const elementRefs = Array(count).fill(0).map(() => useRef(null));
