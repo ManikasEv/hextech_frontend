@@ -1,6 +1,151 @@
-import React from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import serviceDetails from '../interfaces/serviceDetails';
+import Contact from './contact';
+import Footer from './footer';
 
-const Footer = () => {
+const ServiceDetail = () => {
+    const { slug } = useParams();
+    const navigate = useNavigate();
+    const [scrolled, setScrolled] = useState(false);
+    const [visible, setVisible] = useState(true);
+    const [lastScrollY, setLastScrollY] = useState(0);
+
+    const service = serviceDetails[slug];
+
+    useEffect(() => {
+        const handleScroll = () => {
+            const currentScrollY = window.scrollY;
+            
+            // Determine if user is scrolling up or down
+            if (currentScrollY > lastScrollY && visible && currentScrollY > 100) {
+                setVisible(false);
+            } else if (currentScrollY < lastScrollY && !visible) {
+                setVisible(true);
+            }
+            
+            // Update background color based on scroll position
+            if (currentScrollY > 50) {
+                setScrolled(true);
+            } else {
+                setScrolled(false);
+            }
+            
+            setLastScrollY(currentScrollY);
+        };
+
+        window.addEventListener('scroll', handleScroll);
+        
+        return () => {
+            window.removeEventListener('scroll', handleScroll);
+        };
+    }, [lastScrollY, visible]);
+
+    // Scroll to top when component mounts or slug changes
+    useEffect(() => {
+        window.scrollTo({
+            top: 0,
+            left: 0,
+            behavior: 'instant'
+        });
+    }, [slug]);
+
+    if (!service) {
+        return (
+            <div className="min-h-screen flex items-center justify-center bg-secondary">
+                <div className="text-center">
+                    <h1 className="text-4xl font-bold text-white mb-4">Service Not Found</h1>
+                    <button 
+                        onClick={() => navigate('/')}
+                        className="bg-primary text-white px-6 py-3 rounded-md hover:bg-primary/80 transition-colors"
+                    >
+                        Go Home
+                    </button>
+                </div>
+            </div>
+        );
+    }
+
+    return (
+        <div className="min-h-screen">
+            {/* Navbar - Desktop */}
+            <div className={`hidden md:flex md:justify-between md:w-full sticky z-10 transition-all duration-300 
+                ${scrolled ? 'bg-white shadow-md' : 'bg-secondary'}
+                ${visible ? 'top-0' : '-top-full'}
+            `}>
+                {/* left side */}
+                <div className="p-4">
+                    <a href="/" className={`text-2xl font-bold ${scrolled ? 'text-primary' : 'text-primary'}`}> HEXTECH </a>
+                </div>
+                {/* center side - empty */}
+                <div className="flex items-center"></div>
+                {/* right side */}
+                <div className="flex items-center p-4">
+                    <button 
+                        onClick={() => navigate('/')}
+                        className="bg-primary text-white px-6 py-2 rounded-md hover:bg-primary/80 transition-colors"
+                    >
+                        Home
+                    </button>
+                </div>
+            </div>
+
+            {/* Navbar - Mobile */}
+            <div className={`md:hidden flex justify-between items-center w-full sticky z-10 transition-all duration-300 
+                ${scrolled ? 'bg-white shadow-md' : 'bg-secondary'} 
+                ${visible ? 'top-0' : '-top-full'}
+                p-4`}
+            >
+                {/* Mobile left - Logo */}
+                <div>
+                    <a href="/" className="text-2xl font-bold text-primary"> HEXTECH </a>
+                </div>
+
+                {/* Mobile right - Home button */}
+                <div>
+                    <button 
+                        onClick={() => navigate('/')}
+                        className="bg-primary text-white px-4 py-2 rounded-md hover:bg-primary/80 transition-colors"
+                    >
+                        Home
+                    </button>
+                </div>
+            </div>
+
+            {/* Hero Section */}
+            <section className="bg-secondary min-h-[40vh] flex items-center justify-center py-20">
+                <div className="container mx-auto px-4 text-center">
+                    <h1 className="text-5xl md:text-6xl font-bold text-white">
+                        {service.heroTitle}
+                    </h1>
+                </div>
+            </section>
+
+            {/* Content Section */}
+            <section className="bg-white py-16">
+                <div className="container mx-auto px-4 max-w-4xl">
+                    <div className="prose prose-lg mx-auto text-gray-700 text-center">
+                        {service.content.split('\n\n').map((paragraph, index) => (
+                            <p key={index} className="mb-6 text-lg leading-relaxed">
+                                {paragraph}
+                            </p>
+                        ))}
+                    </div>
+                </div>
+            </section>
+
+            {/* Contact Form */}
+            <Contact />
+
+            {/* Footer - Modified to only link to home */}
+            <FooterSimple />
+        </div>
+    );
+};
+
+// Simplified Footer component that only links to home
+const FooterSimple = () => {
+    const navigate = useNavigate();
     const currentYear = new Date().getFullYear();
     const startYear = 2025;
     const yearDisplay = currentYear === startYear 
@@ -45,11 +190,12 @@ const Footer = () => {
                     {/* Column 2 - Quick Links */}
                     <div className="flex flex-col space-y-2 md:w-1/3">
                         <h3 className="text-lg font-semibold mb-4">Quick Links</h3>
-                        <a href="/" className="hover:text-primary transition-colors">Home</a>
-                        <a href="#services" className="hover:text-primary transition-colors">Services</a>
-                        <a href="#projects" className="hover:text-primary transition-colors">Projects</a>
-                        <a href="#about" className="hover:text-primary transition-colors">About Us</a>
-                        <a href="#contact" className="hover:text-primary transition-colors">Contact</a>
+                        <button 
+                            onClick={() => navigate('/')}
+                            className="hover:text-primary transition-colors text-left"
+                        >
+                            Home
+                        </button>
                     </div>
 
                     {/* Column 3 - Contact */}
@@ -83,7 +229,8 @@ const Footer = () => {
                 </div>
             </div>
         </footer>
-    )
-}
+    );
+};
 
-export default Footer;
+export default ServiceDetail;
+

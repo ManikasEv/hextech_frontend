@@ -24,7 +24,7 @@ const AboutUs = () => {
 
     return (
         <motion.section 
-            id="about-us" 
+            id="about" 
             className="py-20 bg-white"
             initial="hidden"
             whileInView="visible"

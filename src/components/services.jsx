@@ -1,6 +1,40 @@
+import { useNavigate } from 'react-router-dom';
+import { useRef, useEffect } from 'react';
 import serviceNodes from '../interfaces/nodes';
 
 const Services = () => {
+    const navigate = useNavigate();
+    const scrollContainerRef = useRef(null);
+
+    const handleLearnMore = (slug) => {
+        navigate(`/services/${slug}`);
+    };
+
+    // Enable horizontal scrolling with mouse wheel
+    useEffect(() => {
+        const scrollContainer = scrollContainerRef.current;
+        if (!scrollContainer) return;
+
+        const handleWheel = (e) => {
+            // Check if the target is inside a scrollable card content area
+            const isInsideScrollableCard = e.target.closest('.custom-scrollbar');
+            
+            // Only handle horizontal scroll if we're not inside a scrollable card
+            if (!isInsideScrollableCard) {
+                // Prevent default vertical scrolling
+                e.preventDefault();
+                
+                // Scroll horizontally instead
+                scrollContainer.scrollLeft += e.deltaY;
+            }
+        };
+
+        scrollContainer.addEventListener('wheel', handleWheel, { passive: false });
+
+        return () => {
+            scrollContainer.removeEventListener('wheel', handleWheel);
+        };
+    }, []);
 
     return (
         <section id="services" className="flex flex-col bg-white min-h-screen py-16 justify-center items-center">
@@ -11,7 +45,7 @@ const Services = () => {
                     <p className="text-xl text-gray-600">Services for Software Development</p>
                 </div>
                 
-                <div className="overflow-x-auto overflow-y-hidden scroll-smooth pb-8 horizontal-scroll">
+                <div ref={scrollContainerRef} className="overflow-x-auto overflow-y-hidden scroll-smooth pb-8 horizontal-scroll">
                     <div className="flex flex-row gap-8 px-8" style={{ width: 'max-content' }}>
                         {/* Service nodes */}
                         {serviceNodes.map((service, index) => (
@@ -31,8 +65,8 @@ const Services = () => {
                                             <h3 className="text-2xl font-bold mb-4 text-primary">{service.title}</h3>
                                             <p className="text-gray-300 mb-4">{service.description}</p>
                                             <button 
-                                                disabled 
-                                                className="mt-auto px-6 py-2 bg-gray-400 text-gray-600 rounded cursor-not-allowed opacity-50"
+                                                onClick={() => handleLearnMore(service.slug)}
+                                                className="mt-auto px-6 py-2 bg-primary text-white rounded hover:bg-primary/80 transition-colors"
                                             >
                                                 Learn More
                                             </button>

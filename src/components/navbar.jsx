@@ -51,14 +51,15 @@ const Navbar = () => {
             `}>
                 {/* left side */}
                 <div className="p-4">
-                    <a href="#" className={`text-2xl font-bold ${scrolled ? 'text-primary' : 'text-primary'}`}> HEXTECH </a>
+                    <a href="/" className={`text-2xl font-bold ${scrolled ? 'text-primary' : 'text-primary'}`}> HEXTECH </a>
                 </div>
                 {/* center side */}
                 <div className="flex items-center">
-                    <a href="#" className={`mx-4 hover:text-primary ${scrolled ? 'text-secondary' : 'text-white'}`}>Home</a>
-                    <a href="#" className={`mx-4 hover:text-primary ${scrolled ? 'text-secondary' : 'text-white'}`}>Services</a>
-                    <a href="#" className={`mx-4 hover:text-primary ${scrolled ? 'text-secondary' : 'text-white'}`}>About</a>
-                    <a href="#" className={`mx-4 hover:text-primary ${scrolled ? 'text-secondary' : 'text-white'}`}>Contact</a>
+                    <a href="/" className={`mx-4 hover:text-primary ${scrolled ? 'text-secondary' : 'text-white'}`}>Home</a>
+                    <a href="#services" className={`mx-4 hover:text-primary ${scrolled ? 'text-secondary' : 'text-white'}`}>Services</a>
+                    <a href="#projects" className={`mx-4 hover:text-primary ${scrolled ? 'text-secondary' : 'text-white'}`}>Projects</a>
+                    <a href="#about" className={`mx-4 hover:text-primary ${scrolled ? 'text-secondary' : 'text-white'}`}>About</a>
+                    <a href="#contact" className={`mx-4 hover:text-primary ${scrolled ? 'text-secondary' : 'text-white'}`}>Contact</a>
                 </div>
                 {/* right side */}
                 <div className="flex items-center p-4">
@@ -104,10 +105,11 @@ const Navbar = () => {
             {mobileMenuOpen && visible && (
                 <div className="md:hidden bg-secondary shadow-lg">
                     <div className="flex flex-col py-4">
-                        <a href="#" className="text-white py-2 px-6 hover:bg-primary/20">Home</a>
-                        <a href="#" className="text-white py-2 px-6 hover:bg-primary/20">Services</a>
-                        <a href="#" className="text-white py-2 px-6 hover:bg-primary/20">About</a>
-                        <a href="#" className="text-white py-2 px-6 hover:bg-primary/20">Contact</a>
+                        <a href="/" className="text-white py-2 px-6 hover:bg-primary/20">Home</a>
+                        <a href="#services" className="text-white py-2 px-6 hover:bg-primary/20">Services</a>
+                        <a href="#projects" className="text-white py-2 px-6 hover:bg-primary/20">Projects</a>
+                        <a href="#about" className="text-white py-2 px-6 hover:bg-primary/20">About</a>
+                        <a href="#contact" className="text-white py-2 px-6 hover:bg-primary/20">Contact</a>
                         <div className="px-6 py-4">
                             <button className="w-full bg-primary text-white py-2 rounded-md">Get Started</button>
                         </div>
