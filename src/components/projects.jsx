@@ -37,10 +37,10 @@ const Projects = () => {
                     <p className="text-xl text-gray-600">Explore our latest work and achievements</p>
                 </div>
 
-                {/* Auto-scrolling container */}
-                <div className="overflow-x-hidden overflow-y-visible py-8 relative">
+                {/* Auto-scrolling container - Desktop / Manual scroll - Mobile */}
+                <div className="overflow-x-auto md:overflow-x-hidden overflow-y-visible py-8 relative mobile-scroll-container">
                     <div 
-                        className="flex gap-8 animate-scroll"
+                        className="flex gap-8 md:animate-scroll"
                         style={{ width: 'max-content' }}
                     >
                         {duplicatedProjects.map((project, index) => (
@@ -129,8 +129,11 @@ const Projects = () => {
 
                 {/* Instruction text */}
                 <div className="text-center mt-8 px-4">
-                    <p className="text-gray-600 text-base">
+                    <p className="text-gray-600 text-base hidden md:block">
                         Click on website projects to explore them live
+                    </p>
+                    <p className="text-gray-600 text-base md:hidden">
+                        Swipe to see more projects • Tap websites to explore them
                     </p>
                 </div>
             </div>
@@ -144,8 +147,41 @@ const Projects = () => {
                         transform: translateX(-33.333%);
                     }
                 }
-                .animate-scroll {
-                    animation: scroll 60s linear infinite;
+                
+                /* Desktop: Auto-scroll animation */
+                @media (min-width: 768px) {
+                    .md\\:animate-scroll {
+                        animation: scroll 60s linear infinite;
+                    }
+                }
+                
+                /* Mobile: Smooth touch scrolling */
+                .mobile-scroll-container {
+                    -webkit-overflow-scrolling: touch;
+                    scroll-snap-type: x mandatory;
+                    scroll-behavior: smooth;
+                }
+                
+                /* Horizontal scrollbar styling for mobile */
+                @media (max-width: 767px) {
+                    .mobile-scroll-container {
+                        scrollbar-width: thin;
+                        scrollbar-color: #00BBE5 #e5e5e5;
+                    }
+                    .mobile-scroll-container::-webkit-scrollbar {
+                        height: 8px;
+                    }
+                    .mobile-scroll-container::-webkit-scrollbar-track {
+                        background: #e5e5e5;
+                        border-radius: 4px;
+                    }
+                    .mobile-scroll-container::-webkit-scrollbar-thumb {
+                        background: #00BBE5;
+                        border-radius: 4px;
+                    }
+                    .mobile-scroll-container::-webkit-scrollbar-thumb:active {
+                        background: #0099c7;
+                    }
                 }
                 
                 /* Custom scrollbar for project descriptions */

@@ -1,5 +1,6 @@
 import portfolioMani from '../assets/portfoliomani.png';
 import ioInside from '../assets/ioinside.png';
+import projecpapa from '../assets/projecpapa.png';
 
 const projects = [
     {
@@ -41,6 +42,14 @@ const projects = [
         description: 'Comprehensive software for managing bookings and sending automated invitations to clients',
         type: 'Software',
         link: null
+    },
+    {
+        id: 6,
+        title: 'Papage',
+        image: projecpapa,
+        description: 'Professional business website delivering quality services and solutions',
+        type: 'Website',
+        link: 'https://papage.ch/'
     }
 ];
 

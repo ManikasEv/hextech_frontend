@@ -5,6 +5,7 @@ import Hero from '../components/hero';
 import AboutUs from '../components/aboutus';
 import Services from '../components/services';
 import Projects from '../components/projects';
+import Pricing from '../components/pricing';
 import Contact from '../components/contact';
 import Footer from '../components/footer';
 
@@ -23,6 +24,7 @@ const Home = () => {
             <AboutUs />
             <Services />
             <Projects />
+            <Pricing />
             <Contact />
             <Footer />
         </>
