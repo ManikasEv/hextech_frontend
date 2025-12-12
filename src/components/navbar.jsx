@@ -122,17 +122,26 @@ const Navbar = () => {
 
             {/* Mobile Menu Items - Slide down when open */}
             {mobileMenuOpen && visible && (
-                <div className="md:hidden bg-secondary shadow-lg fixed top-16 w-full z-10">
+                <div className="md:hidden bg-secondary shadow-lg fixed top-16 w-full z-10 max-h-[calc(100vh-4rem)] overflow-y-auto">
                     <div className="flex flex-col py-4">
                         <a href="#" onClick={(e) => { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }); setMobileMenuOpen(false); }} className="text-white py-2 px-6 hover:bg-primary/20">Home</a>
                         <a href="#" onClick={(e) => handleNavClick(e, 'services')} className="text-white py-2 px-6 hover:bg-primary/20">Services</a>
+                        <a href="#" onClick={(e) => handleNavClick(e, 'process')} className="text-white py-2 px-6 hover:bg-primary/20">Process</a>
                         <a href="#" onClick={(e) => handleNavClick(e, 'projects')} className="text-white py-2 px-6 hover:bg-primary/20">Projects</a>
                         <a href="#" onClick={(e) => handleNavClick(e, 'pricing')} className="text-white py-2 px-6 hover:bg-primary/20">Pricing</a>
+                        <a href="#" onClick={(e) => handleNavClick(e, 'faq')} className="text-white py-2 px-6 hover:bg-primary/20">FAQ</a>
                         <a href="#" onClick={(e) => handleNavClick(e, 'about')} className="text-white py-2 px-6 hover:bg-primary/20">About</a>
                         <a href="#" onClick={(e) => handleNavClick(e, 'contact')} className="text-white py-2 px-6 hover:bg-primary/20">Contact</a>
                         <Link to="/careers" onClick={() => setMobileMenuOpen(false)} className="text-white py-2 px-6 hover:bg-primary/20">Careers</Link>
                         <div className="px-6 py-4">
-                            <button className="w-full bg-primary text-white py-2 rounded-md">Get Started</button>
+                            <button 
+                                onClick={(e) => {
+                                    handleNavClick(e, 'contact');
+                                }}
+                                className="w-full bg-primary text-white py-2 rounded-md"
+                            >
+                                Get Started
+                            </button>
                         </div>
                     </div>
                 </div>

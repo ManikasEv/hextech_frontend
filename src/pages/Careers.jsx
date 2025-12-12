@@ -100,12 +100,9 @@ const Careers = () => {
                                         </div>
                                         <div className="bg-primary/10 border-2 border-primary px-6 py-3 rounded-lg">
                                             <p className="text-sm text-gray-600 mb-1">Apply via email:</p>
-                                            <a 
-                                                href={`mailto:${position.email}`}
-                                                className="text-xl font-semibold text-primary hover:text-primary/80 transition-colors"
-                                            >
+                                            <p className="text-xl font-semibold text-primary">
                                                 {position.email}
-                                            </a>
+                                            </p>
                                         </div>
                                     </div>
                                     <p className="text-gray-700 mt-4">{position.description}</p>
@@ -164,12 +161,9 @@ const Careers = () => {
                                     <p className="text-gray-700 mb-3 text-lg">
                                         Interested in this position? Send your application to:
                                     </p>
-                                    <a 
-                                        href={`mailto:${position.email}`}
-                                        className="text-2xl font-bold text-primary hover:text-primary/80 transition-colors inline-block"
-                                    >
+                                    <p className="text-2xl font-bold text-primary inline-block">
                                         {position.email}
-                                    </a>
+                                    </p>
                                     <p className="text-gray-500 text-sm mt-3">
                                         Please include your resume and cover letter
                                     </p>
@@ -189,12 +183,9 @@ const Careers = () => {
                             we'd love to hear from you!
                         </p>
                         <p className="text-gray-600 mb-2">Send your general application to:</p>
-                        <a 
-                            href="mailto:info@hextech-it.ch"
-                            className="text-2xl font-bold text-primary hover:text-primary/80 transition-colors inline-block"
-                        >
+                        <p className="text-2xl font-bold text-primary inline-block">
                             info@hextech-it.ch
-                        </a>
+                        </p>
                     </div>
                 </div>
             </section>
