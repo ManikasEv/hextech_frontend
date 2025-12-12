@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
-const Navbar = () => {
+const NavbarCareers = () => {
     const [scrolled, setScrolled] = useState(false);
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
     const [visible, setVisible] = useState(true);
@@ -43,22 +43,6 @@ const Navbar = () => {
         setMobileMenuOpen(!mobileMenuOpen);
     };
 
-    const smoothScrollTo = (elementId) => {
-        const element = document.getElementById(elementId);
-        if (element) {
-            element.scrollIntoView({ 
-                behavior: 'smooth',
-                block: 'start'
-            });
-        }
-        setMobileMenuOpen(false); // Close mobile menu after click
-    };
-
-    const handleNavClick = (e, sectionId) => {
-        e.preventDefault();
-        smoothScrollTo(sectionId);
-    };
-
     return (
         <>
             {/* Desktop Menu */}
@@ -68,21 +52,16 @@ const Navbar = () => {
             `}>
                 {/* left side */}
                 <div className="p-4">
-                    <a href="/" className={`text-2xl font-bold ${scrolled ? 'text-primary' : 'text-primary'}`}> HEXTECH </a>
+                    <Link to="/" className={`text-2xl font-bold ${scrolled ? 'text-primary' : 'text-primary'}`}> HEXTECH </Link>
                 </div>
                 {/* center side */}
                 <div className="flex items-center">
-                    <a href="#" onClick={(e) => { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }); }} className={`mx-4 hover:text-primary ${scrolled ? 'text-secondary' : 'text-white'}`}>Home</a>
-                    <a href="#" onClick={(e) => handleNavClick(e, 'services')} className={`mx-4 hover:text-primary ${scrolled ? 'text-secondary' : 'text-white'}`}>Services</a>
-                    <a href="#" onClick={(e) => handleNavClick(e, 'projects')} className={`mx-4 hover:text-primary ${scrolled ? 'text-secondary' : 'text-white'}`}>Projects</a>
-                    <a href="#" onClick={(e) => handleNavClick(e, 'pricing')} className={`mx-4 hover:text-primary ${scrolled ? 'text-secondary' : 'text-white'}`}>Pricing</a>
-                    <a href="#" onClick={(e) => handleNavClick(e, 'about')} className={`mx-4 hover:text-primary ${scrolled ? 'text-secondary' : 'text-white'}`}>About</a>
-                    <a href="#" onClick={(e) => handleNavClick(e, 'contact')} className={`mx-4 hover:text-primary ${scrolled ? 'text-secondary' : 'text-white'}`}>Contact</a>
-                    <Link to="/careers" className={`mx-4 hover:text-primary ${scrolled ? 'text-secondary' : 'text-white'}`}>Careers</Link>
+                    <Link to="/" className={`mx-4 hover:text-primary ${scrolled ? 'text-secondary' : 'text-white'}`}>Home</Link>
+                    <Link to="/careers" className={`mx-4 hover:text-primary ${scrolled ? 'text-secondary' : 'text-white'} font-semibold`}>Careers</Link>
                 </div>
                 {/* right side */}
                 <div className="flex items-center p-4">
-                    <button className="bg-primary text-white px-4 py-2 rounded-md">Get Started</button>
+                    <Link to="/" className="bg-primary text-white px-4 py-2 rounded-md">Get Started</Link>
                 </div>
             </div>
 
@@ -94,7 +73,7 @@ const Navbar = () => {
             >
                 {/* Mobile left - Logo */}
                 <div>
-                    <a href="#" className="text-2xl font-bold text-primary"> HEXTECH </a>
+                    <Link to="/" className="text-2xl font-bold text-primary"> HEXTECH </Link>
                 </div>
 
                 {/* Mobile right - Hamburger */}
@@ -124,15 +103,10 @@ const Navbar = () => {
             {mobileMenuOpen && visible && (
                 <div className="md:hidden bg-secondary shadow-lg fixed top-16 w-full z-10">
                     <div className="flex flex-col py-4">
-                        <a href="#" onClick={(e) => { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }); setMobileMenuOpen(false); }} className="text-white py-2 px-6 hover:bg-primary/20">Home</a>
-                        <a href="#" onClick={(e) => handleNavClick(e, 'services')} className="text-white py-2 px-6 hover:bg-primary/20">Services</a>
-                        <a href="#" onClick={(e) => handleNavClick(e, 'projects')} className="text-white py-2 px-6 hover:bg-primary/20">Projects</a>
-                        <a href="#" onClick={(e) => handleNavClick(e, 'pricing')} className="text-white py-2 px-6 hover:bg-primary/20">Pricing</a>
-                        <a href="#" onClick={(e) => handleNavClick(e, 'about')} className="text-white py-2 px-6 hover:bg-primary/20">About</a>
-                        <a href="#" onClick={(e) => handleNavClick(e, 'contact')} className="text-white py-2 px-6 hover:bg-primary/20">Contact</a>
-                        <Link to="/careers" onClick={() => setMobileMenuOpen(false)} className="text-white py-2 px-6 hover:bg-primary/20">Careers</Link>
+                        <Link to="/" className="text-white py-2 px-6 hover:bg-primary/20">Home</Link>
+                        <Link to="/careers" className="text-white py-2 px-6 hover:bg-primary/20 font-semibold">Careers</Link>
                         <div className="px-6 py-4">
-                            <button className="w-full bg-primary text-white py-2 rounded-md">Get Started</button>
+                            <Link to="/" className="w-full bg-primary text-white py-2 rounded-md block text-center">Get Started</Link>
                         </div>
                     </div>
                 </div>
@@ -141,4 +115,5 @@ const Navbar = () => {
     )
 }
 
-export default Navbar;
+export default NavbarCareers;
+
