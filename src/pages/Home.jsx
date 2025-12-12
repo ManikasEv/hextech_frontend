@@ -4,8 +4,11 @@ import Navbar from '../components/navbar';
 import Hero from '../components/hero';
 import AboutUs from '../components/aboutus';
 import Services from '../components/services';
+import Process from '../components/process';
 import Projects from '../components/projects';
 import Pricing from '../components/pricing';
+import FAQ from '../components/faq';
+import CTA from '../components/cta';
 import Contact from '../components/contact';
 import Footer from '../components/footer';
 
@@ -23,8 +26,11 @@ const Home = () => {
             <Hero />
             <AboutUs />
             <Services />
+            <Process />
             <Projects />
             <Pricing />
+            <FAQ />
+            <CTA />
             <Contact />
             <Footer />
         </>
