@@ -1,7 +1,7 @@
 import { motion } from 'framer-motion';
 import { Briefcase, MapPin, Clock, ArrowRight } from 'lucide-react';
 import NavbarCareers from '../components/navbar-careers';
-import Footer from '../components/footer';
+import FooterCareers from '../components/footer-careers';
 
 const Careers = () => {
     const openPositions = [
@@ -189,13 +189,10 @@ const Careers = () => {
                                     </div>
 
                                     <div className="lg:ml-6">
-                                        <a
-                                            href="mailto:info@hextech-it.ch?subject=Application for {position.title}"
-                                            className="inline-flex items-center gap-2 px-6 py-3 bg-primary text-white rounded-lg font-semibold hover:bg-primary/90 transition-colors group-hover:gap-3"
-                                        >
-                                            Apply Now
-                                            <ArrowRight className="w-4 h-4" />
-                                        </a>
+                                        <div className="text-center lg:text-right">
+                                            <p className="text-sm text-gray-400 mb-2">Apply via email:</p>
+                                            <p className="text-lg font-semibold text-primary">info@hextech-it.ch</p>
+                                        </div>
                                     </div>
                                 </div>
                             </motion.div>
@@ -205,31 +202,29 @@ const Careers = () => {
             </section>
 
             {/* Application CTA */}
-            <section id="apply" className="py-16 px-4 bg-gradient-to-br from-primary to-cyan-600">
+            <section id="apply" className="py-16 px-4 bg-secondary border-t border-primary/20">
                 <div className="container mx-auto max-w-4xl text-center">
                     <motion.div
                         initial={{ opacity: 0, y: 20 }}
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
                     >
-                        <Briefcase className="w-16 h-16 mx-auto mb-6 text-white" />
-                        <h2 className="text-4xl font-bold text-white mb-4">
+                        <Briefcase className="w-16 h-16 mx-auto mb-6 text-primary" />
+                        <h2 className="text-4xl font-bold text-primary mb-4">
                             Don't See Your Role?
                         </h2>
-                        <p className="text-xl text-white/90 mb-8">
+                        <p className="text-xl text-gray-300 mb-8">
                             We're always looking for talented individuals. Send your CV and cover letter to info@hextech-it.ch and we'll get in touch if there's a fit.
                         </p>
-                        <a
-                            href="mailto:info@hextech-it.ch"
-                            className="inline-block px-8 py-4 bg-secondary text-primary rounded-lg font-semibold hover:bg-secondary/90 transition-colors"
-                        >
-                            Apply via Email: info@hextech-it.ch
-                        </a>
+                        <div className="inline-block">
+                            <p className="text-sm text-gray-400 mb-2">Send applications to:</p>
+                            <p className="text-2xl font-bold text-primary">info@hextech-it.ch</p>
+                        </div>
                     </motion.div>
                 </div>
             </section>
 
-            <Footer />
+            <FooterCareers />
         </div>
     );
 };

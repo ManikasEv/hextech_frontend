@@ -4,7 +4,7 @@ import { useCounterAnimation } from '../hooks/useCounterAnimation';
 
 const AboutUs = () => {
     // Custom hook for counter animation 
-    const { count, isVisible, setIsVisible } = useCounterAnimation(10, 1500);
+    const { count, isVisible, setIsVisible } = useCounterAnimation(50, 1500);
 
     // Animation variant just for the section
     const sectionVariants = {
@@ -46,7 +46,7 @@ const AboutUs = () => {
                             </div>
                             <h3 className="text-2xl font-semibold text-white mb-4 text-center">Projects</h3>
                             <p className="text-gray-300 text-center">
-                                We have successfully delivered over 10 projects across various industries, 
+                                We have successfully delivered over 50 projects across various industries, 
                                 helping businesses transform their digital presence and achieve their goals.
                             </p>
                         </div>

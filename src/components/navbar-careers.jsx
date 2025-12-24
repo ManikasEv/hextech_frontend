@@ -44,19 +44,14 @@ const NavbarCareers = () => {
                 {/* center side */}
                 <div className="flex items-center">
                     <button onClick={() => navigate('/')} className={`mx-4 hover:text-primary ${scrolled ? 'text-secondary' : 'text-white'}`}>Home</button>
-                    <button onClick={() => navigate('/#services')} className={`mx-4 hover:text-primary ${scrolled ? 'text-secondary' : 'text-white'}`}>Services</button>
-                    <button onClick={() => navigate('/#projects')} className={`mx-4 hover:text-primary ${scrolled ? 'text-secondary' : 'text-white'}`}>Projects</button>
-                    <button onClick={() => navigate('/#about')} className={`mx-4 hover:text-primary ${scrolled ? 'text-secondary' : 'text-white'}`}>About</button>
-                    <button onClick={() => navigate('/#contact')} className={`mx-4 hover:text-primary ${scrolled ? 'text-secondary' : 'text-white'}`}>Contact</button>
-                    <button onClick={() => navigate('/careers')} className={`mx-4 text-primary font-semibold ${scrolled ? 'text-primary' : 'text-primary'}`}>Careers</button>
                 </div>
                 {/* right side */}
                 <div className="flex items-center p-4">
                     <button 
-                        onClick={() => navigate('/#contact')}
+                        onClick={() => navigate('/')}
                         className="bg-primary text-white px-4 py-2 rounded-md hover:bg-primary/90 transition-colors"
                     >
-                        Get Started
+                        Back to Home
                     </button>
                 </div>
             </div>
@@ -104,17 +99,12 @@ const NavbarCareers = () => {
                 <div className="md:hidden fixed top-16 left-0 right-0 bg-secondary shadow-lg z-40">
                     <div className="flex flex-col py-4">
                         <button onClick={() => { navigate('/'); setMobileMenuOpen(false); }} className="text-white py-2 px-6 hover:bg-primary/20 text-left">Home</button>
-                        <button onClick={() => { navigate('/#services'); setMobileMenuOpen(false); }} className="text-white py-2 px-6 hover:bg-primary/20 text-left">Services</button>
-                        <button onClick={() => { navigate('/#projects'); setMobileMenuOpen(false); }} className="text-white py-2 px-6 hover:bg-primary/20 text-left">Projects</button>
-                        <button onClick={() => { navigate('/#about'); setMobileMenuOpen(false); }} className="text-white py-2 px-6 hover:bg-primary/20 text-left">About</button>
-                        <button onClick={() => { navigate('/#contact'); setMobileMenuOpen(false); }} className="text-white py-2 px-6 hover:bg-primary/20 text-left">Contact</button>
-                        <button onClick={() => { navigate('/careers'); setMobileMenuOpen(false); }} className="text-primary py-2 px-6 hover:bg-primary/20 text-left font-semibold">Careers</button>
                         <div className="px-6 py-4">
                             <button 
-                                onClick={() => { navigate('/#contact'); setMobileMenuOpen(false); }}
+                                onClick={() => { navigate('/'); setMobileMenuOpen(false); }}
                                 className="w-full bg-primary text-white py-2 rounded-md hover:bg-primary/90 transition-colors"
                             >
-                                Get Started
+                                Back to Home
                             </button>
                         </div>
                     </div>

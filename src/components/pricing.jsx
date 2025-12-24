@@ -4,52 +4,49 @@ import { Check } from 'lucide-react';
 const Pricing = () => {
     const pricingPlans = [
         {
-            name: "Starter",
-            price: "CHF 2,500",
-            period: "one-time",
-            description: "Perfect for small businesses and startups",
+            name: "Basic Support",
+            price: "CHF 200",
+            period: "year",
+            description: "Essential maintenance for small websites",
             features: [
-                "Responsive Website Design",
-                "Up to 5 Pages",
-                "Basic SEO Optimization",
-                "Contact Form Integration",
-                "Mobile Responsive",
-                "2 Rounds of Revisions",
-                "30 Days Support"
+                "Monthly Security Updates",
+                "Bug Fixes & Patches",
+                "Performance Monitoring",
+                "Email Support (48h response)",
+                "Up to 2 Hours of Changes/Month",
+                "Backup & Recovery"
             ],
             highlighted: false
         },
         {
-            name: "Professional",
-            price: "CHF 5,000",
-            period: "one-time",
-            description: "Ideal for growing businesses",
+            name: "Professional Support",
+            price: "CHF 300",
+            period: "year",
+            description: "Comprehensive support for growing businesses",
             features: [
-                "Everything in Starter",
-                "Up to 10 Pages",
-                "Advanced SEO & Analytics",
-                "CMS Integration",
-                "E-commerce Ready",
-                "Custom Animations",
-                "API Integration",
-                "60 Days Support"
+                "Everything in Basic",
+                "Weekly Security Updates",
+                "Priority Email Support (24h response)",
+                "Up to 5 Hours of Changes/Month",
+                "SEO Monitoring & Reports",
+                "Content Updates",
+                "Phone Support"
             ],
             highlighted: true
         },
         {
-            name: "Enterprise",
+            name: "Enterprise Support",
             price: "Custom",
             period: "quote",
-            description: "For large-scale projects",
+            description: "Premium support for mission-critical applications",
             features: [
                 "Everything in Professional",
-                "Unlimited Pages",
-                "Custom Web Application",
-                "Mobile App Development",
-                "Database Design",
-                "Advanced Security",
-                "Cloud Deployment",
-                "12 Months Support"
+                "Daily Monitoring",
+                "24/7 Emergency Support",
+                "Unlimited Changes",
+                "Dedicated Account Manager",
+                "Advanced Analytics",
+                "Custom SLA Agreement"
             ],
             highlighted: false
         }
@@ -66,8 +63,8 @@ const Pricing = () => {
                     transition={{ duration: 0.6 }}
                     className="text-center mb-16"
                 >
-                    <h2 className="text-5xl font-bold text-primary mb-4">Pricing Plans</h2>
-                    <p className="text-xl text-gray-300">Choose the perfect plan for your project</p>
+                    <h2 className="text-5xl font-bold text-primary mb-4">Support Packages</h2>
+                    <p className="text-xl text-gray-300">Yearly maintenance and support plans</p>
                 </motion.div>
 
                 {/* Pricing Cards */}
