@@ -1,10 +1,12 @@
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const Navbar = () => {
     const [scrolled, setScrolled] = useState(false);
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
     const [visible, setVisible] = useState(true);
     const [lastScrollY, setLastScrollY] = useState(0);
+    const navigate = useNavigate();
 
     useEffect(() => {
         const handleScroll = () => {
@@ -60,6 +62,7 @@ const Navbar = () => {
                     <a href="#projects" className={`mx-4 hover:text-primary ${scrolled ? 'text-secondary' : 'text-white'}`}>Projects</a>
                     <a href="#about" className={`mx-4 hover:text-primary ${scrolled ? 'text-secondary' : 'text-white'}`}>About</a>
                     <a href="#contact" className={`mx-4 hover:text-primary ${scrolled ? 'text-secondary' : 'text-white'}`}>Contact</a>
+                    <button onClick={() => navigate('/careers')} className={`mx-4 hover:text-primary ${scrolled ? 'text-secondary' : 'text-white'}`}>Careers</button>
                 </div>
                 {/* right side */}
                 <div className="flex items-center p-4">
@@ -110,6 +113,7 @@ const Navbar = () => {
                         <a href="#projects" className="text-white py-2 px-6 hover:bg-primary/20">Projects</a>
                         <a href="#about" className="text-white py-2 px-6 hover:bg-primary/20">About</a>
                         <a href="#contact" className="text-white py-2 px-6 hover:bg-primary/20">Contact</a>
+                        <button onClick={() => navigate('/careers')} className="text-white py-2 px-6 hover:bg-primary/20 text-left">Careers</button>
                         <div className="px-6 py-4">
                             <button className="w-full bg-primary text-white py-2 rounded-md">Get Started</button>
                         </div>
