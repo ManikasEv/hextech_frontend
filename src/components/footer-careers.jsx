@@ -1,11 +1,14 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 
-const Footer = () => {
+const FooterCareers = () => {
     const currentYear = new Date().getFullYear();
     const startYear = 2025;
     const yearDisplay = currentYear === startYear 
         ? startYear.toString() 
         : `${startYear}-${currentYear}`;
+    
+    const navigate = useNavigate();
 
     return (
         <footer className="bg-secondary text-white py-12">
@@ -45,13 +48,8 @@ const Footer = () => {
                     {/* Column 2 - Quick Links */}
                     <div className="flex flex-col space-y-2 md:w-1/3">
                         <h3 className="text-lg font-semibold mb-4">Quick Links</h3>
-                        <a href="/" className="hover:text-primary transition-colors">Home</a>
-                        <a href="#services" className="hover:text-primary transition-colors">Services</a>
-                        <a href="#projects" className="hover:text-primary transition-colors">Projects</a>
-                        <a href="#pricing" className="hover:text-primary transition-colors">Pricing</a>
-                        <a href="#about" className="hover:text-primary transition-colors">About Us</a>
-                        <a href="#contact" className="hover:text-primary transition-colors">Contact</a>
-                        <a href="/careers" className="hover:text-primary transition-colors">Careers</a>
+                        <button onClick={() => navigate('/')} className="hover:text-primary transition-colors text-left">Home</button>
+                        <button onClick={() => navigate('/careers')} className="hover:text-primary transition-colors text-left">Careers</button>
                     </div>
 
                     {/* Column 3 - Contact */}
@@ -88,4 +86,5 @@ const Footer = () => {
     )
 }
 
-export default Footer;
+export default FooterCareers;
+
