@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
 
 const Navbar = () => {
     const [scrolled, setScrolled] = useState(false);
@@ -43,26 +42,10 @@ const Navbar = () => {
         setMobileMenuOpen(!mobileMenuOpen);
     };
 
-    const smoothScrollTo = (elementId) => {
-        const element = document.getElementById(elementId);
-        if (element) {
-            element.scrollIntoView({ 
-                behavior: 'smooth',
-                block: 'start'
-            });
-        }
-        setMobileMenuOpen(false); // Close mobile menu after click
-    };
-
-    const handleNavClick = (e, sectionId) => {
-        e.preventDefault();
-        smoothScrollTo(sectionId);
-    };
-
     return (
         <>
             {/* Desktop Menu */}
-            <div className={`hidden md:flex md:justify-between md:w-full fixed z-10 transition-all duration-300 
+            <div className={`hidden md:flex md:justify-between md:w-full sticky z-10 transition-all duration-300 
                 ${scrolled ? 'bg-white shadow-md' : 'bg-secondary'}
                 ${visible ? 'top-0' : '-top-full'}
             `}>
@@ -72,13 +55,11 @@ const Navbar = () => {
                 </div>
                 {/* center side */}
                 <div className="flex items-center">
-                    <a href="#" onClick={(e) => { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }); }} className={`mx-4 hover:text-primary ${scrolled ? 'text-secondary' : 'text-white'}`}>Home</a>
-                    <a href="#" onClick={(e) => handleNavClick(e, 'services')} className={`mx-4 hover:text-primary ${scrolled ? 'text-secondary' : 'text-white'}`}>Services</a>
-                    <a href="#" onClick={(e) => handleNavClick(e, 'projects')} className={`mx-4 hover:text-primary ${scrolled ? 'text-secondary' : 'text-white'}`}>Projects</a>
-                    <a href="#" onClick={(e) => handleNavClick(e, 'pricing')} className={`mx-4 hover:text-primary ${scrolled ? 'text-secondary' : 'text-white'}`}>Pricing</a>
-                    <a href="#" onClick={(e) => handleNavClick(e, 'about')} className={`mx-4 hover:text-primary ${scrolled ? 'text-secondary' : 'text-white'}`}>About</a>
-                    <a href="#" onClick={(e) => handleNavClick(e, 'contact')} className={`mx-4 hover:text-primary ${scrolled ? 'text-secondary' : 'text-white'}`}>Contact</a>
-                    <Link to="/careers" className={`mx-4 hover:text-primary ${scrolled ? 'text-secondary' : 'text-white'}`}>Careers</Link>
+                    <a href="/" className={`mx-4 hover:text-primary ${scrolled ? 'text-secondary' : 'text-white'}`}>Home</a>
+                    <a href="#services" className={`mx-4 hover:text-primary ${scrolled ? 'text-secondary' : 'text-white'}`}>Services</a>
+                    <a href="#projects" className={`mx-4 hover:text-primary ${scrolled ? 'text-secondary' : 'text-white'}`}>Projects</a>
+                    <a href="#about" className={`mx-4 hover:text-primary ${scrolled ? 'text-secondary' : 'text-white'}`}>About</a>
+                    <a href="#contact" className={`mx-4 hover:text-primary ${scrolled ? 'text-secondary' : 'text-white'}`}>Contact</a>
                 </div>
                 {/* right side */}
                 <div className="flex items-center p-4">
@@ -87,7 +68,7 @@ const Navbar = () => {
             </div>
 
             {/* Mobile Menu */}
-            <div className={`md:hidden flex justify-between items-center w-full fixed z-10 transition-all duration-300 
+            <div className={`md:hidden flex justify-between items-center w-full sticky z-10 transition-all duration-300 
                 ${scrolled ? 'bg-white shadow-md' : 'bg-secondary'} 
                 ${visible ? 'top-0' : '-top-full'}
                 p-4`}
@@ -122,26 +103,15 @@ const Navbar = () => {
 
             {/* Mobile Menu Items - Slide down when open */}
             {mobileMenuOpen && visible && (
-                <div className="md:hidden bg-secondary shadow-lg fixed top-16 w-full z-10 max-h-[calc(100vh-4rem)] overflow-y-auto">
+                <div className="md:hidden bg-secondary shadow-lg">
                     <div className="flex flex-col py-4">
-                        <a href="#" onClick={(e) => { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }); setMobileMenuOpen(false); }} className="text-white py-2 px-6 hover:bg-primary/20">Home</a>
-                        <a href="#" onClick={(e) => handleNavClick(e, 'services')} className="text-white py-2 px-6 hover:bg-primary/20">Services</a>
-                        <a href="#" onClick={(e) => handleNavClick(e, 'process')} className="text-white py-2 px-6 hover:bg-primary/20">Process</a>
-                        <a href="#" onClick={(e) => handleNavClick(e, 'projects')} className="text-white py-2 px-6 hover:bg-primary/20">Projects</a>
-                        <a href="#" onClick={(e) => handleNavClick(e, 'pricing')} className="text-white py-2 px-6 hover:bg-primary/20">Pricing</a>
-                        <a href="#" onClick={(e) => handleNavClick(e, 'faq')} className="text-white py-2 px-6 hover:bg-primary/20">FAQ</a>
-                        <a href="#" onClick={(e) => handleNavClick(e, 'about')} className="text-white py-2 px-6 hover:bg-primary/20">About</a>
-                        <a href="#" onClick={(e) => handleNavClick(e, 'contact')} className="text-white py-2 px-6 hover:bg-primary/20">Contact</a>
-                        <Link to="/careers" onClick={() => setMobileMenuOpen(false)} className="text-white py-2 px-6 hover:bg-primary/20">Careers</Link>
+                        <a href="/" className="text-white py-2 px-6 hover:bg-primary/20">Home</a>
+                        <a href="#services" className="text-white py-2 px-6 hover:bg-primary/20">Services</a>
+                        <a href="#projects" className="text-white py-2 px-6 hover:bg-primary/20">Projects</a>
+                        <a href="#about" className="text-white py-2 px-6 hover:bg-primary/20">About</a>
+                        <a href="#contact" className="text-white py-2 px-6 hover:bg-primary/20">Contact</a>
                         <div className="px-6 py-4">
-                            <button 
-                                onClick={(e) => {
-                                    handleNavClick(e, 'contact');
-                                }}
-                                className="w-full bg-primary text-white py-2 rounded-md"
-                            >
-                                Get Started
-                            </button>
+                            <button className="w-full bg-primary text-white py-2 rounded-md">Get Started</button>
                         </div>
                     </div>
                 </div>
