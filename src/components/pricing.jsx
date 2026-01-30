@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion';
 import { Check } from 'lucide-react';
+import T from './T';
 
 const Pricing = () => {
     const pricingPlans = [
@@ -63,8 +64,8 @@ const Pricing = () => {
                     transition={{ duration: 0.6 }}
                     className="text-center mb-16"
                 >
-                    <h2 className="text-5xl font-bold text-primary mb-4">Support Packages</h2>
-                    <p className="text-xl text-gray-300">Yearly maintenance and support plans</p>
+                    <h2 className="text-5xl font-bold text-primary mb-4"><T>Support Packages</T></h2>
+                    <p className="text-xl text-gray-300"><T>Yearly maintenance and support plans</T></p>
                 </motion.div>
 
                 {/* Pricing Cards */}
@@ -84,20 +85,20 @@ const Pricing = () => {
                         >
                             {plan.highlighted && (
                                 <div className="absolute -top-4 left-1/2 transform -translate-x-1/2 bg-secondary text-primary px-6 py-1 rounded-full text-sm font-bold">
-                                    POPULAR
+                                    <T>POPULAR</T>
                                 </div>
                             )}
 
                             <div className="text-center mb-8">
-                                <h3 className="text-2xl font-bold mb-2">{plan.name}</h3>
+                                <h3 className="text-2xl font-bold mb-2"><T>{plan.name}</T></h3>
                                 <div className="mb-4">
                                     <span className="text-4xl font-bold">{plan.price}</span>
                                     {plan.period !== "quote" && (
-                                        <span className="text-lg opacity-75">/{plan.period}</span>
+                                        <span className="text-lg opacity-75">/<T>{plan.period}</T></span>
                                     )}
                                 </div>
                                 <p className={`text-sm ${plan.highlighted ? 'text-secondary/80' : 'text-gray-600'}`}>
-                                    {plan.description}
+                                    <T>{plan.description}</T>
                                 </p>
                             </div>
 
@@ -110,7 +111,7 @@ const Pricing = () => {
                                         <span className={`text-sm ${
                                             plan.highlighted ? 'text-secondary' : 'text-gray-700'
                                         }`}>
-                                            {feature}
+                                            <T>{feature}</T>
                                         </span>
                                     </li>
                                 ))}
@@ -121,7 +122,7 @@ const Pricing = () => {
                                     ? 'bg-secondary text-primary hover:bg-secondary/90'
                                     : 'bg-primary text-white hover:bg-primary/90'
                             }`}>
-                                Get Started
+                                <T>Get Started</T>
                             </button>
                         </motion.div>
                     ))}
@@ -134,7 +135,7 @@ const Pricing = () => {
                     transition={{ duration: 0.6, delay: 0.8 }}
                     className="text-center mt-12"
                 >
-                    <p className="text-gray-400">All prices exclude VAT. Contact us for custom solutions.</p>
+                    <p className="text-gray-400"><T>All prices exclude VAT. Contact us for custom solutions.</T></p>
                 </motion.div>
             </div>
         </section>

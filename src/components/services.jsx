@@ -1,6 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import { useRef, useEffect } from 'react';
 import serviceNodes from '../interfaces/nodes';
+import T from './T';
 
 const Services = () => {
     const navigate = useNavigate();
@@ -41,8 +42,8 @@ const Services = () => {
             <div className="w-full px-4">
                 {/* Section Header */}
                 <div className="text-center mb-12">
-                    <h2 className="text-5xl font-bold text-primary mb-4">Services</h2>
-                    <p className="text-xl text-gray-600">Services for Software Development</p>
+                    <h2 className="text-5xl font-bold text-primary mb-4"><T>Services</T></h2>
+                    <p className="text-xl text-gray-600"><T>Services for Software Development</T></p>
                 </div>
                 
                 <div ref={scrollContainerRef} className="overflow-x-auto overflow-y-hidden scroll-smooth pb-8 horizontal-scroll">
@@ -62,13 +63,13 @@ const Services = () => {
                                             style={{ backgroundImage: `url(${service.image})` }}
                                         ></div>
                                         <div className="p-6 border border-primary/20 flex flex-col overflow-y-auto custom-scrollbar" style={{ height: 'calc(500px - 192px)' }}>
-                                            <h3 className="text-2xl font-bold mb-4 text-primary">{service.title}</h3>
-                                            <p className="text-gray-300 mb-4">{service.description}</p>
+                                            <h3 className="text-2xl font-bold mb-4 text-primary"><T>{service.title}</T></h3>
+                                            <p className="text-gray-300 mb-4"><T>{service.description}</T></p>
                                             <button 
                                                 onClick={() => handleLearnMore(service.slug)}
                                                 className="mt-auto px-6 py-2 bg-primary text-white rounded hover:bg-primary/80 transition-colors"
                                             >
-                                                Learn More
+                                                <T>Learn More</T>
                                             </button>
                                         </div>
                                     </div>
@@ -78,7 +79,7 @@ const Services = () => {
                     </div>
                 </div>
             </div>
-            <style jsx>{`
+            <style>{`
                 /* Horizontal scroll container - cyan scrollbar */
                 .horizontal-scroll {
                     scrollbar-width: thin;  /* Firefox */

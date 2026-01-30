@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion';
 import { ArrowRight, Mail, Phone } from 'lucide-react';
+import T from './T';
 
 const CTA = () => {
     return (
@@ -15,12 +16,12 @@ const CTA = () => {
                     >
                         {/* Main Heading */}
                         <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-primary mb-6">
-                            Ready to Transform Your Digital Presence?
+                            <T>Ready to Transform Your Digital Presence?</T>
                         </h2>
                         
                         {/* Subheading */}
                         <p className="text-xl md:text-2xl text-gray-300 mb-8 max-w-3xl mx-auto">
-                            Let's build something amazing together. Get in touch with our team and start your journey to digital success.
+                            <T>Let's build something amazing together. Get in touch with our team and start your journey to digital success.</T>
                         </p>
 
                         {/* CTA Buttons */}
@@ -31,7 +32,7 @@ const CTA = () => {
                                 whileTap={{ scale: 0.95 }}
                                 className="group px-8 py-4 bg-primary text-white rounded-lg font-semibold text-lg shadow-xl hover:shadow-2xl transition-all flex items-center gap-2"
                             >
-                                Get Started Now
+                                <T>Get Started Now</T>
                                 <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
                             </motion.a>
                             
@@ -41,7 +42,7 @@ const CTA = () => {
                                 whileTap={{ scale: 0.95 }}
                                 className="px-8 py-4 bg-transparent text-primary rounded-lg font-semibold text-lg border-2 border-primary hover:bg-primary/10 transition-all"
                             >
-                                View Our Services
+                                <T>View Our Services</T>
                             </motion.a>
                         </div>
 
@@ -60,7 +61,7 @@ const CTA = () => {
                             <div className="hidden sm:block w-px h-6 bg-primary/30"></div>
                             <div className="flex items-center gap-2">
                                 <Phone className="w-5 h-5 text-primary" />
-                                <span>Based in Zurich, Switzerland</span>
+                                <span><T>Based in Zurich, Switzerland</T></span>
                             </div>
                         </motion.div>
                     </motion.div>
@@ -75,19 +76,19 @@ const CTA = () => {
                     >
                         <div className="text-center">
                             <div className="text-4xl font-bold text-primary mb-2">50+</div>
-                            <div className="text-gray-400">Projects Delivered</div>
+                            <div className="text-gray-400"><T>Projects Delivered</T></div>
                         </div>
                         <div className="text-center">
                             <div className="text-4xl font-bold text-primary mb-2">100%</div>
-                            <div className="text-gray-400">Client Satisfaction</div>
+                            <div className="text-gray-400"><T>Client Satisfaction</T></div>
                         </div>
                         <div className="text-center">
                             <div className="text-4xl font-bold text-primary mb-2">24/7</div>
-                            <div className="text-gray-400">Support Available</div>
+                            <div className="text-gray-400"><T>Support Available</T></div>
                         </div>
                         <div className="text-center">
                             <div className="text-4xl font-bold text-primary mb-2">5+</div>
-                            <div className="text-gray-400">Years Experience</div>
+                            <div className="text-gray-400"><T>Years Experience</T></div>
                         </div>
                     </motion.div>
                 </div>
