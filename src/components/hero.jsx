@@ -8,6 +8,7 @@ import react from '../assets/physics.png'
 import node from '../assets/nodejs.png'
 import tailwind from '../assets/tailwind.png'
 import css from '../assets/css.png'
+import T from './T'
 
 const Hero = () => {
     const [text, setText] = useState('');
@@ -80,7 +81,7 @@ const Hero = () => {
                 </div>
             </div>
             <p className="text-white text-center max-w-2xl mx-auto mb-8 px-4 mt-4">
-                We are a team of experienced developers and designers who are passionate about creating beautiful and functional websites and mobile apps.
+                <T>We are a team of experienced developers and designers who are passionate about creating beautiful and functional websites and mobile apps.</T>
             </p>
             <div className="bg-secondary py-4 flex justify-center mb-4">
                 <div className="w-[35vh] md:w-[55vh] overflow-hidden relative">
@@ -93,7 +94,7 @@ const Hero = () => {
                     </div>
                 </div>
             </div>
-            <style jsx>{`
+            <style>{`
                 @keyframes marquee {
                     0% {
                         transform: translateX(-100%);

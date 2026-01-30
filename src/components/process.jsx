@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion';
 import { Search, Lightbulb, Code, Rocket, MessageSquare, CheckCircle } from 'lucide-react';
+import T from './T';
 
 const Process = () => {
     const steps = [
@@ -58,8 +59,8 @@ const Process = () => {
                     transition={{ duration: 0.6 }}
                     className="text-center mb-16"
                 >
-                    <h2 className="text-5xl font-bold text-primary mb-4">Our Process</h2>
-                    <p className="text-xl text-gray-600">A proven methodology to bring your ideas to life</p>
+                    <h2 className="text-5xl font-bold text-primary mb-4"><T>Our Process</T></h2>
+                    <p className="text-xl text-gray-600"><T>A proven methodology to bring your ideas to life</T></p>
                 </motion.div>
 
                 {/* Process Steps */}
@@ -89,10 +90,10 @@ const Process = () => {
 
                                         {/* Content */}
                                         <h3 className="text-2xl font-bold text-primary mb-4">
-                                            {step.title}
+                                            <T>{step.title}</T>
                                         </h3>
                                         <p className="text-gray-300 leading-relaxed">
-                                            {step.description}
+                                            <T>{step.description}</T>
                                         </p>
 
                                         {/* Hover Effect */}
@@ -116,7 +117,7 @@ const Process = () => {
                         href="#contact"
                         className="inline-block px-8 py-4 bg-primary text-white rounded-lg font-semibold hover:bg-primary/90 transition-colors shadow-lg"
                     >
-                        Start Your Project
+                        <T>Start Your Project</T>
                     </a>
                 </motion.div>
             </div>
@@ -125,4 +126,5 @@ const Process = () => {
 };
 
 export default Process;
+
 

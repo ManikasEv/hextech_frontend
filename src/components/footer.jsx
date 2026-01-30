@@ -1,4 +1,5 @@
 import React from 'react';
+import T from './T';
 
 const Footer = () => {
     const currentYear = new Date().getFullYear();
@@ -15,8 +16,7 @@ const Footer = () => {
                     <div className="flex flex-col space-y-4">
                         <h3 className="text-2xl font-bold text-primary mb-4">HEXTECH</h3>
                         <p className="mb-4">
-                            We specialize in creating beautiful and functional websites and mobile applications 
-                            that help businesses grow and succeed in the digital world.
+                            <T>We specialize in creating beautiful and functional websites and mobile applications that help businesses grow and succeed in the digital world.</T>
                         </p>
                         <div className="flex space-x-4">
                             <a href="#" className="hover:text-primary transition-colors">
@@ -44,19 +44,19 @@ const Footer = () => {
 
                     {/* Column 2 - Quick Links */}
                     <div className="flex flex-col space-y-2">
-                        <h3 className="text-lg font-semibold mb-4">Quick Links</h3>
-                        <a href="/" className="hover:text-primary transition-colors">Home</a>
-                        <a href="#services" className="hover:text-primary transition-colors">Services</a>
-                        <a href="#projects" className="hover:text-primary transition-colors">Projects</a>
-                        <a href="#pricing" className="hover:text-primary transition-colors">Pricing</a>
-                        <a href="#about" className="hover:text-primary transition-colors">About Us</a>
-                        <a href="#contact" className="hover:text-primary transition-colors">Contact</a>
-                        <a href="/careers" className="hover:text-primary transition-colors">Careers</a>
+                        <h3 className="text-lg font-semibold mb-4"><T>Quick Links</T></h3>
+                        <a href="/" className="hover:text-primary transition-colors"><T>Home</T></a>
+                        <a href="#services" className="hover:text-primary transition-colors"><T>Services</T></a>
+                        <a href="#projects" className="hover:text-primary transition-colors"><T>Projects</T></a>
+                        <a href="#pricing" className="hover:text-primary transition-colors"><T>Pricing</T></a>
+                        <a href="#about" className="hover:text-primary transition-colors"><T>About Us</T></a>
+                        <a href="#contact" className="hover:text-primary transition-colors"><T>Contact</T></a>
+                        <a href="/careers" className="hover:text-primary transition-colors"><T>Careers</T></a>
                     </div>
 
                     {/* Column 3 - Contact */}
                     <div className="flex flex-col space-y-4">
-                        <h3 className="text-lg font-semibold mb-4">Contact Us</h3>
+                        <h3 className="text-lg font-semibold mb-4"><T>Contact Us</T></h3>
                         <p className="flex items-start">
                             <svg className="w-6 h-6 mr-2 text-primary flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
@@ -81,7 +81,7 @@ const Footer = () => {
 
                 {/* Copyright */}
                 <div className="mt-12 pt-8 border-t border-gray-700 text-center text-sm">
-                    <p>&copy; {yearDisplay} HEXTECH. All rights reserved.</p>
+                    <p>&copy; {yearDisplay} HEXTECH. <T>All rights reserved.</T></p>
                 </div>
             </div>
         </footer>

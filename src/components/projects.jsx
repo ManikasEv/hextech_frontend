@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion';
 import projects from '../interfaces/projectsData';
+import T from './T';
 
 const Projects = () => {
     const handleProjectClick = (link, type) => {
@@ -33,8 +34,8 @@ const Projects = () => {
             <div className="w-full">
                 {/* Section Header */}
                 <div className="text-center mb-12 px-4">
-                    <h2 className="text-5xl font-bold text-secondary mb-4">Our Projects</h2>
-                    <p className="text-xl text-gray-600">Explore our latest work and achievements</p>
+                    <h2 className="text-5xl font-bold text-secondary mb-4"><T>Our Projects</T></h2>
+                    <p className="text-xl text-gray-600"><T>Explore our latest work and achievements</T></p>
                 </div>
 
                 {/* Auto-scrolling container */}
@@ -130,12 +131,12 @@ const Projects = () => {
                 {/* Instruction text */}
                 <div className="text-center mt-8 px-4">
                     <p className="text-gray-600 text-base">
-                        Click on website projects to explore them live
+                        <T>Click on website projects to explore them live</T>
                     </p>
                 </div>
             </div>
 
-            <style jsx>{`
+            <style>{`
                 @keyframes scroll {
                     0% {
                         transform: translateX(0);

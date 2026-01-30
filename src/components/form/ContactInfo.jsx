@@ -1,5 +1,6 @@
 import React from 'react';
 import ContactIcon from './ContactIcons';
+import T from '../T';
 
 // A reusable component for displaying contact information
 const ContactInfo = ({ item }) => {
@@ -10,7 +11,7 @@ const ContactInfo = ({ item }) => {
           <ContactIcon iconType={item.iconType} />
         </div>
       </div>
-      <h3 className="text-xl font-semibold text-white mb-2">{item.title}</h3>
+      <h3 className="text-xl font-semibold text-white mb-2"><T>{item.title}</T></h3>
       <p className="text-gray-300">{item.content}</p>
     </div>
   );

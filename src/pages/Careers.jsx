@@ -1,60 +1,10 @@
 import { motion } from 'framer-motion';
-import { Briefcase, MapPin, Clock, ArrowRight } from 'lucide-react';
+import { Briefcase, Mail } from 'lucide-react';
 import NavbarCareers from '../components/navbar-careers';
 import FooterCareers from '../components/footer-careers';
+import T from '../components/T';
 
 const Careers = () => {
-    const openPositions = [
-        {
-            title: "Senior React Developer",
-            location: "Zurich, Switzerland",
-            type: "Full-time",
-            description: "We're looking for an experienced React developer to join our frontend team. You'll be working on cutting-edge web applications for our Swiss and international clients.",
-            requirements: [
-                "5+ years of experience with React",
-                "Strong knowledge of TypeScript",
-                "Experience with modern CSS frameworks (Tailwind)",
-                "Fluent in English, German is a plus"
-            ]
-        },
-        {
-            title: "Full Stack Developer",
-            location: "Zurich, Switzerland / Remote",
-            type: "Full-time",
-            description: "Join our team as a Full Stack Developer and work on exciting projects that combine frontend and backend technologies.",
-            requirements: [
-                "3+ years of full-stack development experience",
-                "Proficiency in React and Node.js",
-                "Database experience (PostgreSQL, MongoDB)",
-                "Strong problem-solving skills"
-            ]
-        },
-        {
-            title: "UI/UX Designer",
-            location: "Zurich, Switzerland",
-            type: "Full-time / Part-time",
-            description: "We're seeking a creative UI/UX designer to craft beautiful and intuitive digital experiences for our clients.",
-            requirements: [
-                "3+ years of UI/UX design experience",
-                "Proficiency in Figma and Adobe Creative Suite",
-                "Strong portfolio showcasing web and mobile designs",
-                "Understanding of frontend development is a plus"
-            ]
-        },
-        {
-            title: "Mobile App Developer",
-            location: "Zurich, Switzerland",
-            type: "Full-time",
-            description: "Build innovative mobile applications for iOS and Android using React Native and native technologies.",
-            requirements: [
-                "3+ years of mobile development experience",
-                "Experience with React Native or Flutter",
-                "Published apps on App Store/Play Store",
-                "Knowledge of native iOS/Android development"
-            ]
-        }
-    ];
-
     const benefits = [
         {
             title: "Competitive Salary",
@@ -96,10 +46,10 @@ const Careers = () => {
                         className="text-center"
                     >
                         <h1 className="text-5xl md:text-6xl font-bold text-primary mb-6">
-                            Join Our Team
+                            <T>Join Our Team</T>
                         </h1>
                         <p className="text-xl md:text-2xl text-gray-300 max-w-3xl mx-auto">
-                            Be part of a dynamic team building innovative digital solutions for clients across Switzerland and beyond.
+                            <T>Be part of a dynamic team building innovative digital solutions for clients across Switzerland and beyond.</T>
                         </p>
                     </motion.div>
                 </div>
@@ -114,7 +64,7 @@ const Careers = () => {
                         viewport={{ once: true }}
                         className="text-4xl font-bold text-primary text-center mb-12"
                     >
-                        Why Work With Us?
+                        <T>Why Work With Us?</T>
                     </motion.h2>
 
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -127,15 +77,15 @@ const Careers = () => {
                                 transition={{ duration: 0.5, delay: index * 0.1 }}
                                 className="bg-secondary border border-primary/20 rounded-lg p-6 hover:border-primary/50 transition-colors"
                             >
-                                <h3 className="text-xl font-bold text-primary mb-2">{benefit.title}</h3>
-                                <p className="text-gray-300">{benefit.description}</p>
+                                <h3 className="text-xl font-bold text-primary mb-2"><T>{benefit.title}</T></h3>
+                                <p className="text-gray-300"><T>{benefit.description}</T></p>
                             </motion.div>
                         ))}
                     </div>
                 </div>
             </section>
 
-            {/* Open Positions */}
+            {/* Open Positions - No Positions Available */}
             <section className="py-16 px-4">
                 <div className="container mx-auto max-w-6xl">
                     <motion.h2
@@ -144,60 +94,36 @@ const Careers = () => {
                         viewport={{ once: true }}
                         className="text-4xl font-bold text-primary text-center mb-12"
                     >
-                        Open Positions
+                        <T>Open Positions</T>
                     </motion.h2>
 
-                    <div className="space-y-6">
-                        {openPositions.map((position, index) => (
-                            <motion.div
-                                key={index}
-                                initial={{ opacity: 0, y: 20 }}
-                                whileInView={{ opacity: 1, y: 0 }}
-                                viewport={{ once: true }}
-                                transition={{ duration: 0.5, delay: index * 0.1 }}
-                                className="bg-white/5 backdrop-blur-sm border border-primary/20 rounded-lg p-8 hover:border-primary/50 transition-all group"
+                    <motion.div
+                        initial={{ opacity: 0, y: 20 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 0.5 }}
+                        className="bg-white/5 backdrop-blur-sm border border-primary/20 rounded-lg p-12 text-center"
+                    >
+                        <Briefcase className="w-20 h-20 mx-auto mb-6 text-primary/50" />
+                        <h3 className="text-3xl font-bold text-primary mb-4">
+                            <T>No Available Positions Right Now</T>
+                        </h3>
+                        <p className="text-xl text-gray-300 mb-8 max-w-2xl mx-auto">
+                            <T>We don't have any open positions at the moment, but we're always interested in connecting with talented professionals.</T>
+                        </p>
+                        <div className="bg-secondary/50 border border-primary/30 rounded-lg p-6 max-w-md mx-auto">
+                            <p className="text-gray-300 mb-4">
+                                <T>Send your CV to</T>:
+                            </p>
+                            <a 
+                                href="mailto:info@hextech.ch" 
+                                className="inline-flex items-center gap-2 text-2xl font-bold text-primary hover:text-primary/80 transition-colors"
                             >
-                                <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-6">
-                                    <div className="flex-1">
-                                        <h3 className="text-2xl font-bold text-primary mb-4">
-                                            {position.title}
-                                        </h3>
-                                        
-                                        <div className="flex flex-wrap gap-4 mb-4 text-gray-300">
-                                            <div className="flex items-center gap-2">
-                                                <MapPin className="w-4 h-4" />
-                                                <span>{position.location}</span>
-                                            </div>
-                                            <div className="flex items-center gap-2">
-                                                <Clock className="w-4 h-4" />
-                                                <span>{position.type}</span>
-                                            </div>
-                                        </div>
-
-                                        <p className="text-gray-300 mb-4">
-                                            {position.description}
-                                        </p>
-
-                                        <div>
-                                            <h4 className="text-lg font-semibold text-primary mb-2">Requirements:</h4>
-                                            <ul className="list-disc list-inside space-y-1 text-gray-300">
-                                                {position.requirements.map((req, idx) => (
-                                                    <li key={idx}>{req}</li>
-                                                ))}
-                                            </ul>
-                                        </div>
-                                    </div>
-
-                                    <div className="lg:ml-6">
-                                        <div className="text-center lg:text-right">
-                                            <p className="text-sm text-gray-400 mb-2">Apply via email:</p>
-                                            <p className="text-lg font-semibold text-primary">info@hextech-it.ch</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </motion.div>
-                        ))}
-                    </div>
+                                <Mail className="w-6 h-6" />
+                                info@hextech.ch
+                            </a>
+                        </div>
+                    </motion.div>
                 </div>
             </section>
 
@@ -209,16 +135,22 @@ const Careers = () => {
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
                     >
-                        <Briefcase className="w-16 h-16 mx-auto mb-6 text-primary" />
+                        <Mail className="w-16 h-16 mx-auto mb-6 text-primary" />
                         <h2 className="text-4xl font-bold text-primary mb-4">
-                            Don't See Your Role?
+                            <T>Interested in Joining Us?</T>
                         </h2>
                         <p className="text-xl text-gray-300 mb-8">
-                            We're always looking for talented individuals. Send your CV and cover letter to info@hextech-it.ch and we'll get in touch if there's a fit.
+                            <T>We're always looking for talented individuals. Send your CV and we'll get in touch if there's a fit.</T>
                         </p>
-                        <div className="inline-block">
-                            <p className="text-sm text-gray-400 mb-2">Send applications to:</p>
-                            <p className="text-2xl font-bold text-primary">info@hextech-it.ch</p>
+                        <div className="inline-block bg-white/5 border border-primary/20 rounded-lg p-6">
+                            <p className="text-sm text-gray-400 mb-2"><T>Send applications to</T>:</p>
+                            <a 
+                                href="mailto:info@hextech.ch"
+                                className="text-2xl font-bold text-primary hover:text-primary/80 transition-colors inline-flex items-center gap-2"
+                            >
+                                <Mail className="w-6 h-6" />
+                                info@hextech.ch
+                            </a>
                         </div>
                     </motion.div>
                 </div>

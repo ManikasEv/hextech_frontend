@@ -1,4 +1,5 @@
 import React from 'react';
+import T from '../T';
 
 /**
  * Reusable form field component that handles different input types
@@ -79,12 +80,12 @@ const InputField = ({ field, formData, onChange, errors }) => {
         htmlFor={id}
         className="block text-sm font-medium text-gray-300 mb-1"
       >
-        {label}
+        <T>{label}</T>
         {required && <span className="text-red-500 ml-1">*</span>}
       </label>
       {renderInputField()}
       {errors?.[id] && (
-        <p className="mt-1 text-sm text-red-500">{errors[id]}</p>
+        <p className="mt-1 text-sm text-red-500"><T>{errors[id]}</T></p>
       )}
     </div>
   );

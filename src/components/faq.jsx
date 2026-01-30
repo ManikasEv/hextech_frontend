@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Plus, Minus } from 'lucide-react';
+import T from './T';
 
 const FAQ = () => {
     const [openIndex, setOpenIndex] = useState(null);
@@ -55,8 +56,8 @@ const FAQ = () => {
                     transition={{ duration: 0.6 }}
                     className="text-center mb-16"
                 >
-                    <h2 className="text-5xl font-bold text-primary mb-4">Frequently Asked Questions</h2>
-                    <p className="text-xl text-gray-300">Got questions? We've got answers</p>
+                    <h2 className="text-5xl font-bold text-primary mb-4"><T>Frequently Asked Questions</T></h2>
+                    <p className="text-xl text-gray-300"><T>Got questions? We've got answers</T></p>
                 </motion.div>
 
                 {/* FAQ List */}
@@ -76,7 +77,7 @@ const FAQ = () => {
                                     className="w-full px-6 py-5 flex items-center justify-between text-left hover:bg-white/5 transition-colors"
                                 >
                                     <span className="text-lg font-semibold text-white pr-4">
-                                        {faq.question}
+                                        <T>{faq.question}</T>
                                     </span>
                                     <span className="flex-shrink-0 w-8 h-8 flex items-center justify-center rounded-full bg-primary text-white">
                                         {openIndex === index ? (
@@ -97,7 +98,7 @@ const FAQ = () => {
                                             className="overflow-hidden"
                                         >
                                             <div className="px-6 pb-5 text-gray-300 leading-relaxed border-t border-primary/10 pt-4">
-                                                {faq.answer}
+                                                <T>{faq.answer}</T>
                                             </div>
                                         </motion.div>
                                     )}
@@ -115,12 +116,12 @@ const FAQ = () => {
                     transition={{ duration: 0.6, delay: 0.5 }}
                     className="text-center mt-12"
                 >
-                    <p className="text-gray-300 mb-4">Still have questions?</p>
+                    <p className="text-gray-300 mb-4"><T>Still have questions?</T></p>
                     <a 
                         href="#contact"
                         className="inline-block px-8 py-3 bg-primary text-white rounded-lg font-semibold hover:bg-primary/90 transition-colors"
                     >
-                        Contact Us
+                        <T>Contact Us</T>
                     </a>
                 </motion.div>
             </div>
@@ -129,4 +130,5 @@ const FAQ = () => {
 };
 
 export default FAQ;
+
 

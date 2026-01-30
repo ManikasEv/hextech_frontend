@@ -1,9 +1,9 @@
 import { useState } from 'react';
-import { motion } from 'framer-motion';
 import { contactFormFields, contactInfoItems } from '../interfaces/contactData';
 import { validateContactForm } from '../interfaces/formValidation';
 import InputField from './form/InputField';
 import ContactInfo from './form/ContactInfo';
+import T from './T';
 
 const Contact = () => {
     // Form state management
@@ -87,30 +87,15 @@ const Contact = () => {
         }
     };
 
-    // Animation variant
-    const sectionVariants = {
-        hidden: { opacity: 0, y: 50 },
-        visible: { 
-            opacity: 1, 
-            y: 0,
-            transition: { duration: 0.8 }
-        }
-    };
-
     return (
-        <motion.section 
+        <section 
             id="contact" 
             className="py-20 bg-secondary"
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: false, amount: 0.1 }}
-            variants={sectionVariants}
         >
             <div className="container mx-auto ">
-                <h2 className="text-4xl font-bold text-center mb-4 text-primary">Propose Your Project</h2>
+                <h2 className="text-4xl font-bold text-center mb-4 text-primary"><T>Propose Your Project</T></h2>
                 <p className="text-gray-300 text-center max-w-2xl mx-auto mb-12">
-                    Share your vision with us, and let's transform your ideas into innovative digital solutions. 
-                    Tell us about your project requirements, and we'll get back to you with a tailored plan.
+                    <T>Share your vision with us, and let's transform your ideas into innovative digital solutions. Tell us about your project requirements, and we'll get back to you with a tailored plan.</T>
                 </p>
                 
                 {/* Contact Form */}
@@ -159,7 +144,7 @@ const Contact = () => {
                                     disabled={isSubmitting}
                                     className="w-full md:w-auto px-8 py-3 bg-primary text-white rounded-md hover:bg-primary/80 transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary disabled:opacity-50 disabled:cursor-not-allowed"
                                 >
-                                    {isSubmitting ? 'Sending...' : 'Submit Message'}
+                                    {isSubmitting ? <T>Sending...</T> : <T>Submit Message</T>}
                                 </button>
                             </div>
                         </form>
@@ -174,7 +159,7 @@ const Contact = () => {
                 </div>
                 <div className="border-b-2 border-gray-700 w-full"></div>
             </div>
-        </motion.section>
+        </section>
     );
 };
 

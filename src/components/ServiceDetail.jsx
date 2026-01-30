@@ -3,6 +3,8 @@ import { useState, useEffect } from 'react';
 import serviceDetails from '../interfaces/serviceDetails';
 import Contact from './contact';
 import Footer from './footer';
+import T from './T';
+import LanguageSwitcher from './LanguageSwitcher';
 
 const ServiceDetail = () => {
     const { slug } = useParams();
@@ -54,12 +56,12 @@ const ServiceDetail = () => {
         return (
             <div className="min-h-screen flex items-center justify-center bg-secondary">
                 <div className="text-center">
-                    <h1 className="text-4xl font-bold text-white mb-4">Service Not Found</h1>
+                    <h1 className="text-4xl font-bold text-white mb-4"><T>Service Not Found</T></h1>
                     <button 
                         onClick={() => navigate('/')}
                         className="bg-primary text-white px-6 py-3 rounded-md hover:bg-primary/80 transition-colors"
                     >
-                        Go Home
+                        <T>Go Home</T>
                     </button>
                 </div>
             </div>
@@ -80,12 +82,13 @@ const ServiceDetail = () => {
                 {/* center side - empty */}
                 <div className="flex items-center"></div>
                 {/* right side */}
-                <div className="flex items-center p-4">
+                <div className="flex items-center gap-2 p-4">
+                    <LanguageSwitcher scrolled={scrolled} />
                     <button 
                         onClick={() => navigate('/')}
                         className="bg-primary text-white px-6 py-2 rounded-md hover:bg-primary/80 transition-colors"
                     >
-                        Home
+                        <T>Home</T>
                     </button>
                 </div>
             </div>
@@ -101,13 +104,14 @@ const ServiceDetail = () => {
                     <a href="/" className="text-2xl font-bold text-primary"> HEXTECH </a>
                 </div>
 
-                {/* Mobile right - Home button */}
-                <div>
+                {/* Mobile right - Language and Home */}
+                <div className="flex items-center gap-2">
+                    <LanguageSwitcher scrolled={scrolled} />
                     <button 
                         onClick={() => navigate('/')}
                         className="bg-primary text-white px-4 py-2 rounded-md hover:bg-primary/80 transition-colors"
                     >
-                        Home
+                        <T>Home</T>
                     </button>
                 </div>
             </div>
@@ -116,7 +120,7 @@ const ServiceDetail = () => {
             <section className="bg-secondary min-h-[40vh] flex items-center justify-center py-20">
                 <div className="container mx-auto px-4 text-center">
                     <h1 className="text-5xl md:text-6xl font-bold text-white">
-                        {service.heroTitle}
+                        <T>{service.heroTitle}</T>
                     </h1>
                 </div>
             </section>
@@ -127,7 +131,7 @@ const ServiceDetail = () => {
                     <div className="prose prose-lg mx-auto text-gray-700 text-center">
                         {service.content.split('\n\n').map((paragraph, index) => (
                             <p key={index} className="mb-6 text-lg leading-relaxed">
-                                {paragraph}
+                                <T>{paragraph}</T>
                             </p>
                         ))}
                     </div>
@@ -160,8 +164,7 @@ const FooterSimple = () => {
                     <div className="flex flex-col space-y-4 md:w-1/3">
                         <h3 className="text-2xl font-bold text-primary mb-4">HEXTECH</h3>
                         <p className="mb-4">
-                            We specialize in creating beautiful and functional websites and mobile applications 
-                            that help businesses grow and succeed in the digital world.
+                            <T>We specialize in creating beautiful and functional websites and mobile applications that help businesses grow and succeed in the digital world.</T>
                         </p>
                         <div className="flex space-x-4">
                             <a href="#" className="hover:text-primary transition-colors">
@@ -189,18 +192,18 @@ const FooterSimple = () => {
 
                     {/* Column 2 - Quick Links */}
                     <div className="flex flex-col space-y-2 md:w-1/3">
-                        <h3 className="text-lg font-semibold mb-4">Quick Links</h3>
+                        <h3 className="text-lg font-semibold mb-4"><T>Quick Links</T></h3>
                         <button 
                             onClick={() => navigate('/')}
                             className="hover:text-primary transition-colors text-left"
                         >
-                            Home
+                            <T>Home</T>
                         </button>
                     </div>
 
                     {/* Column 3 - Contact */}
                     <div className="flex flex-col space-y-4 md:w-1/3">
-                        <h3 className="text-lg font-semibold mb-4">Contact Us</h3>
+                        <h3 className="text-lg font-semibold mb-4"><T>Contact Us</T></h3>
                         <p className="flex items-start">
                             <svg className="w-6 h-6 mr-2 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
@@ -225,7 +228,7 @@ const FooterSimple = () => {
 
                 {/* Copyright */}
                 <div className="mt-12 pt-8 border-t border-gray-700 text-center text-sm">
-                    <p>&copy; {yearDisplay} HEXTECH. All rights reserved.</p>
+                    <p>&copy; {yearDisplay} HEXTECH. <T>All rights reserved.</T></p>
                 </div>
             </div>
         </footer>
