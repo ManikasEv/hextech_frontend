@@ -62,7 +62,7 @@ const Hero = () => {
     const techIcons = [wordpress, html, react, tailwind, css, node,wordpress, html, react, tailwind, css, node,wordpress, html, react, tailwind, css, node,wordpress, html, react, tailwind, css, node,wordpress, html, react, tailwind, css, node,wordpress, html, react, tailwind, css, node,wordpress, html, react, tailwind, css, node,wordpress, html, react, tailwind, css, node,wordpress, html, react, tailwind, css, node,wordpress, html, react, tailwind, css, node,wordpress, html, react, tailwind, css, node,wordpress, html, react, tailwind, css, node,wordpress, html, react, tailwind, css, node,wordpress, html, react, tailwind, css, node,wordpress, html, react, tailwind, css, node,wordpress, html, react, tailwind, css, node,];
 
     return (
-        <div className="w-full h-auto flex flex-col items-center bg-secondary">
+        <div className="w-full h-auto flex flex-col items-center bg-secondary pt-16 md:pt-0">
             <div className="text-4xl font-bold text-primary text-center mt-8 mb-4">
                 {text}
                 <span>_</span>

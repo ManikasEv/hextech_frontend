@@ -14,8 +14,11 @@ const Navbar = () => {
         const handleScroll = () => {
             const currentScrollY = window.scrollY;
             
-            // Don't hide navbar if mobile menu is open
-            if (!mobileMenuOpen) {
+            // Desktop only: Auto-hide on scroll down
+            // Check if screen is desktop size (>= 768px)
+            const isDesktop = window.innerWidth >= 768;
+            
+            if (isDesktop && !mobileMenuOpen) {
                 // Determine if user is scrolling up or down
                 if (currentScrollY > lastScrollY && visible && currentScrollY > 100) {
                     // Scrolling down & navbar is visible & past threshold
@@ -76,15 +79,14 @@ const Navbar = () => {
                 </div>
             </div>
 
-            {/* Mobile Menu */}
-            <div className={`md:hidden flex justify-between items-center w-full sticky z-10 transition-all duration-300 
+            {/* Mobile Menu - Always visible, fixed positioning */}
+            <div className={`md:hidden flex justify-between items-center w-full fixed top-0 left-0 right-0 z-50 transition-colors duration-300 
                 ${scrolled ? 'bg-secondary shadow-md' : 'bg-secondary'} 
-                ${visible ? 'top-0' : '-top-full'}
                 p-4`}
             >
                 {/* Mobile left - Logo */}
                 <div>
-                    <a href="#" className="text-2xl font-bold text-primary"> HEXTECH </a>
+                    <a href="/" className="text-2xl font-bold text-primary"> HEXTECH </a>
                 </div>
 
                 {/* Mobile right - Hamburger */}
@@ -112,7 +114,7 @@ const Navbar = () => {
 
             {/* Mobile Menu Items - Slide down when open */}
             {mobileMenuOpen && (
-                <div className="md:hidden bg-secondary shadow-lg sticky top-[64px] z-10">
+                <div className="md:hidden fixed top-[64px] left-0 right-0 bg-secondary shadow-lg z-40">
                     <div className="flex flex-col py-4">
                         <a href="/" className="text-white py-2 px-6 hover:bg-primary/20" onClick={() => setMobileMenuOpen(false)}><T>Home</T></a>
                         <a href="#services" className="text-white py-2 px-6 hover:bg-primary/20" onClick={() => setMobileMenuOpen(false)}><T>Services</T></a>
