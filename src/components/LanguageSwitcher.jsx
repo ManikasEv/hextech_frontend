@@ -40,11 +40,6 @@ const LanguageSwitcher = ({ scrolled }) => {
         aria-label="Change language"
       >
         <span className="text-2xl">{currentLanguage.flag}</span>
-        <span className={`text-sm font-medium hidden sm:inline ${
-          scrolled ? 'text-secondary' : 'text-white'
-        }`}>
-          {currentLanguage.code.toUpperCase()}
-        </span>
         <svg
           className={`w-4 h-4 transition-transform ${isOpen ? 'rotate-180' : ''} ${
             scrolled ? 'text-secondary' : 'text-white'
