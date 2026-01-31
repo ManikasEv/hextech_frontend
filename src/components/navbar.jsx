@@ -14,13 +14,16 @@ const Navbar = () => {
         const handleScroll = () => {
             const currentScrollY = window.scrollY;
             
-            // Determine if user is scrolling up or down
-            if (currentScrollY > lastScrollY && visible && currentScrollY > 100) {
-                // Scrolling down & navbar is visible & past threshold
-                setVisible(false);
-            } else if (currentScrollY < lastScrollY && !visible) {
-                // Scrolling up & navbar is hidden
-                setVisible(true);
+            // Don't hide navbar if mobile menu is open
+            if (!mobileMenuOpen) {
+                // Determine if user is scrolling up or down
+                if (currentScrollY > lastScrollY && visible && currentScrollY > 100) {
+                    // Scrolling down & navbar is visible & past threshold
+                    setVisible(false);
+                } else if (currentScrollY < lastScrollY && !visible) {
+                    // Scrolling up & navbar is hidden
+                    setVisible(true);
+                }
             }
             
             // Update background color based on scroll position
@@ -40,7 +43,7 @@ const Navbar = () => {
         return () => {
             window.removeEventListener('scroll', handleScroll);
         };
-    }, [lastScrollY, visible]);
+    }, [lastScrollY, visible, mobileMenuOpen]);
 
     const toggleMobileMenu = () => {
         setMobileMenuOpen(!mobileMenuOpen);
@@ -108,15 +111,15 @@ const Navbar = () => {
             </div>
 
             {/* Mobile Menu Items - Slide down when open */}
-            {mobileMenuOpen && visible && (
-                <div className="md:hidden bg-secondary shadow-lg">
+            {mobileMenuOpen && (
+                <div className="md:hidden bg-secondary shadow-lg sticky top-[64px] z-10">
                     <div className="flex flex-col py-4">
-                        <a href="/" className="text-white py-2 px-6 hover:bg-primary/20"><T>Home</T></a>
-                        <a href="#services" className="text-white py-2 px-6 hover:bg-primary/20"><T>Services</T></a>
-                        <a href="#projects" className="text-white py-2 px-6 hover:bg-primary/20"><T>Projects</T></a>
-                        <a href="#about" className="text-white py-2 px-6 hover:bg-primary/20"><T>About</T></a>
-                        <a href="#contact" className="text-white py-2 px-6 hover:bg-primary/20"><T>Contact</T></a>
-                        <button onClick={() => navigate('/careers')} className="text-white py-2 px-6 hover:bg-primary/20 text-left"><T>Careers</T></button>
+                        <a href="/" className="text-white py-2 px-6 hover:bg-primary/20" onClick={() => setMobileMenuOpen(false)}><T>Home</T></a>
+                        <a href="#services" className="text-white py-2 px-6 hover:bg-primary/20" onClick={() => setMobileMenuOpen(false)}><T>Services</T></a>
+                        <a href="#projects" className="text-white py-2 px-6 hover:bg-primary/20" onClick={() => setMobileMenuOpen(false)}><T>Projects</T></a>
+                        <a href="#about" className="text-white py-2 px-6 hover:bg-primary/20" onClick={() => setMobileMenuOpen(false)}><T>About</T></a>
+                        <a href="#contact" className="text-white py-2 px-6 hover:bg-primary/20" onClick={() => setMobileMenuOpen(false)}><T>Contact</T></a>
+                        <button onClick={() => { navigate('/careers'); setMobileMenuOpen(false); }} className="text-white py-2 px-6 hover:bg-primary/20 text-left"><T>Careers</T></button>
                         <div className="px-6 py-2 flex justify-center">
                             <LanguageSwitcher scrolled={false} />
                         </div>
