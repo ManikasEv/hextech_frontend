@@ -46,13 +46,6 @@ export const TranslationProvider = ({ children }) => {
       return text;
     }
 
-    const apiKey = import.meta.env.VITE_DEEPL_API_KEY;
-    
-    if (!apiKey) {
-      console.warn('DeepL API key not found. Please add VITE_DEEPL_API_KEY to your .env.local file');
-      return text;
-    }
-
     try {
       // Add to queue to throttle API calls
       const translatedText = await translationQueue.add(async () => {
@@ -66,7 +59,6 @@ export const TranslationProvider = ({ children }) => {
           },
           {
             headers: {
-              'Authorization': `DeepL-Auth-Key ${apiKey}`,
               'Content-Type': 'application/json'
             },
           }
