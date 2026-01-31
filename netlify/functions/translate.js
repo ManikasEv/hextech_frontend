@@ -10,7 +10,6 @@ export default async (req, context) => {
     const apiKey = Netlify.env.get('DEEPL_API_KEY');
     
     if (!apiKey) {
-      console.error('DEEPL_API_KEY not found in Netlify environment');
       return new Response(JSON.stringify({ error: 'API key not configured' }), {
         status: 500,
         headers: { 
@@ -22,8 +21,6 @@ export default async (req, context) => {
 
     // Parse request body
     const body = await req.json();
-
-    console.log('Proxying translation request to DeepL API...');
 
     // Make request to DeepL API
     const response = await fetch('https://api-free.deepl.com/v2/translate', {
@@ -38,7 +35,6 @@ export default async (req, context) => {
     const data = await response.json();
 
     if (!response.ok) {
-      console.error('DeepL API error:', data);
       return new Response(JSON.stringify(data), {
         status: response.status,
         headers: { 
@@ -47,8 +43,6 @@ export default async (req, context) => {
         }
       });
     }
-
-    console.log('Translation successful');
 
     return new Response(JSON.stringify(data), {
       status: 200,
@@ -59,7 +53,6 @@ export default async (req, context) => {
     });
 
   } catch (error) {
-    console.error('Translation function error:', error);
     return new Response(JSON.stringify({ error: error.message }), {
       status: 500,
       headers: { 

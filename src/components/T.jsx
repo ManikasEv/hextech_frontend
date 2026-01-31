@@ -39,7 +39,6 @@ const T = ({ children }) => {
           setTranslatedText(translated);
         }
       } catch (error) {
-        console.error('Translation error:', error);
         if (isMounted) {
           setTranslatedText(children);
         }

@@ -1,6 +1,5 @@
 import { createContext, useContext, useState, useEffect } from 'react';
-import axios from 'axios';
-import { translationQueue } from '../utils/translationQueue';
+import { batchTranslationManager } from '../utils/translationQueue';
 
 const TranslationContext = createContext();
 
@@ -47,27 +46,8 @@ export const TranslationProvider = ({ children }) => {
     }
 
     try {
-      // Add to queue to throttle API calls
-      const translatedText = await translationQueue.add(async () => {
-        console.log('Translating:', text.substring(0, 50), '...');
-
-        const response = await axios.post(
-          '/api/deepl/v2/translate',
-          {
-            text: [text],
-            target_lang: targetLang.toUpperCase()
-          },
-          {
-            headers: {
-              'Content-Type': 'application/json'
-            },
-          }
-        );
-
-        return response.data.translations[0].text;
-      });
-      
-      console.log('✓ Translated');
+      // Use batch translation manager for instant results
+      const translatedText = await batchTranslationManager.translate(text, targetLang);
       
       // Cache the translation
       setTranslations(prev => ({
@@ -77,10 +57,6 @@ export const TranslationProvider = ({ children }) => {
 
       return translatedText;
     } catch (error) {
-      console.error('Translation error:', error.response?.data || error.message);
-      if (error.response?.status === 429) {
-        console.warn('Rate limit - returning original text');
-      }
       return text;
     }
   };
