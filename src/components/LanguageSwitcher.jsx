@@ -32,18 +32,14 @@ const LanguageSwitcher = ({ scrolled }) => {
     <div className="relative language-switcher">
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className={`flex items-center gap-2 px-3 py-2 rounded-md transition-colors ${
-          scrolled 
-            ? 'hover:bg-gray-100' 
-            : 'hover:bg-white/10'
-        }`}
+        className="flex items-center gap-2 px-4 py-2 rounded-md transition-colors border-2 border-primary hover:bg-primary/10"
         aria-label="Change language"
       >
-        <span className="text-2xl">{currentLanguage.flag}</span>
+        <span className="text-base font-medium text-primary">
+          {currentLanguage.code.toUpperCase()}
+        </span>
         <svg
-          className={`w-4 h-4 transition-transform ${isOpen ? 'rotate-180' : ''} ${
-            scrolled ? 'text-secondary' : 'text-white'
-          }`}
+          className={`w-4 h-4 transition-transform ${isOpen ? 'rotate-180' : ''} text-primary`}
           fill="none"
           stroke="currentColor"
           viewBox="0 0 24 24"
@@ -68,7 +64,7 @@ const LanguageSwitcher = ({ scrolled }) => {
                   : 'text-white hover:bg-white/10'
               }`}
             >
-              <span className="text-2xl">{lang.flag}</span>
+              <span className="font-bold text-base">{lang.code.toUpperCase()}</span>
               <span className="font-medium">{lang.name}</span>
               {language === lang.code && (
                 <svg className="w-4 h-4 ml-auto text-primary" fill="currentColor" viewBox="0 0 20 20">
