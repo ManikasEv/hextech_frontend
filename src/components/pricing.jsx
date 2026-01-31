@@ -10,44 +10,38 @@ const Pricing = () => {
             period: "year",
             description: "Essential maintenance for small websites",
             features: [
-                "Monthly Security Updates",
-                "Bug Fixes & Patches",
-                "Performance Monitoring",
+                "Monthly Updates",
                 "Email Support (48h response)",
-                "Up to 2 Hours of Changes/Month",
+                "Up to 2 Changes/Month",
+                "Performance Monitoring",
                 "Backup & Recovery"
             ],
             highlighted: false
         },
         {
             name: "Professional Support",
-            price: "CHF 300",
+            price: "CHF 350",
             period: "year",
-            description: "Comprehensive support for growing businesses",
+            description: "Complete solution for growing businesses",
             features: [
-                "Everything in Basic",
-                "Weekly Security Updates",
-                "Priority Email Support (24h response)",
-                "Up to 5 Hours of Changes/Month",
-                "SEO Monitoring & Reports",
+                "Priority Support (24h response)",
+                "Email & Domain (if belongs to us)",
+                "Google Posts Management",
+                "Up to 5 Changes/Month",
                 "Content Updates",
-                "Phone Support"
+                "10% Discount on Future Projects"
             ],
             highlighted: true
         },
         {
-            name: "Enterprise Support",
-            price: "Custom",
+            name: "Custom Package",
+            price: "Let's Talk",
             period: "quote",
-            description: "Premium support for mission-critical applications",
+            description: "Tailored solutions for your unique needs",
             features: [
                 "Everything in Professional",
-                "Daily Monitoring",
-                "24/7 Emergency Support",
-                "Unlimited Changes",
-                "Dedicated Account Manager",
-                "Advanced Analytics",
-                "Custom SLA Agreement"
+                "Direct discussion with client",
+                "Customized to your requirements"
             ],
             highlighted: false
         }
@@ -77,7 +71,7 @@ const Pricing = () => {
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true }}
                             transition={{ duration: 0.6, delay: index * 0.2 }}
-                            className={`relative rounded-2xl p-8 ${
+                            className={`relative rounded-2xl p-8 flex flex-col ${
                                 plan.highlighted 
                                     ? 'bg-primary text-secondary shadow-2xl scale-105 z-10' 
                                     : 'bg-white text-secondary shadow-lg'
@@ -102,7 +96,7 @@ const Pricing = () => {
                                 </p>
                             </div>
 
-                            <ul className="space-y-4 mb-8">
+                            <ul className="space-y-4 mb-8 flex-grow">
                                 {plan.features.map((feature, fIndex) => (
                                     <li key={fIndex} className="flex items-start">
                                         <Check className={`w-5 h-5 mr-3 flex-shrink-0 mt-0.5 ${
@@ -117,13 +111,16 @@ const Pricing = () => {
                                 ))}
                             </ul>
 
-                            <button className={`w-full py-3 rounded-lg font-semibold transition-all ${
-                                plan.highlighted
-                                    ? 'bg-secondary text-primary hover:bg-secondary/90'
-                                    : 'bg-primary text-white hover:bg-primary/90'
-                            }`}>
+                            <a 
+                                href="#contact"
+                                className={`w-full py-3 rounded-lg font-semibold transition-all block text-center ${
+                                    plan.highlighted
+                                        ? 'bg-secondary text-primary hover:bg-secondary/90'
+                                        : 'bg-primary text-white hover:bg-primary/90'
+                                }`}
+                            >
                                 <T>Get Started</T>
-                            </button>
+                            </a>
                         </motion.div>
                     ))}
                 </div>
