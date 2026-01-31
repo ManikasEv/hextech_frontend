@@ -75,7 +75,7 @@ const Navbar = () => {
 
             {/* Mobile Menu */}
             <div className={`md:hidden flex justify-between items-center w-full sticky z-10 transition-all duration-300 
-                ${scrolled ? 'bg-white shadow-md' : 'bg-secondary'} 
+                ${scrolled ? 'bg-secondary shadow-md' : 'bg-secondary'} 
                 ${visible ? 'top-0' : '-top-full'}
                 p-4`}
             >
@@ -88,7 +88,7 @@ const Navbar = () => {
                 <div>
                     <button 
                         onClick={toggleMobileMenu}
-                        className="text-white focus:outline-none"
+                        className="text-primary focus:outline-none"
                     >
                         <svg 
                             className="w-6 h-6" 
