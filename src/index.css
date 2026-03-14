@@ -28,7 +28,8 @@ body.custom-cursor-enabled * {
   pointer-events: none;
   z-index: 99999999;
   box-shadow: 0 0 14px rgba(0, 187, 229, 0.8);
-  transition: width 0.12s ease, height 0.12s ease;
+  transition: width 0.12s ease, height 0.12s ease, opacity 0.15s ease;
+  opacity: 0; /* hidden until JS gets real mouse coords */
 }
 
 .custom-cursor-trail {

@@ -207,13 +207,6 @@ export const TranslationProvider = ({ children }) => {
 
     return (
         <TranslationContext.Provider value={{ language, translations, changeLanguage, translateText, t, isTranslating }}>
-            {isTranslating && (
-                <div style={{ position: 'fixed', inset: 0, background: 'rgba(0,10,22,0.8)', zIndex: 99999, display: 'flex', alignItems: 'center', justifyContent: 'center', pointerEvents: 'none' }}>
-                    <span style={{ color: 'rgb(0,187,229)', fontFamily: 'JetBrains Mono, monospace', fontSize: '1.1rem', letterSpacing: '0.1em' }}>
-                        Translating…
-                    </span>
-                </div>
-            )}
             {children}
         </TranslationContext.Provider>
     );
