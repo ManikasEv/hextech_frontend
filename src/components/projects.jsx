@@ -1,177 +1,272 @@
-import { motion } from 'framer-motion';
+import { useRef, useEffect, useState, useCallback } from 'react';
+import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import projects from '../interfaces/projectsData';
 import T from './T';
+import { scrambleReveal, wordReveal } from '../utils/textAnimations';
 
-const Projects = () => {
-    const handleProjectClick = (link, type) => {
-        // Only allow clicking on websites
-        if (link && type === 'Website') {
-            window.open(link, '_blank', 'noopener,noreferrer');
-        }
+gsap.registerPlugin(ScrollTrigger);
+
+const CARD_WIDTH_DESKTOP = 380;
+const CARD_WIDTH_MOBILE  = 300;
+const CARD_GAP           = 32;
+
+// ── Reusable carousel hook ────────────────────────────────────────────────────
+function useCarousel(trackRef, cardWidth) {
+    const tweenRef        = useRef(null);
+    const offsetRef       = useRef(0);
+    const isDragging      = useRef(false);
+    const dragStartX      = useRef(0);
+    const dragStartOffset = useRef(0);
+    const [activeIndex, setActiveIndex] = useState(0);
+
+    const totalOriginal  = projects.length;
+    const CARD_STEP      = cardWidth + CARD_GAP;
+    const singleSetWidth = totalOriginal * CARD_STEP;
+
+    const buildTween = useCallback(() => {
+        if (!trackRef.current) return;
+        tweenRef.current?.kill();
+        tweenRef.current = gsap.to(offsetRef, {
+            current: offsetRef.current - singleSetWidth,
+            duration: 25,
+            ease: 'none',
+            repeat: -1,
+            onUpdate: () => {
+                let x = offsetRef.current % singleSetWidth;
+                if (x > 0) x -= singleSetWidth;
+                gsap.set(trackRef.current, { x });
+                setActiveIndex(Math.round(Math.abs(x) / CARD_STEP) % totalOriginal);
+            },
+        });
+    }, [trackRef, singleSetWidth, totalOriginal, CARD_STEP]);
+
+    const pauseCarousel  = () => tweenRef.current?.pause();
+    const resumeCarousel = () => tweenRef.current?.play();
+
+    const onPointerDown = (e) => {
+        isDragging.current      = true;
+        dragStartX.current      = e.clientX ?? e.touches?.[0]?.clientX;
+        dragStartOffset.current = offsetRef.current;
+        tweenRef.current?.pause();
+        if (trackRef.current) trackRef.current.style.cursor = 'grabbing';
     };
 
-    // Triple projects for seamless infinite scroll
+    const onPointerMove = (e) => {
+        if (!isDragging.current) return;
+        const x      = e.clientX ?? e.touches?.[0]?.clientX;
+        const delta  = x - dragStartX.current;
+        let   next   = dragStartOffset.current + delta;
+        let   visual = next % singleSetWidth;
+        if (visual > 0) visual -= singleSetWidth;
+        offsetRef.current = next;
+        gsap.set(trackRef.current, { x: visual });
+    };
+
+    const onPointerUp = () => {
+        if (!isDragging.current) return;
+        isDragging.current = false;
+        if (trackRef.current) trackRef.current.style.cursor = 'grab';
+        tweenRef.current?.play();
+    };
+
+    const goTo = (idx) => {
+        tweenRef.current?.kill();
+        const target      = -idx * CARD_STEP;
+        offsetRef.current = target;
+        setActiveIndex(idx);
+        gsap.to(trackRef.current, {
+            x: target,
+            duration: 0.7,
+            ease: 'power3.out',
+            onComplete: () => buildTween(),
+        });
+    };
+
+    return { buildTween, pauseCarousel, resumeCarousel, onPointerDown, onPointerMove, onPointerUp, goTo, activeIndex, tweenRef };
+}
+
+// ── Card renderer ─────────────────────────────────────────────────────────────
+const ProjectCard = ({ project, cardWidth, onClick }) => (
+    <div
+        className={`flex-shrink-0 group ${project.type === 'Website' && project.link ? 'cursor-pointer' : 'cursor-default'}`}
+        style={{ width: `${cardWidth}px` }}
+        onClick={onClick}
+    >
+        <div className="h-full bg-white/5 border border-primary/20 rounded-2xl shadow-lg overflow-hidden hover:border-primary transition-all duration-300 hover:-translate-y-2">
+            <div className="relative overflow-hidden" style={{ height: cardWidth === CARD_WIDTH_DESKTOP ? '224px' : '192px' }}>
+                <div
+                    className="w-full h-full bg-cover bg-center group-hover:scale-110 transition-transform duration-500"
+                    style={{ backgroundImage: `url(${project.image})` }}
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-secondary/90 via-secondary/40 to-transparent" />
+                <div className="absolute top-4 right-4">
+                    <span className={`px-4 py-1.5 rounded-full text-sm font-semibold ${project.type === 'Website' ? 'bg-primary text-secondary' : 'bg-purple-500 text-white'}`}>
+                        <T>{project.type}</T>
+                    </span>
+                </div>
+                <div className="absolute bottom-4 left-4 right-4">
+                    <h3 className="text-2xl font-bold text-white drop-shadow-lg"><T>{project.title}</T></h3>
+                </div>
+            </div>
+            <div className="p-6 flex flex-col" style={{ height: '180px' }}>
+                <div className="flex-1 overflow-y-auto mb-4 custom-scrollbar-project">
+                    <p className="text-gray-400 text-base leading-relaxed"><T>{project.description}</T></p>
+                </div>
+                <div className="flex-shrink-0">
+                    {project.type === 'Website' && project.link ? (
+                        <div className="flex items-center text-primary font-semibold">
+                            <span><T>Visit Website</T></span>
+                            <svg className="w-5 h-5 ml-2 group-hover:translate-x-2 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                            </svg>
+                        </div>
+                    ) : project.type === 'Website' ? (
+                        <div className="flex items-center text-gray-500 font-semibold"><span><T>Coming Soon</T></span></div>
+                    ) : (
+                        <div className="flex items-center text-gray-500 font-semibold"><span><T>Software Project</T></span></div>
+                    )}
+                </div>
+            </div>
+        </div>
+    </div>
+);
+
+// ── Dots ──────────────────────────────────────────────────────────────────────
+const Dots = ({ activeIndex, goTo, className = '' }) => (
+    <div className={`flex justify-center gap-3 mt-6 ${className}`}>
+        {projects.map((_, i) => (
+            <button
+                key={i}
+                onClick={() => goTo(i)}
+                className={`rounded-full transition-all duration-300 ${activeIndex === i ? 'w-7 h-3 bg-primary' : 'w-3 h-3 bg-white/20 hover:bg-white/50'}`}
+            />
+        ))}
+    </div>
+);
+
+// ── Main component ────────────────────────────────────────────────────────────
+const Projects = () => {
+    const sectionRef  = useRef(null);
+    const headerRef   = useRef(null);
+    const h2Ref       = useRef(null);
+    const subRef      = useRef(null);
+
+    const desktopTrackRef = useRef(null);
+    const mobileTrackRef  = useRef(null);
+
     const duplicatedProjects = [...projects, ...projects, ...projects];
 
-    const sectionVariants = {
-        hidden: { opacity: 0, y: 50 },
-        visible: { 
-            opacity: 1, 
-            y: 0,
-            transition: { duration: 0.8 }
-        }
+    const handleProjectClick = (link, type) => {
+        if (link && type === 'Website') window.open(link, '_blank', 'noopener,noreferrer');
     };
 
+    const desktop = useCarousel(desktopTrackRef, CARD_WIDTH_DESKTOP);
+    const mobile  = useCarousel(mobileTrackRef,  CARD_WIDTH_MOBILE);
+
+    // ── Entrance animations + start tweens on scroll ─────────────────────────
+    useEffect(() => {
+        const ctx = gsap.context(() => {
+            scrambleReveal(h2Ref.current,  { stagger: 0.04 });
+            wordReveal(subRef.current, { y: 22, stagger: 0.06, delay: 0.3 });
+
+            gsap.from(headerRef.current, {
+                y: -40, opacity: 0, duration: 0.9, ease: 'power3.out',
+                scrollTrigger: { trigger: headerRef.current, start: 'top 85%', toggleActions: 'play none none none' },
+            });
+
+            ScrollTrigger.create({
+                trigger: sectionRef.current,
+                start: 'top 80%',
+                once: true,
+                onEnter: () => {
+                    desktop.buildTween();
+                    mobile.buildTween();
+                },
+            });
+        }, sectionRef);
+
+        return () => {
+            ctx.revert();
+            desktop.tweenRef.current?.kill();
+            mobile.tweenRef.current?.kill();
+        };
+    }, []); // eslint-disable-line react-hooks/exhaustive-deps
+
     return (
-        <motion.section 
-            id="projects" 
-            className="py-20 bg-gray-50"
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, amount: 0.1 }}
-            variants={sectionVariants}
-        >
+        <section ref={sectionRef} id="projects" className="py-20 bg-secondary overflow-hidden">
             <div className="w-full">
-                {/* Section Header */}
-                <div className="text-center mb-12 px-4">
-                    <h2 className="text-5xl font-bold text-secondary mb-4"><T>Our Projects</T></h2>
-                    <p className="text-xl text-gray-600"><T>Explore our latest work and achievements</T></p>
+                {/* Header */}
+                <div ref={headerRef} className="text-center mb-12 px-4">
+                    <h2 ref={h2Ref} className="text-5xl font-bold text-primary mb-4"><T>Our Projects</T></h2>
+                    <p ref={subRef} className="text-xl text-gray-400"><T>Explore our latest work and achievements</T></p>
                 </div>
 
-                {/* Auto-scrolling container */}
-                <div className="overflow-x-hidden overflow-y-visible py-8 relative">
-                    <div 
-                        className="flex gap-8 animate-scroll"
-                        style={{ width: 'max-content' }}
-                    >
+                {/* ── Desktop carousel ── */}
+                <div
+                    className="hidden md:block relative py-8"
+                    onMouseEnter={desktop.pauseCarousel}
+                    onMouseLeave={desktop.resumeCarousel}
+                    onPointerDown={desktop.onPointerDown}
+                    onPointerMove={desktop.onPointerMove}
+                    onPointerUp={desktop.onPointerUp}
+                    onPointerLeave={desktop.onPointerUp}
+                    style={{ cursor: 'grab', userSelect: 'none' }}
+                >
+                    <div className="absolute left-0 top-0 bottom-0 w-24 bg-gradient-to-r from-secondary to-transparent z-10 pointer-events-none" />
+                    <div className="absolute right-0 top-0 bottom-0 w-24 bg-gradient-to-l from-secondary to-transparent z-10 pointer-events-none" />
+                    <div ref={desktopTrackRef} className="flex gap-8 px-8" style={{ width: 'max-content', willChange: 'transform' }}>
                         {duplicatedProjects.map((project, index) => (
-                            <motion.div
-                                key={`${project.id}-${index}`}
-                                className={`flex-shrink-0 group ${project.type === 'Website' && project.link ? 'cursor-pointer' : 'cursor-default'}`}
-                                style={{ width: '380px' }}
-                                whileHover={{ scale: 1.08, y: -10 }}
-                                transition={{ duration: 0.3 }}
+                            <ProjectCard
+                                key={`d-${project.id}-${index}`}
+                                project={project}
+                                cardWidth={CARD_WIDTH_DESKTOP}
                                 onClick={() => handleProjectClick(project.link, project.type)}
-                            >
-                                {/* Project Card */}
-                                <div className="h-full bg-white rounded-2xl shadow-lg overflow-hidden border-2 border-transparent hover:border-primary transition-all duration-300">
-                                    {/* Image Container with Gradient Overlay */}
-                                    <div className="relative h-56 overflow-hidden">
-                                        <div 
-                                            className="w-full h-full bg-cover bg-center transform group-hover:scale-110 transition-transform duration-500"
-                                            style={{ backgroundImage: `url(${project.image})` }}
-                                        ></div>
-                                        {/* Gradient overlay */}
-                                        <div className="absolute inset-0 bg-gradient-to-t from-secondary/90 via-secondary/40 to-transparent"></div>
-                                        
-                                        {/* Type Badge */}
-                                        <div className="absolute top-4 right-4">
-                                            <span className={`px-4 py-1.5 rounded-full text-sm font-semibold ${
-                                                project.type === 'Website' 
-                                                    ? 'bg-primary text-white' 
-                                                    : 'bg-purple-500 text-white'
-                                            }`}>
-                                                {project.type}
-                                            </span>
-                                        </div>
-
-                                        {/* Title at bottom of image */}
-                                        <div className="absolute bottom-4 left-4 right-4">
-                                            <h3 className="text-2xl font-bold text-white drop-shadow-lg">
-                                                {project.title}
-                                            </h3>
-                                        </div>
-                                    </div>
-
-                                    {/* Card Content */}
-                                    <div className="p-6 flex flex-col" style={{ height: '200px' }}>
-                                        {/* Scrollable description area */}
-                                        <div className="flex-1 overflow-y-auto mb-4 custom-scrollbar-project">
-                                            <p className="text-gray-600 text-base leading-relaxed">
-                                                {project.description}
-                                            </p>
-                                        </div>
-
-                                        {/* Fixed position button/label */}
-                                        <div className="flex-shrink-0">
-                                            {project.type === 'Website' && project.link ? (
-                                                <div className="flex items-center text-primary font-semibold group-hover:text-secondary transition-colors">
-                                                    <span>Visit Website</span>
-                                                    <svg 
-                                                        className="w-5 h-5 ml-2 transform group-hover:translate-x-2 transition-transform" 
-                                                        fill="none" 
-                                                        stroke="currentColor" 
-                                                        viewBox="0 0 24 24"
-                                                    >
-                                                        <path 
-                                                            strokeLinecap="round" 
-                                                            strokeLinejoin="round" 
-                                                            strokeWidth={2} 
-                                                            d="M17 8l4 4m0 0l-4 4m4-4H3" 
-                                                        />
-                                                    </svg>
-                                                </div>
-                                            ) : project.type === 'Website' && !project.link ? (
-                                                <div className="flex items-center text-gray-400 font-semibold">
-                                                    <span>Coming Soon</span>
-                                                </div>
-                                            ) : (
-                                                <div className="flex items-center text-gray-400 font-semibold">
-                                                    <span>Software Project</span>
-                                                </div>
-                                            )}
-                                        </div>
-                                    </div>
-                                </div>
-                            </motion.div>
+                            />
                         ))}
                     </div>
                 </div>
+                <Dots activeIndex={desktop.activeIndex} goTo={desktop.goTo} className="hidden md:flex" />
 
-                {/* Instruction text */}
-                <div className="text-center mt-8 px-4">
-                    <p className="text-gray-600 text-base">
-                        <T>Click on website projects to explore them live</T>
-                    </p>
+                {/* ── Mobile carousel ── */}
+                <div
+                    className="block md:hidden relative py-8"
+                    onMouseEnter={mobile.pauseCarousel}
+                    onMouseLeave={mobile.resumeCarousel}
+                    onPointerDown={mobile.onPointerDown}
+                    onPointerMove={mobile.onPointerMove}
+                    onPointerUp={mobile.onPointerUp}
+                    onPointerLeave={mobile.onPointerUp}
+                    style={{ cursor: 'grab', userSelect: 'none', overflow: 'hidden' }}
+                >
+                    <div className="absolute left-0 top-0 bottom-0 w-10 bg-gradient-to-r from-secondary to-transparent z-10 pointer-events-none" />
+                    <div className="absolute right-0 top-0 bottom-0 w-10 bg-gradient-to-l from-secondary to-transparent z-10 pointer-events-none" />
+                    <div ref={mobileTrackRef} className="flex gap-8 px-4" style={{ width: 'max-content', willChange: 'transform' }}>
+                        {duplicatedProjects.map((project, index) => (
+                            <ProjectCard
+                                key={`m-${project.id}-${index}`}
+                                project={project}
+                                cardWidth={CARD_WIDTH_MOBILE}
+                                onClick={() => handleProjectClick(project.link, project.type)}
+                            />
+                        ))}
+                    </div>
+                </div>
+                <Dots activeIndex={mobile.activeIndex} goTo={mobile.goTo} className="flex md:hidden" />
+
+                <div className="text-center mt-4 px-4">
+                    <p className="text-gray-500 text-sm"><T>Hover to pause · Drag to browse · Click dots to jump</T></p>
                 </div>
             </div>
 
             <style>{`
-                @keyframes scroll {
-                    0% {
-                        transform: translateX(0);
-                    }
-                    100% {
-                        transform: translateX(-33.333%);
-                    }
-                }
-                .animate-scroll {
-                    animation: scroll 60s linear infinite;
-                }
-                
-                /* Custom scrollbar for project descriptions */
-                .custom-scrollbar-project {
-                    scrollbar-width: thin;
-                    scrollbar-color: #00BBE5 #f3f4f6;
-                }
-                .custom-scrollbar-project::-webkit-scrollbar {
-                    width: 4px;
-                }
-                .custom-scrollbar-project::-webkit-scrollbar-track {
-                    background: #f3f4f6;
-                    border-radius: 2px;
-                }
-                .custom-scrollbar-project::-webkit-scrollbar-thumb {
-                    background: #00BBE5;
-                    border-radius: 2px;
-                }
-                .custom-scrollbar-project::-webkit-scrollbar-thumb:hover {
-                    background: #0099c7;
-                }
+                .custom-scrollbar-project { scrollbar-width: thin; scrollbar-color: rgba(0,187,229,0.4) transparent; }
+                .custom-scrollbar-project::-webkit-scrollbar { width: 3px; }
+                .custom-scrollbar-project::-webkit-scrollbar-track { background: transparent; }
+                .custom-scrollbar-project::-webkit-scrollbar-thumb { background: rgba(0,187,229,0.4); border-radius: 99px; }
             `}</style>
-        </motion.section>
+        </section>
     );
 };
 
 export default Projects;
-

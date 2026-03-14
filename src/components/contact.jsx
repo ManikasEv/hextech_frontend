@@ -1,9 +1,14 @@
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
+import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { contactFormFields, contactInfoItems } from '../interfaces/contactData';
 import { validateContactForm } from '../interfaces/formValidation';
 import InputField from './form/InputField';
 import ContactInfo from './form/ContactInfo';
 import T from './T';
+import { scrambleReveal, wordReveal } from '../utils/textAnimations';
+
+gsap.registerPlugin(ScrollTrigger);
 
 const Contact = () => {
     // Form state management
@@ -16,6 +21,47 @@ const Contact = () => {
     const [errors, setErrors] = useState({});
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [submitStatus, setSubmitStatus] = useState(null);
+
+    const sectionRef = useRef(null);
+    const headerRef = useRef(null);
+    const h2Ref = useRef(null);
+    const subRef = useRef(null);
+    const formRef = useRef(null);
+    const infoRef = useRef(null);
+
+    useEffect(() => {
+        const ctx = gsap.context(() => {
+            scrambleReveal(h2Ref.current, { stagger: 0.03 });
+            wordReveal(subRef.current, { y: 22, stagger: 0.06, delay: 0.3 });
+
+            gsap.from(formRef.current, {
+                y: 60,
+                opacity: 0,
+                duration: 0.8,
+                ease: 'power3.out',
+                scrollTrigger: {
+                    trigger: formRef.current,
+                    start: 'top 85%',
+                    toggleActions: 'play none none none',
+                },
+            });
+
+            gsap.from('.contact-info-item', {
+                y: 40,
+                opacity: 0,
+                duration: 0.6,
+                stagger: 0.15,
+                ease: 'power3.out',
+                scrollTrigger: {
+                    trigger: infoRef.current,
+                    start: 'top 85%',
+                    toggleActions: 'play none none none',
+                },
+            });
+        }, sectionRef);
+
+        return () => ctx.revert();
+    }, []);
 
     // Event handlers
     const handleChange = (e) => {
@@ -89,17 +135,20 @@ const Contact = () => {
 
     return (
         <section 
+            ref={sectionRef}
             id="contact" 
             className="py-20 bg-secondary"
         >
             <div className="container mx-auto ">
-                <h2 className="text-4xl font-bold text-center mb-4 text-primary"><T>Propose Your Project</T></h2>
-                <p className="text-gray-300 text-center max-w-2xl mx-auto mb-12">
-                    <T>Share your vision with us, and let's transform your ideas into innovative digital solutions. Tell us about your project requirements, and we'll get back to you with a tailored plan.</T>
-                </p>
+                <div ref={headerRef}>
+                    <h2 ref={h2Ref} className="text-4xl font-bold text-center mb-4 text-primary"><T>Propose Your Project</T></h2>
+                    <p ref={subRef} className="text-gray-400 text-center max-w-2xl mx-auto mb-12">
+                        <T>Share your vision with us, and let's transform your ideas into innovative digital solutions. Tell us about your project requirements, and we'll get back to you with a tailored plan.</T>
+                    </p>
+                </div>
                 
                 {/* Contact Form */}
-                <div className="max-w-3xl mx-auto bg-secondary shadow-lg rounded-lg overflow-hidden">
+                <div ref={formRef} className="max-w-3xl mx-auto bg-white/5 border border-primary/20 shadow-lg rounded-lg overflow-hidden">
                     <div className="p-8">
                         {submitStatus && (
                             <div className={`mb-6 p-4 rounded-md ${submitStatus.success ? 'bg-green-800/30 text-green-400' : 'bg-red-800/30 text-red-400'}`}>
@@ -152,9 +201,11 @@ const Contact = () => {
                 </div>
                 
                 {/* Contact information */}
-                <div className="mt-16 grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
+                <div ref={infoRef} className="mt-16 grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
                     {contactInfoItems.map(item => (
-                        <ContactInfo key={item.id} item={item} />
+                        <div key={item.id} className="contact-info-item">
+                            <ContactInfo item={item} />
+                        </div>
                     ))}
                 </div>
                 <div className="border-b-2 border-gray-700 w-full"></div>

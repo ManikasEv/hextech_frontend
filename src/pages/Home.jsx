@@ -6,7 +6,6 @@ import AboutUs from '../components/aboutus';
 import Services from '../components/services';
 import Process from '../components/process';
 import Projects from '../components/projects';
-import Pricing from '../components/pricing';
 import FAQ from '../components/faq';
 import CTA from '../components/cta';
 import Contact from '../components/contact';
@@ -28,7 +27,6 @@ const Home = () => {
             <Services />
             <Process />
             <Projects />
-            <Pricing />
             <FAQ />
             <CTA />
             <Contact />

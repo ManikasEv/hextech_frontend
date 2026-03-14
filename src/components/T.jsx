@@ -2,58 +2,43 @@ import { useEffect, useState } from 'react';
 import { useTranslation } from '../contexts/TranslationContext';
 
 /**
- * Translation component that automatically translates text
- * Usage: <T>Your text here</T>
+ * <T>Your text here</T>
+ *
+ * Flow:
+ * 1. Render: show cached value synchronously (no flicker).
+ * 2. After changeLanguage() pre-warm, `translations` updates once →
+ *    this component re-renders and picks up the cached value.
+ * 3. Cache miss: calls translateText() which hits DeepL then updates state.
  */
 const T = ({ children }) => {
-  const { language, translateText, t } = useTranslation();
-  const [translatedText, setTranslatedText] = useState(children);
+    const { language, translations, translateText } = useTranslation();
 
-  useEffect(() => {
-    let isMounted = true;
-
-    const performTranslation = async () => {
-      // Return original text if not a string
-      if (!children || typeof children !== 'string') {
-        if (isMounted) setTranslatedText(children);
-        return;
-      }
-
-      // Return original for English
-      if (language === 'en') {
-        if (isMounted) setTranslatedText(children);
-        return;
-      }
-
-      // Check cache first
-      const cached = t(children);
-      if (cached !== children) {
-        if (isMounted) setTranslatedText(cached);
-        return;
-      }
-
-      // If not cached, trigger translation
-      try {
-        const translated = await translateText(children, language);
-        if (isMounted && typeof translated === 'string') {
-          setTranslatedText(translated);
-        }
-      } catch (error) {
-        if (isMounted) {
-          setTranslatedText(children);
-        }
-      }
+    const getDisplay = () => {
+        if (!children || typeof children !== 'string' || language === 'en') return children;
+        return translations[`${children}__${language}`] || children;
     };
 
-    performTranslation();
+    const [display, setDisplay] = useState(getDisplay);
 
-    return () => {
-      isMounted = false;
-    };
-  }, [children, language, translateText, t]);
+    useEffect(() => {
+        if (!children || typeof children !== 'string') { setDisplay(children); return; }
+        if (language === 'en') { setDisplay(children); return; }
 
-  return translatedText;
+        const cached = translations[`${children}__${language}`];
+        if (cached) { setDisplay(cached); return; }
+
+        // Cache miss — ask the API
+        let cancelled = false;
+        translateText(children, language).then(result => {
+            if (!cancelled && typeof result === 'string') setDisplay(result);
+        }).catch(() => { if (!cancelled) setDisplay(children); });
+
+        return () => { cancelled = true; };
+    // translateText is stable (no deps), safe to omit from array.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [children, language, translations]);
+
+    return display;
 };
 
 export default T;
-

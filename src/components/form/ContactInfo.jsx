@@ -12,7 +12,7 @@ const ContactInfo = ({ item }) => {
         </div>
       </div>
       <h3 className="text-xl font-semibold text-white mb-2"><T>{item.title}</T></h3>
-      <p className="text-gray-300">{item.content}</p>
+      <p className="text-gray-300"><T>{item.content}</T></p>
     </div>
   );
 };

@@ -3,4 +3,106 @@
 @theme {
   --color-primary: rgb(0, 187, 229);    /* #00bbe5 */
   --color-secondary: rgb(0, 10, 22);    /* #000a16 */
+  --font-mono: 'JetBrains Mono', monospace;
+  --font-sans: 'Space Grotesk', sans-serif;
+}
+
+/* ── Custom cursor ─────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; }
+
+/* Hide native cursor only when custom cursor is active */
+body.custom-cursor-enabled,
+body.custom-cursor-enabled * {
+  cursor: none !important;
+}
+
+.custom-cursor-dot {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 18px;
+  height: 18px;
+  border-radius: 9999px;
+  background: rgb(0, 187, 229);
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  z-index: 99999999;
+  box-shadow: 0 0 14px rgba(0, 187, 229, 0.8);
+  transition: width 0.12s ease, height 0.12s ease;
+}
+
+.custom-cursor-trail {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 99999998;
+}
+
+/* Shrink on hover over interactive elements */
+.custom-cursor-dot.hovering {
+  width: 10px;
+  height: 10px;
+}
+
+body {
+  font-family: 'Space Grotesk', sans-serif;
+  background-color: rgb(0, 10, 22);
+  color: #e2e8f0;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* All headings use the hacker / dev mono font */
+h1, h2, h3, h4, h5, h6,
+.font-mono-heading {
+  font-family: 'JetBrains Mono', monospace;
+}
+
+/* Cursor blink used on the typewriter */
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0; }
+}
+.cursor-blink { animation: blink 0.8s step-end infinite; }
+
+/* Glitch effect keyframes (used on HEXTECH logo) */
+@keyframes glitch-1 {
+  0%   { clip-path: inset(40% 0 61% 0); transform: translate(-4px,  2px); }
+  20%  { clip-path: inset(92% 0  1% 0); transform: translate( 4px, -2px); }
+  40%  { clip-path: inset(43% 0 50% 0); transform: translate(-2px,  4px); }
+  60%  { clip-path: inset(25% 0 58% 0); transform: translate( 2px, -4px); }
+  80%  { clip-path: inset(54% 0 36% 0); transform: translate(-4px,  2px); }
+  100% { clip-path: inset(58% 0 43% 0); transform: translate( 0,    0   ); }
+}
+@keyframes glitch-2 {
+  0%   { clip-path: inset(65% 0 14% 0); transform: translate( 4px, -2px); }
+  20%  { clip-path: inset( 7% 0 82% 0); transform: translate(-4px,  2px); }
+  40%  { clip-path: inset(78% 0 10% 0); transform: translate( 2px, -4px); }
+  60%  { clip-path: inset(15% 0 70% 0); transform: translate(-2px,  4px); }
+  80%  { clip-path: inset(35% 0 55% 0); transform: translate( 4px, -2px); }
+  100% { clip-path: inset(50% 0 40% 0); transform: translate( 0,    0   ); }
+}
+
+.glitch {
+  position: relative;
+}
+.glitch::before,
+.glitch::after {
+  content: attr(data-text);
+  position: absolute;
+  inset: 0;
+  color: rgb(0, 187, 229);
+  opacity: 0;
+  pointer-events: none;
+}
+.glitch:hover::before {
+  opacity: 0.7;
+  animation: glitch-1 0.4s steps(2) infinite;
+}
+.glitch:hover::after {
+  opacity: 0.5;
+  color: #ff00ff;
+  animation: glitch-2 0.4s steps(2) infinite;
 }
