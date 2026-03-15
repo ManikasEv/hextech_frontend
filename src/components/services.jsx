@@ -9,6 +9,8 @@ gsap.registerPlugin(ScrollTrigger);
 
 const FlipCard = ({ service, index }) => {
     const [flipped, setFlipped] = useState(false);
+    const scrollRef = useRef(null);
+    const isScrollingRef = useRef(false);
 
     const icons = [
         // Web Development
@@ -29,13 +31,19 @@ const FlipCard = ({ service, index }) => {
         </svg>,
     ];
 
+    const handleMouseLeave = () => {
+        // Don't flip back if user is scrolling the description
+        if (isScrollingRef.current) return;
+        setFlipped(false);
+    };
+
     return (
         <div
             className="service-flip-card cursor-pointer"
             style={{ perspective: '1200px', width: '360px', height: '480px' }}
             onClick={() => setFlipped(!flipped)}
             onMouseEnter={() => setFlipped(true)}
-            onMouseLeave={() => setFlipped(false)}
+            onMouseLeave={handleMouseLeave}
         >
             <div
                 style={{
@@ -110,10 +118,21 @@ const FlipCard = ({ service, index }) => {
                         </h3>
                     </div>
 
-                    {/* Scrollable description */}
+                    {/* Scrollable description — stops card from flipping back while scrolling */}
                     <div
+                        ref={scrollRef}
                         className="flex-1 overflow-y-auto pr-1 back-scroll"
                         style={{ scrollBehavior: 'smooth' }}
+                        onScroll={() => {
+                            isScrollingRef.current = true;
+                            clearTimeout(scrollRef.current._scrollTimer);
+                            scrollRef.current._scrollTimer = setTimeout(() => {
+                                isScrollingRef.current = false;
+                            }, 300);
+                        }}
+                        onMouseEnter={() => { isScrollingRef.current = true; }}
+                        onMouseLeave={() => { isScrollingRef.current = false; }}
+                        onClick={e => e.stopPropagation()}
                     >
                         <p className="text-gray-300 text-sm leading-7 text-center">
                             <T>{service.description}</T>
@@ -136,19 +155,11 @@ const FlipCard = ({ service, index }) => {
 
             <style>{`
                 .back-scroll {
-                    scrollbar-width: thin;
-                    scrollbar-color: rgba(0,187,229,0.4) transparent;
+                    scrollbar-width: none;
                     overscroll-behavior: contain;
                 }
                 .back-scroll::-webkit-scrollbar {
-                    width: 3px;
-                }
-                .back-scroll::-webkit-scrollbar-track {
-                    background: transparent;
-                }
-                .back-scroll::-webkit-scrollbar-thumb {
-                    background: rgba(0,187,229,0.4);
-                    border-radius: 99px;
+                    display: none;
                 }
             `}</style>
         </div>
