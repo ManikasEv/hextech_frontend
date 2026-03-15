@@ -2,7 +2,7 @@ import { createContext, useContext, useState, useEffect, useCallback, useRef } f
 import { batchTranslationManager, translateBulk } from '../utils/translationQueue';
 
 const TranslationContext = createContext();
-const CACHE_VERSION = 'v6';
+const CACHE_VERSION = 'v7';
 
 export const useTranslation = () => {
     const ctx = useContext(TranslationContext);
@@ -25,7 +25,7 @@ const ALL_STRINGS = [
     'Our diverse team of experts combines technical excellence with creative thinking, working collaboratively to deliver innovative solutions tailored to your unique needs.',
     // Services
     'We build digital experiences that set you apart from the competition.',
-    'Hover to learn more',
+    'Hover to learn more', 'Tap to learn more',
     'Web Development', 'Custom websites built for speed, beauty & results.',
     'We design and build fully custom websites using modern frameworks. From landing pages to complex web platforms — every site is tailored to your brand, optimized for performance, and crafted to convert visitors into customers.',
     'Hosting & Maintenance', 'Your website, always online and up to date.',
@@ -117,7 +117,6 @@ function loadCache() {
     try {
         const ver = localStorage.getItem('trans_version');
         if (ver !== CACHE_VERSION) {
-            // Clear all old translation keys from previous versions
             localStorage.removeItem('trans_cache');
             localStorage.removeItem('translations');
             localStorage.removeItem('translations_version');
@@ -135,19 +134,21 @@ function saveCache(data) {
 // ── Provider ──────────────────────────────────────────────────────────────────
 export const TranslationProvider = ({ children }) => {
     const [language, setLanguage] = useState(() => localStorage.getItem('language') || 'en');
-    const [translations, setTranslations] = useState(loadCache);
-    const [isTranslating, setIsTranslating] = useState(false);
 
-    // Always-fresh ref — lets translateText read latest cache without being in deps
-    const cacheRef = useRef(translations);
-    useEffect(() => {
-        cacheRef.current = translations;
-        saveCache(translations);
-    }, [translations]);
+    // cacheRef is the single source of truth for translations — always up to date.
+    // We also keep a `tick` counter so <T> components re-render when cache grows.
+    const cacheRef = useRef(loadCache());
+    const [tick, setTick] = useState(0);
+
+    // Persist to localStorage whenever cache changes
+    const flushCache = useCallback(() => {
+        saveCache(cacheRef.current);
+        setTick(n => n + 1); // trigger re-render of all <T> components
+    }, []);
 
     useEffect(() => { localStorage.setItem('language', language); }, [language]);
 
-    // Stable — never recreated. Used by <T> for cache-miss single strings.
+    // Stable — reads cacheRef directly, no stale closures
     const translateText = useCallback(async (text, targetLang) => {
         if (!text || typeof text !== 'string' || targetLang === 'en') return text;
         const key = `${text}__${targetLang}`;
@@ -155,58 +156,47 @@ export const TranslationProvider = ({ children }) => {
         try {
             const result = await batchTranslationManager.translate(text, targetLang);
             cacheRef.current = { ...cacheRef.current, [key]: result };
-            setTranslations(prev => ({ ...prev, [key]: result }));
+            flushCache();
             return result;
         } catch { return text; }
-    }, []); // no deps — reads cacheRef directly
+    }, [flushCache]);
 
-    // Sync getter for non-async consumers
+    // Sync getter — used by <T> for immediate zero-delay reads
     const t = useCallback((text) => {
         if (!text || language === 'en') return text;
         return cacheRef.current[`${text}__${language}`] || text;
     }, [language]);
 
-    // Core pre-warm function — used by both changeLanguage and the mount effect
+    // Pre-warm: fetch only strings NOT already in cache
     const prewarm = useCallback(async (targetLang) => {
         const missing = UNIQUE_STRINGS.filter(s => !cacheRef.current[`${s}__${targetLang}`]);
-        if (missing.length === 0) return;
+        if (missing.length === 0) return; // everything cached — instant, no API call
         try {
             const translated = await translateBulk(missing, targetLang);
             const newEntries = {};
             missing.forEach((s, i) => { newEntries[`${s}__${targetLang}`] = translated[i] ?? s; });
-            setTranslations(prev => {
-                const merged = { ...prev, ...newEntries };
-                cacheRef.current = merged;
-                return merged;
-            });
+            cacheRef.current = { ...cacheRef.current, ...newEntries };
+            flushCache();
         } catch (e) {
             console.error('[Translation] pre-warm failed:', e);
         }
+    }, [flushCache]);
+
+    // On mount: pre-warm if language is non-English
+    useEffect(() => {
+        if (language !== 'en') prewarm(language);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
-    // On mount: if language is already non-English (saved in localStorage),
-    // pre-warm all strings immediately so T components get translations on first render.
-    useEffect(() => {
-        if (language !== 'en') {
-            setIsTranslating(true);
-            prewarm(language).finally(() => setIsTranslating(false));
-        }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []); // mount only
-
-    // Pre-warm ALL strings when language changes
+    // Change language + pre-warm
     const changeLanguage = useCallback(async (newLang) => {
         if (newLang === language) return;
-        if (newLang === 'en') { setLanguage('en'); return; }
-
-        setIsTranslating(true);
         setLanguage(newLang);
-        await prewarm(newLang);
-        setIsTranslating(false);
+        if (newLang !== 'en') await prewarm(newLang);
     }, [language, prewarm]);
 
     return (
-        <TranslationContext.Provider value={{ language, translations, changeLanguage, translateText, t, isTranslating }}>
+        <TranslationContext.Provider value={{ language, cacheRef, tick, changeLanguage, translateText, t }}>
             {children}
         </TranslationContext.Provider>
     );

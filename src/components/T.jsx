@@ -1,44 +1,36 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef } from 'react';
 import { useTranslation } from '../contexts/TranslationContext';
 
 /**
  * <T>Your text here</T>
  *
- * Flow:
- * 1. Render: show cached value synchronously (no flicker).
- * 2. After changeLanguage() pre-warm, `translations` updates once →
- *    this component re-renders and picks up the cached value.
- * 3. Cache miss: calls translateText() which hits DeepL then updates state.
+ * Reads the translation synchronously from cacheRef on every render.
+ * Re-renders whenever `tick` increments (cache grew) or `language` changes.
+ * Zero async flicker — if it's cached, it shows immediately.
+ * Cache miss: fires translateText() once, which updates cacheRef + bumps tick.
  */
 const T = ({ children }) => {
-    const { language, translations, translateText } = useTranslation();
+    const { language, cacheRef, tick, translateText } = useTranslation();
+    const requestedRef = useRef(false);
 
-    const getDisplay = () => {
-        if (!children || typeof children !== 'string' || language === 'en') return children;
-        return translations[`${children}__${language}`] || children;
-    };
+    // Reset request flag when language or text changes
+    useEffect(() => { requestedRef.current = false; }, [children, language]);
 
-    const [display, setDisplay] = useState(getDisplay);
+    if (!children || typeof children !== 'string' || language === 'en') return children;
 
-    useEffect(() => {
-        if (!children || typeof children !== 'string') { setDisplay(children); return; }
-        if (language === 'en') { setDisplay(children); return; }
+    const key = `${children}__${language}`;
+    const cached = cacheRef.current[key];
 
-        const cached = translations[`${children}__${language}`];
-        if (cached) { setDisplay(cached); return; }
+    if (cached) return cached;
 
-        // Cache miss — ask the API
-        let cancelled = false;
-        translateText(children, language).then(result => {
-            if (!cancelled && typeof result === 'string') setDisplay(result);
-        }).catch(() => { if (!cancelled) setDisplay(children); });
+    // Cache miss — fire one async request (guard prevents duplicate calls)
+    if (!requestedRef.current) {
+        requestedRef.current = true;
+        translateText(children, language); // updates cacheRef + calls flushCache() → tick++
+    }
 
-        return () => { cancelled = true; };
-    // translateText is stable (no deps), safe to omit from array.
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [children, language, translations]);
-
-    return display;
+    // Show original while waiting
+    return children;
 };
 
 export default T;

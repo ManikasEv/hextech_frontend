@@ -157,11 +157,10 @@ const IconMarquee = memo(() => {
     return (
         <div
             ref={iconsRowRef}
-            className="w-full md:w-1/2 overflow-hidden mb-8 py-4 mx-auto"
+            className="w-full overflow-hidden mb-8 py-4"
             style={{
-                maskImage: 'linear-gradient(to right, transparent 0%, black 18%, black 82%, transparent 100%)',
-                WebkitMaskImage: 'linear-gradient(to right, transparent 0%, black 18%, black 82%, transparent 100%)',
-                contain: 'layout style',
+                maskImage: 'linear-gradient(to right, transparent 0%, black 15%, black 85%, transparent 100%)',
+                WebkitMaskImage: 'linear-gradient(to right, transparent 0%, black 15%, black 85%, transparent 100%)',
             }}
         >
             <div ref={marqueeTrackRef} className="flex gap-8 w-max px-4" style={{ willChange: 'transform' }}>
@@ -186,7 +185,6 @@ const Hero = () => {
     const sectionRef    = useRef(null);
     const imagesRef     = useRef(null);
     const subtitleRef   = useRef(null);
-    const iconsRowRef   = useRef(null);
 
     const phrasesRaw = ["Web Development", "Mobile Development", "UI/UX Design"];
     const { language, translateText } = useTranslation();
@@ -201,11 +199,6 @@ const Hero = () => {
               .from(imagesRef.current, { y: 50, opacity: 0, duration: 0.9 }, '-=0.4');
 
             wordReveal(subtitleRef.current, { y: 20, duration: 0.8, delay: 0.5, start: 'top 100%' });
-
-            if (iconsRowRef.current) {
-                const iconEls = Array.from(iconsRowRef.current.querySelectorAll('.tech-icon')).slice(0, icons.length);
-                gsap.from(iconEls, { y: 20, opacity: 0, scale: 0.6, duration: 0.5, stagger: 0.07, ease: 'back.out(1.7)', delay: 0.6 });
-            }
         }, sectionRef);
         return () => ctx.revert();
     }, []);
@@ -259,9 +252,7 @@ const Hero = () => {
             </p>
 
             {/* Icon marquee — isolated memo component, never re-renders */}
-            <div ref={iconsRowRef} className="w-full">
-                <IconMarquee />
-            </div>
+            <IconMarquee />
         </div>
     );
 };
