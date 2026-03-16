@@ -8,6 +8,7 @@ import Process from '../components/process';
 import Projects from '../components/projects';
 import FAQ from '../components/faq';
 import CTA from '../components/cta';
+import Reviews from '../components/reviews';
 import Contact from '../components/contact';
 import Footer from '../components/footer';
 
@@ -29,6 +30,7 @@ const Home = () => {
             <Projects />
             <FAQ />
             <CTA />
+            <Reviews />
             <Contact />
             <Footer />
         </>
