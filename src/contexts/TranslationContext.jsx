@@ -2,7 +2,7 @@ import { createContext, useContext, useState, useEffect, useCallback, useRef } f
 import { batchTranslationManager, translateBulk } from '../utils/translationQueue';
 
 const TranslationContext = createContext();
-const CACHE_VERSION = 'v8';
+const CACHE_VERSION = 'v9';
 
 export const useTranslation = () => {
     const ctx = useContext(TranslationContext);
@@ -120,6 +120,8 @@ const ALL_STRINGS = [
     'Help others find us by leaving a review on Google. It takes less than a minute and means the world to us.',
     'Review us on Google',
     'Please fill in all required fields.', 'Something went wrong. Please try again.',
+    'Your photo', 'optional', 'Upload a photo', 'Remove photo',
+    'No written review.', 'Verified Google reviews',
 ];
 
 // Deduplicate ALL_STRINGS (avoid sending duplicates to DeepL)

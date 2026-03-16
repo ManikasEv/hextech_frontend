@@ -178,9 +178,12 @@ const Reviews = () => {
     const [testimonials, setTestimonials]   = useState([]);
     const [googleLoading, setGoogleLoading] = useState(true);
     const [form, setForm]     = useState({ name: '', company: '', rating: 5, message: '' });
+    const [photoFile, setPhotoFile]   = useState(null);
+    const [photoPreview, setPhotoPreview] = useState(null);
     const [submitting, setSubmitting] = useState(false);
     const [submitted, setSubmitted]   = useState(false);
     const [error, setError]           = useState('');
+    const fileInputRef = useRef(null);
 
     useEffect(() => {
         fetch(`${API_URL}/api/reviews`)
@@ -212,19 +215,38 @@ const Reviews = () => {
         return () => ctx.revert();
     }, []);
 
+    const handlePhotoChange = (e) => {
+        const file = e.target.files?.[0];
+        if (!file) return;
+        setPhotoFile(file);
+        const reader = new FileReader();
+        reader.onload = (ev) => setPhotoPreview(ev.target.result);
+        reader.readAsDataURL(file);
+    };
+
+    const removePhoto = () => {
+        setPhotoFile(null);
+        setPhotoPreview(null);
+        if (fileInputRef.current) fileInputRef.current.value = '';
+    };
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         if (!form.name || !form.message) { setError(t('Please fill in all required fields.')); return; }
         setSubmitting(true); setError('');
         try {
-            const res = await fetch(`${API_URL}/api/testimonials`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(form),
-            });
+            const fd = new FormData();
+            fd.append('name', form.name);
+            fd.append('company', form.company || '');
+            fd.append('rating', form.rating);
+            fd.append('message', form.message);
+            if (photoFile) fd.append('photo', photoFile);
+
+            const res = await fetch(`${API_URL}/api/testimonials`, { method: 'POST', body: fd });
             if (!res.ok) throw new Error('Failed');
             setSubmitted(true);
             setForm({ name: '', company: '', rating: 5, message: '' });
+            removePhoto();
             loadTestimonials();
         } catch {
             setError(t('Something went wrong. Please try again.'));
@@ -234,7 +256,7 @@ const Reviews = () => {
 
     const allReviews = [
         ...googleData.reviews.map(r => ({ ...r, isGoogle: true })),
-        ...testimonials.map(r => ({ author: r.name, company: r.company, rating: r.rating, text: r.message, time: new Date(r.created_at).toLocaleDateString(), isGoogle: false })),
+        ...testimonials.map(r => ({ author: r.name, company: r.company, rating: r.rating, text: r.message, avatar: r.photo || null, time: new Date(r.created_at).toLocaleDateString(), isGoogle: false })),
     ];
 
     // Combined rating
@@ -332,6 +354,34 @@ const Reviews = () => {
                                         rows={4} placeholder={t('Tell us about your experience...')}
                                         className="bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-white text-sm focus:outline-none focus:border-primary transition-colors resize-none" />
                                 </div>
+
+                                {/* Photo upload */}
+                                <div className="flex flex-col gap-2">
+                                    <label className="text-gray-400 text-xs uppercase tracking-wide"><T>Your photo</T> <span className="normal-case text-gray-600">(<T>optional</T>)</span></label>
+                                    {photoPreview ? (
+                                        <div className="flex items-center gap-4">
+                                            <img src={photoPreview} alt="preview" className="w-16 h-16 rounded-full object-cover ring-2 ring-primary/40" />
+                                            <div className="flex flex-col gap-1">
+                                                <span className="text-gray-400 text-xs">{photoFile?.name}</span>
+                                                <button type="button" onClick={removePhoto}
+                                                    className="text-red-400 text-xs hover:text-red-300 transition-colors text-left">
+                                                    ✕ <T>Remove photo</T>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    ) : (
+                                        <button type="button" onClick={() => fileInputRef.current?.click()}
+                                            className="flex items-center gap-3 w-full border border-dashed border-white/20 hover:border-primary/50 rounded-lg px-4 py-3 text-gray-400 hover:text-white transition-all text-sm">
+                                            <svg className="w-5 h-5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+                                                <path strokeLinecap="round" strokeLinejoin="round" d="M6.827 6.175A2.31 2.31 0 015.186 7.23c-.38.054-.757.112-1.134.175C2.999 7.58 2.25 8.507 2.25 9.574V18a2.25 2.25 0 002.25 2.25h15A2.25 2.25 0 0021.75 18V9.574c0-1.067-.75-1.994-1.802-2.169a47.865 47.865 0 00-1.134-.175 2.31 2.31 0 01-1.64-1.055l-.822-1.316a2.192 2.192 0 00-1.736-1.039 48.774 48.774 0 00-5.232 0 2.192 2.192 0 00-1.736 1.039l-.821 1.316z" />
+                                                <path strokeLinecap="round" strokeLinejoin="round" d="M16.5 12.75a4.5 4.5 0 11-9 0 4.5 4.5 0 019 0zM18.75 10.5h.008v.008h-.008V10.5z" />
+                                            </svg>
+                                            <T>Upload a photo</T>
+                                        </button>
+                                    )}
+                                    <input ref={fileInputRef} type="file" accept="image/*" className="hidden" onChange={handlePhotoChange} />
+                                </div>
+
                                 {error && <p className="text-red-400 text-sm">{error}</p>}
                                 <button type="submit" disabled={submitting}
                                     className="w-full py-3 bg-primary text-secondary font-semibold rounded-lg hover:bg-primary/90 active:scale-95 transition-all text-sm disabled:opacity-50">
