@@ -228,7 +228,7 @@ const Hero = () => {
     }, []);
 
     return (
-        <div ref={sectionRef} className="w-full h-auto flex flex-col items-center bg-secondary pt-16 md:pt-0">
+        <div ref={sectionRef} className="w-full h-auto flex flex-col items-center bg-secondary pt-16">
             <div className="hero-typewriter">
                 <Typewriter phrases={phrases} />
             </div>

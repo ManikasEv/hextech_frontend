@@ -7,41 +7,52 @@ import T from './T';
 const Navbar = () => {
     const navigate = useNavigate();
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-    const [visible, setVisible] = useState(true);
-    const [lastScrollY, setLastScrollY] = useState(0);
 
-    const logoRef = useRef(null);
+    const navRef    = useRef(null);
+    const logoRef   = useRef(null);
     const centerRef = useRef(null);
-    const rightRef = useRef(null);
+    const rightRef  = useRef(null);
 
-    // Animate all nav items on first mount only
+    // Track scroll state via refs — no re-renders, no stale closures
+    const lastScrollY  = useRef(0);
+    const navHidden    = useRef(false);
+
+    // Entrance animation on mount
     useEffect(() => {
         const links = centerRef.current?.querySelectorAll('a, button') ?? [];
         const tl = gsap.timeline({ defaults: { ease: 'power2.out' } });
-
-        tl.fromTo(logoRef.current, { x: -18, opacity: 0 }, { x: 0, opacity: 1, duration: 0.24 }, 0)
-          .fromTo(links, { y: -12, opacity: 0 }, { y: 0, opacity: 1, duration: 0.22, stagger: 0 }, 0.02)
-          .fromTo(rightRef.current, { x: 18, opacity: 0 }, { x: 0, opacity: 1, duration: 0.24 }, 0.02);
-
+        tl.fromTo(logoRef.current,  { x: -18, opacity: 0 }, { x: 0, opacity: 1, duration: 0.24 }, 0)
+          .fromTo(links,             { y: -12, opacity: 0 }, { y: 0, opacity: 1, duration: 0.22, stagger: 0 }, 0.02)
+          .fromTo(rightRef.current,  { x: 18,  opacity: 0 }, { x: 0, opacity: 1, duration: 0.24 }, 0.02);
         return () => {
             tl.kill();
-            const nodes = [logoRef.current, rightRef.current, ...links].filter(Boolean);
-            if (nodes.length) gsap.set(nodes, { clearProps: 'all' });
+            gsap.set([logoRef.current, rightRef.current, ...links].filter(Boolean), { clearProps: 'all' });
         };
-    }, []); // mount only — language changes just update the <T> text in-place
+    }, []);
 
+    // Hide on scroll down, show on scroll up
     useEffect(() => {
-        const handleScroll = () => {
+        const nav = navRef.current;
+        if (!nav) return;
+
+        const onScroll = () => {
+            if (window.innerWidth < 768) return;
             const y = window.scrollY;
-            if (window.innerWidth >= 768 && !mobileMenuOpen) {
-                if (y > lastScrollY && visible && y > 100) setVisible(false);
-                else if (y < lastScrollY && !visible) setVisible(true);
+            const goingDown = y > lastScrollY.current;
+            lastScrollY.current = y;
+
+            if (goingDown && !navHidden.current && y > 80) {
+                navHidden.current = true;
+                gsap.to(nav, { y: '-100%', duration: 0.35, ease: 'power2.in', overwrite: true });
+            } else if (!goingDown && navHidden.current) {
+                navHidden.current = false;
+                gsap.to(nav, { y: '0%', duration: 0.4, ease: 'power2.out', overwrite: true });
             }
-            setLastScrollY(y);
         };
-        window.addEventListener('scroll', handleScroll);
-        return () => window.removeEventListener('scroll', handleScroll);
-    }, [lastScrollY, visible, mobileMenuOpen]);
+
+        window.addEventListener('scroll', onScroll, { passive: true });
+        return () => window.removeEventListener('scroll', onScroll);
+    }, []);
 
     const scrollToContact = () => {
         const el = document.getElementById('contact');
@@ -52,7 +63,7 @@ const Navbar = () => {
 
     return (
         <>
-            <div className={`hidden md:flex md:justify-between md:w-full sticky z-50 bg-secondary transition-all duration-300 ${visible ? 'top-0' : '-top-full'}`}>
+            <div ref={navRef} className="hidden md:flex md:justify-between md:w-full fixed top-0 left-0 right-0 z-50 bg-secondary border-b border-white/5">
                 <div ref={logoRef} className="p-4">
                     <a href="/" className="text-2xl font-bold text-primary glitch" data-text="HEXTECH">HEXTECH</a>
                 </div>
