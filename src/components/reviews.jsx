@@ -7,7 +7,7 @@ import { useTranslation } from '../contexts/TranslationContext';
 gsap.registerPlugin(ScrollTrigger);
 
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001';
-const GOOGLE_REVIEW_URL = 'https://search.google.com/local/writereview?placeid=REPLACE_WITH_YOUR_PLACE_ID';
+const GOOGLE_REVIEW_URL = 'https://search.google.com/local/writereview?placeid=ChIJp_bZ8jxbNKIR_b1k2prTqmY';
 
 // ── Star display ──────────────────────────────────────────────────────────────
 const Stars = ({ rating, size = 'sm' }) => {
