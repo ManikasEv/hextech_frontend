@@ -139,7 +139,7 @@ const Contact = () => {
             id="contact" 
             className="py-20 bg-secondary"
         >
-            <div className="container mx-auto ">
+            <div className="container mx-auto px-4">
                 <div ref={headerRef}>
                     <h2 ref={h2Ref} className="text-4xl font-bold text-center mb-4 text-primary"><T>Propose Your Project</T></h2>
                     <p ref={subRef} className="text-gray-400 text-center max-w-2xl mx-auto mb-12">

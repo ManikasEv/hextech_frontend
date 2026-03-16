@@ -156,22 +156,26 @@ const Projects = () => {
     const desktopTrackRef = useRef(null);
     const mobileTrackRef  = useRef(null);
 
-    // Start with local data, upgrade to DB data when available
-    const [projects, setProjects] = useState(localProjects);
+    // Load from DB first; fall back to local only if API fails
+    const [projects, setProjects] = useState([]);
     const [loadedFromDB, setLoadedFromDB] = useState(false);
 
     // Fetch from API
     useEffect(() => {
-        if (!API_URL) return;
         fetch(`${API_URL}/api/projects`)
             .then(r => r.ok ? r.json() : Promise.reject(r.status))
             .then(data => {
                 if (Array.isArray(data) && data.length > 0) {
                     setProjects(data);
                     setLoadedFromDB(true);
+                } else {
+                    setProjects(localProjects);
                 }
             })
-            .catch(err => console.warn('[Projects] API unavailable, using local data:', err));
+            .catch(err => {
+                console.warn('[Projects] API unavailable, using local data:', err);
+                setProjects(localProjects);
+            });
     }, []);
 
     const duplicatedProjects = [...projects, ...projects, ...projects];

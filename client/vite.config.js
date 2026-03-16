@@ -15,6 +15,14 @@ export default defineConfig({
         target: 'https://hextech-backend.vercel.app',
         changeOrigin: true,
       },
+      '/api/reviews': {
+        target: 'https://hextech-backend.vercel.app',
+        changeOrigin: true,
+      },
+      '/api/testimonials': {
+        target: 'https://hextech-backend.vercel.app',
+        changeOrigin: true,
+      },
     }
   }
 })
