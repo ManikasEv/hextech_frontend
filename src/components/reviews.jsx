@@ -177,7 +177,7 @@ const Reviews = () => {
     const [googleData, setGoogleData]       = useState({ rating: 0, total: 0, reviews: [] });
     const [testimonials, setTestimonials]   = useState([]);
     const [googleLoading, setGoogleLoading] = useState(true);
-    const [form, setForm]     = useState({ name: '', company: '', rating: 5, message: '' });
+    const [form, setForm]     = useState({ name: '', company: '', email: '', rating: 5, message: '' });
     const [photoFile, setPhotoFile]   = useState(null);
     const [photoPreview, setPhotoPreview] = useState(null);
     const [submitting, setSubmitting] = useState(false);
@@ -238,6 +238,7 @@ const Reviews = () => {
             const fd = new FormData();
             fd.append('name', form.name);
             fd.append('company', form.company || '');
+            fd.append('email', form.email || '');
             fd.append('rating', form.rating);
             fd.append('message', form.message);
             if (photoFile) fd.append('photo', photoFile);
@@ -245,7 +246,7 @@ const Reviews = () => {
             const res = await fetch(`${API_URL}/api/testimonials`, { method: 'POST', body: fd });
             if (!res.ok) throw new Error('Failed');
             setSubmitted(true);
-            setForm({ name: '', company: '', rating: 5, message: '' });
+            setForm({ name: '', company: '', email: '', rating: 5, message: '' });
             removePhoto();
             loadTestimonials();
         } catch {
@@ -343,6 +344,12 @@ const Reviews = () => {
                                             placeholder={t('Optional')}
                                             className="bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-white text-sm focus:outline-none focus:border-primary transition-colors" />
                                     </div>
+                                </div>
+                                <div className="flex flex-col gap-1">
+                                    <label className="text-gray-400 text-xs uppercase tracking-wide"><T>Email</T></label>
+                                    <input type="email" value={form.email} onChange={e => setForm(p => ({ ...p, email: e.target.value }))}
+                                        placeholder={t('your@email.com (not shown publicly)')}
+                                        className="bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-white text-sm focus:outline-none focus:border-primary transition-colors" />
                                 </div>
                                 <div className="flex flex-col gap-2">
                                     <label className="text-gray-400 text-xs uppercase tracking-wide"><T>Rating</T> *</label>
