@@ -39,7 +39,7 @@ const FlipCard = ({ service, index }) => {
 
     return (
         <div
-            className="service-flip-card cursor-pointer w-full md:w-[360px]"
+            className="service-flip-card cursor-pointer w-full"
             style={{ perspective: '1200px', height: 'clamp(420px, 60vw, 480px)' }}
             onClick={() => setFlipped(!flipped)}
             onMouseEnter={() => setFlipped(true)}
@@ -197,15 +197,19 @@ const Services = () => {
 
     return (
         <section ref={sectionRef} id="services" className="bg-secondary min-h-screen py-20 flex flex-col justify-center items-center">
-            <div className="w-full max-w-5xl mx-auto px-4">
+            <div className="w-full max-w-6xl mx-auto px-4">
                 {/* Header */}
                 <div ref={headerRef} className="text-center mb-16">
                     <h2 ref={h2Ref} className="text-5xl font-bold text-primary mb-4"><T>Services</T></h2>
                     <p ref={subRef} className="text-xl text-gray-400"><T>We build digital experiences that set you apart from the competition.</T></p>
                 </div>
 
-                {/* Cards grid — single column on mobile, wrapping on desktop */}
-                <div className="services-grid flex flex-col md:flex-row md:flex-wrap justify-center gap-8">
+                {/* Cards grid — 1 col mobile, 2 col desktop (3 col if 5+ services) */}
+                <div className={`services-grid grid grid-cols-1 gap-8 ${
+                    serviceNodes.length >= 5
+                        ? 'md:grid-cols-3'
+                        : 'md:grid-cols-2'
+                }`}>
                     {serviceNodes.map((service, index) => (
                         <FlipCard key={service.slug} service={service} index={index} />
                     ))}
