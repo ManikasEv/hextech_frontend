@@ -5,45 +5,19 @@ import T from './T';
 const Pricing = () => {
     const pricingPlans = [
         {
-            name: "Basic Support",
-            price: "CHF 200",
-            period: "year",
-            description: "Essential maintenance for small websites",
+            name: "Website Package",
+            price: "CHF 1500",
+            period: "one-time",
+            description: "Full business website package with one clear pricing model",
             features: [
-                "Monthly Updates",
-                "Email Support (48h response)",
-                "Up to 2 Changes/Month",
-                "Performance Monitoring",
-                "Backup & Recovery"
-            ],
-            highlighted: false
-        },
-        {
-            name: "Professional Support",
-            price: "CHF 350",
-            period: "year",
-            description: "Complete solution for growing businesses",
-            features: [
-                "Priority Support (24h response)",
-                "Email & Domain (if belongs to us)",
-                "Google Posts Management",
-                "Up to 5 Changes/Month",
-                "Content Updates",
-                "10% Discount on Future Projects"
+                "Custom website design and development",
+                "SEO-ready structure and fast performance",
+                "CHF 200 maintenance fee (yearly)",
+                "Domain renewal and email renewal billed at cost",
+                "Custom software with database maintenance scales by usage",
+                "Perfect for restaurant websites and service businesses",
             ],
             highlighted: true
-        },
-        {
-            name: "Custom Package",
-            price: "Let's Talk",
-            period: "quote",
-            description: "Tailored solutions for your unique needs",
-            features: [
-                "Everything in Professional",
-                "Direct discussion with client",
-                "Customized to your requirements"
-            ],
-            highlighted: false
         }
     ];
 
@@ -58,12 +32,12 @@ const Pricing = () => {
                     transition={{ duration: 0.6 }}
                     className="text-center mb-16"
                 >
-                    <h2 className="text-5xl font-bold text-primary mb-4"><T>Support Packages</T></h2>
-                    <p className="text-xl text-gray-300"><T>Yearly maintenance and support plans</T></p>
+                    <h2 className="text-5xl font-bold text-primary mb-4"><T>Website Pricing</T></h2>
+                    <p className="text-xl text-gray-300"><T>Simple package with transparent maintenance terms</T></p>
                 </motion.div>
 
                 {/* Pricing Cards */}
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
+                <div className="grid grid-cols-1 gap-8 max-w-2xl mx-auto">
                     {pricingPlans.map((plan, index) => (
                         <motion.div
                             key={index}
@@ -132,7 +106,7 @@ const Pricing = () => {
                     transition={{ duration: 0.6, delay: 0.8 }}
                     className="text-center mt-12"
                 >
-                    <p className="text-gray-400"><T>All prices exclude VAT. Contact us for custom solutions.</T></p>
+                    <p className="text-gray-400"><T>All prices exclude VAT. Domain and email renewal costs depend on provider pricing.</T></p>
                 </motion.div>
             </div>
         </section>

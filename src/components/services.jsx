@@ -29,6 +29,14 @@ const FlipCard = ({ service, index }) => {
         <svg xmlns="http://www.w3.org/2000/svg" className="w-16 h-16" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3 3h6v6H3V3zm0 12h6v6H3v-6zm12-12h6v6h-6V3zm-1 12h2v2h-2v-2zm2 2h2v2h-2v-2zm-2 2h2v2h-2v-2zm4-4h2v2h-2v-2zm2 2h2v2h-2v-2zm-2 2h2v2h-2v-2zm2-6h2v2h-2v-2z" />
         </svg>,
+        // Social Media & Content Creation
+        <svg xmlns="http://www.w3.org/2000/svg" className="w-16 h-16" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M7 8h10M7 12h6m-6 4h8M5 21h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v14a2 2 0 002 2z" />
+        </svg>,
+        // AI Ads
+        <svg xmlns="http://www.w3.org/2000/svg" className="w-16 h-16" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 3v2m0 14v2M5 12H3m18 0h-2M7.5 7.5l-1.5-1.5m12 12-1.5-1.5M7.5 16.5L6 18m12-12-1.5 1.5M9 12a3 3 0 106 0 3 3 0 00-6 0z" />
+        </svg>,
     ];
 
     const handleMouseLeave = () => {
@@ -72,7 +80,7 @@ const FlipCard = ({ service, index }) => {
 
                     {/* Icon */}
                     <div className="text-primary">
-                        {icons[index]}
+                        {icons[index % icons.length]}
                     </div>
 
                     {/* Title + short desc */}
@@ -112,7 +120,7 @@ const FlipCard = ({ service, index }) => {
                     {/* Small icon + title — fixed at top */}
                     <div className="flex-shrink-0 flex flex-col items-center mb-4">
                         <div className="text-primary/50 scale-50 -mb-5">
-                            {icons[index]}
+                            {icons[index % icons.length]}
                         </div>
                         <h3 className="text-lg font-bold text-primary text-center">
                             <T>{service.title}</T>

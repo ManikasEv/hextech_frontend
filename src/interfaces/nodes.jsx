@@ -25,11 +25,27 @@ const serviceNodes = [
     },
     {
         number: '04',
-        title: 'QR & Business Cards',
-        slug: 'qr-business-cards',
-        shortDesc: 'Make your first impression unforgettable.',
-        description: 'We design custom QR codes and professional business cards that reflect your brand identity. Smart QR codes link to your website, portfolio, or contact info — turning every card into a powerful digital gateway.',
+        title: 'Reservation Software',
+        slug: 'reservation-software',
+        shortDesc: 'Custom booking systems for restaurants and hospitality.',
+        description: 'We build custom reservation software with your own workflows, guest management, booking limits, and integrations. From small restaurants to high-traffic venues, we can create scalable systems backed by a secure database.',
+        icon: `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8 7V3m8 4V3M4 11h16M5 21h14a1 1 0 001-1V7a1 1 0 00-1-1H5a1 1 0 00-1 1v13a1 1 0 001 1zm3-6h3v3H8v-3z"/></svg>`,
+    },
+    {
+        number: '05',
+        title: 'Social Media & Content Creation',
+        slug: 'social-media-content',
+        shortDesc: 'Grow your audience with consistent content.',
+        description: 'We plan and produce social media content tailored to your brand and target audience. From content calendars and post design to campaign direction, we help your business stay active and relevant online.',
         icon: `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 4v1m0 14v1M4 12h1m14 0h1M6.343 6.343l.707.707M16.95 16.95l.707.707M6.343 17.657l.707-.707M16.95 7.05l.707-.707M9 12a3 3 0 106 0 3 3 0 00-6 0z"/></svg>`,
+    },
+    {
+        number: '06',
+        title: 'AI Ads for Any Business',
+        slug: 'ai-ads',
+        shortDesc: 'AI-powered ad creatives for products and services.',
+        description: 'We create AI-powered ad concepts and visual campaigns for any type of product or business. We focus on clear messaging, creative testing, and conversion-ready ad assets for social and search platforms.',
+        icon: `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9.75 3v2.25M14.25 3v2.25M4.5 8.25h15M6.75 21h10.5a2.25 2.25 0 002.25-2.25V8.25A2.25 2.25 0 0017.25 6H6.75A2.25 2.25 0 004.5 8.25v10.5A2.25 2.25 0 006.75 21zm2.25-6h6"/></svg>`,
     },
 ];
 

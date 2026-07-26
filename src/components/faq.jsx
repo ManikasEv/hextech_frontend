@@ -22,10 +22,10 @@ const FAQ = () => {
         { question: "What technologies do you use?", answer: "We use modern, industry-standard technologies including React, Node.js, Next.js, Tailwind CSS, and various databases. We choose the best tech stack based on your specific project requirements and goals." },
         { question: "Do you provide ongoing support after launch?", answer: "Yes! All our packages include post-launch support. We offer maintenance plans ranging from 30 days to 12 months, depending on your chosen package. We're here to help with updates, bug fixes, and improvements." },
         { question: "Can you help with mobile app development?", answer: "Absolutely! We specialize in both iOS and Android app development using React Native and native technologies. We can create cross-platform apps or platform-specific solutions based on your needs." },
-        { question: "What is your pricing structure?", answer: "We offer flexible pricing based on project scope and requirements. Our packages start from CHF 2,500 for basic websites. For custom projects, we provide detailed quotes after understanding your needs. All prices exclude VAT." },
+        { question: "What is your pricing structure?", answer: "We offer one website package at CHF 1,500. Yearly maintenance is CHF 200 plus domain and email renewal costs. If a custom software solution with database is running, maintenance scales based on usage." },
         { question: "Do you work with clients outside of Zurich?", answer: "Yes! While we're based in Zurich, we work with clients throughout Switzerland and internationally. We're comfortable conducting meetings remotely and can travel when necessary." },
         { question: "Will my website be mobile-friendly?", answer: "Absolutely! All our websites are fully responsive and optimized for mobile devices, tablets, and desktops. Mobile-first design is a core part of our development process." },
-        { question: "Can you help with SEO and digital marketing?", answer: "Yes! We implement SEO best practices in all our projects, including proper meta tags, structured data, and performance optimization. We can also connect you with our marketing partners for comprehensive digital marketing strategies." },
+        { question: "Can you help with SEO and digital marketing?", answer: "Yes. We handle technical SEO, on-page SEO, social media strategy, content creation, and AI-powered ad creatives for all kinds of products and businesses." },
     ];
 
     useEffect(() => {
