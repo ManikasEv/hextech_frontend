@@ -32,9 +32,12 @@ const Footer = () => {
                     <div className="flex flex-col space-y-2">
                         <h3 className="text-lg font-semibold mb-4"><T>Quick Links</T></h3>
                         <a href="/" className="hover:text-primary transition-colors"><T>Home</T></a>
+                        <a href="#about" className="hover:text-primary transition-colors"><T>About Us</T></a>
                         <a href="#services" className="hover:text-primary transition-colors"><T>Services</T></a>
                         <a href="#portfolio" className="hover:text-primary transition-colors"><T>Portfolio</T></a>
-                        <a href="#about" className="hover:text-primary transition-colors"><T>About Us</T></a>
+                        <a href="#pricing" className="hover:text-primary transition-colors"><T>Pricing</T></a>
+                        <a href="#process" className="hover:text-primary transition-colors"><T>Process</T></a>
+                        <a href="#reviews" className="hover:text-primary transition-colors"><T>Reviews</T></a>
                         <a href="#contact" className="hover:text-primary transition-colors"><T>Contact</T></a>
                         <a href="/careers" className="hover:text-primary transition-colors"><T>Careers</T></a>
                     </div>

@@ -73,13 +73,16 @@ const Navbar = () => {
                     </a>
                 </div>
 
-                <div ref={centerRef} className="flex items-center">
-                    <a href="/" className="mx-4 hover:text-primary text-white transition-colors"><T>Home</T></a>
-                    <a href="#services" onClick={(e) => { e.preventDefault(); scrollToSection('services'); }} className="mx-4 hover:text-primary text-white transition-colors"><T>Services</T></a>
-                    <a href="#portfolio" onClick={(e) => { e.preventDefault(); scrollToSection('portfolio'); }} className="mx-4 hover:text-primary text-white transition-colors"><T>Portfolio</T></a>
-                    <a href="#about" onClick={(e) => { e.preventDefault(); scrollToSection('about'); }} className="mx-4 hover:text-primary text-white transition-colors"><T>About</T></a>
-                    <a href="#contact" onClick={(e) => { e.preventDefault(); scrollToSection('contact'); }} className="mx-4 hover:text-primary text-white transition-colors"><T>Contact</T></a>
-                    <button onClick={() => navigate('/careers')} className="mx-4 hover:text-primary text-white transition-colors"><T>Careers</T></button>
+                <div ref={centerRef} className="flex items-center flex-wrap justify-center gap-y-1">
+                    <a href="/" className="mx-2.5 lg:mx-3 hover:text-primary text-white transition-colors text-sm lg:text-base"><T>Home</T></a>
+                    <a href="#about" onClick={(e) => { e.preventDefault(); scrollToSection('about'); }} className="mx-2.5 lg:mx-3 hover:text-primary text-white transition-colors text-sm lg:text-base"><T>About</T></a>
+                    <a href="#services" onClick={(e) => { e.preventDefault(); scrollToSection('services'); }} className="mx-2.5 lg:mx-3 hover:text-primary text-white transition-colors text-sm lg:text-base"><T>Services</T></a>
+                    <a href="#portfolio" onClick={(e) => { e.preventDefault(); scrollToSection('portfolio'); }} className="mx-2.5 lg:mx-3 hover:text-primary text-white transition-colors text-sm lg:text-base"><T>Portfolio</T></a>
+                    <a href="#pricing" onClick={(e) => { e.preventDefault(); scrollToSection('pricing'); }} className="mx-2.5 lg:mx-3 hover:text-primary text-white transition-colors text-sm lg:text-base"><T>Pricing</T></a>
+                    <a href="#process" onClick={(e) => { e.preventDefault(); scrollToSection('process'); }} className="mx-2.5 lg:mx-3 hover:text-primary text-white transition-colors text-sm lg:text-base"><T>Process</T></a>
+                    <a href="#reviews" onClick={(e) => { e.preventDefault(); scrollToSection('reviews'); }} className="mx-2.5 lg:mx-3 hover:text-primary text-white transition-colors text-sm lg:text-base"><T>Reviews</T></a>
+                    <a href="#contact" onClick={(e) => { e.preventDefault(); scrollToSection('contact'); }} className="mx-2.5 lg:mx-3 hover:text-primary text-white transition-colors text-sm lg:text-base"><T>Contact</T></a>
+                    <button onClick={() => navigate('/careers')} className="mx-2.5 lg:mx-3 hover:text-primary text-white transition-colors text-sm lg:text-base"><T>Careers</T></button>
                 </div>
 
                 <div ref={rightRef} className="flex items-center gap-2 p-4">
@@ -111,9 +114,12 @@ const Navbar = () => {
                 <div className="md:hidden fixed top-[64px] left-0 right-0 bg-secondary/95 backdrop-blur-md shadow-lg z-40">
                     <div className="flex flex-col py-4">
                         <a href="/" className="text-white py-2 px-6 hover:bg-primary/20" onClick={() => setMobileMenuOpen(false)}><T>Home</T></a>
+                        <a href="#about" className="text-white py-2 px-6 hover:bg-primary/20" onClick={(e) => { e.preventDefault(); scrollToSection('about'); }}><T>About</T></a>
                         <a href="#services" className="text-white py-2 px-6 hover:bg-primary/20" onClick={(e) => { e.preventDefault(); scrollToSection('services'); }}><T>Services</T></a>
                         <a href="#portfolio" className="text-white py-2 px-6 hover:bg-primary/20" onClick={(e) => { e.preventDefault(); scrollToSection('portfolio'); }}><T>Portfolio</T></a>
-                        <a href="#about" className="text-white py-2 px-6 hover:bg-primary/20" onClick={(e) => { e.preventDefault(); scrollToSection('about'); }}><T>About</T></a>
+                        <a href="#pricing" className="text-white py-2 px-6 hover:bg-primary/20" onClick={(e) => { e.preventDefault(); scrollToSection('pricing'); }}><T>Pricing</T></a>
+                        <a href="#process" className="text-white py-2 px-6 hover:bg-primary/20" onClick={(e) => { e.preventDefault(); scrollToSection('process'); }}><T>Process</T></a>
+                        <a href="#reviews" className="text-white py-2 px-6 hover:bg-primary/20" onClick={(e) => { e.preventDefault(); scrollToSection('reviews'); }}><T>Reviews</T></a>
                         <a href="#contact" className="text-white py-2 px-6 hover:bg-primary/20" onClick={(e) => { e.preventDefault(); scrollToSection('contact'); }}><T>Contact</T></a>
                         <button onClick={() => { navigate('/careers'); setMobileMenuOpen(false); }} className="text-white py-2 px-6 hover:bg-primary/20 text-left"><T>Careers</T></button>
                         <div className="px-6 py-4">
