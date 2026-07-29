@@ -137,7 +137,7 @@ const Contact = () => {
         <section 
             ref={sectionRef}
             id="contact" 
-            className="py-20 bg-secondary"
+            className="py-20"
         >
             <div className="container mx-auto px-4">
                 <div ref={headerRef}>

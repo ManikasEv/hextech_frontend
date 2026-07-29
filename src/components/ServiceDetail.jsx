@@ -5,6 +5,7 @@ import Contact from './contact';
 import Footer from './footer';
 import T from './T';
 import LanguageSwitcher from './LanguageSwitcher';
+import hextechLogo from '../assets/Hextech_full_logo.png';
 
 const ServiceDetail = () => {
     const { slug } = useParams();
@@ -54,7 +55,7 @@ const ServiceDetail = () => {
 
     if (!service) {
         return (
-            <div className="min-h-screen flex items-center justify-center bg-secondary">
+            <div className="min-h-screen flex items-center justify-center">
                 <div className="text-center">
                     <h1 className="text-4xl font-bold text-white mb-4"><T>Service Not Found</T></h1>
                     <button 
@@ -71,13 +72,15 @@ const ServiceDetail = () => {
     return (
         <div className="min-h-screen">
             {/* Navbar - Desktop */}
-            <div className={`hidden md:flex md:justify-between md:w-full sticky z-10 transition-all duration-300 
-                ${scrolled ? 'bg-white shadow-md' : 'bg-secondary'}
+            <div className={`hidden md:flex md:justify-between md:w-full sticky z-10 transition-all duration-300
+                ${scrolled ? 'bg-white shadow-md' : 'bg-secondary/80 backdrop-blur-md border-b border-white/5'}
                 ${visible ? 'top-0' : '-top-full'}
             `}>
                 {/* left side */}
                 <div className="p-4">
-                    <a href="/" className={`text-2xl font-bold ${scrolled ? 'text-primary' : 'text-primary'}`}> HEXTECH </a>
+                    <a href="/" className="block hover:opacity-80 transition-opacity">
+                        <img src={hextechLogo} alt="Hextech" className="h-7 w-auto" />
+                    </a>
                 </div>
                 {/* center side - empty */}
                 <div className="flex items-center"></div>
@@ -94,14 +97,16 @@ const ServiceDetail = () => {
             </div>
 
             {/* Navbar - Mobile */}
-            <div className={`md:hidden flex justify-between items-center w-full sticky z-10 transition-all duration-300 
-                ${scrolled ? 'bg-white shadow-md' : 'bg-secondary'} 
+            <div className={`md:hidden flex justify-between items-center w-full sticky z-10 transition-all duration-300
+                ${scrolled ? 'bg-white shadow-md' : 'bg-secondary/80 backdrop-blur-md border-b border-white/5'} 
                 ${visible ? 'top-0' : '-top-full'}
                 p-4`}
             >
                 {/* Mobile left - Logo */}
                 <div>
-                    <a href="/" className="text-2xl font-bold text-primary"> HEXTECH </a>
+                    <a href="/" className="block hover:opacity-80 transition-opacity">
+                        <img src={hextechLogo} alt="Hextech" className="h-6 w-auto" />
+                    </a>
                 </div>
 
                 {/* Mobile right - Language and Home */}
@@ -117,7 +122,7 @@ const ServiceDetail = () => {
             </div>
 
             {/* Hero Section */}
-            <section className="bg-secondary min-h-[40vh] flex items-center justify-center py-20">
+            <section className="min-h-[40vh] flex items-center justify-center py-20">
                 <div className="container mx-auto px-4 text-center">
                     <h1 className="text-5xl md:text-6xl font-bold text-white">
                         <T>{service.heroTitle}</T>
@@ -157,12 +162,12 @@ const FooterSimple = () => {
         : `${startYear}-${currentYear}`;
 
     return (
-        <footer className="bg-secondary text-white py-12">
+        <footer className="text-white py-12 border-t border-white/5">
             <div className="container mx-auto px-4">
                 <div className="flex flex-col md:flex-row justify-between gap-8">
                     {/* Column 1 - Company Info */}
                     <div className="flex flex-col space-y-4 md:w-1/3">
-                        <h3 className="text-2xl font-bold text-primary mb-4">HEXTECH</h3>
+                        <img src={hextechLogo} alt="Hextech" className="h-7 w-auto mb-2" />
                         <p className="mb-4">
                             <T>We specialize in creating beautiful and functional websites and mobile applications that help businesses grow and succeed in the digital world.</T>
                         </p>

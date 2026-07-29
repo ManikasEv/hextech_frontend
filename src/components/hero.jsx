@@ -1,10 +1,24 @@
 import { useState, useEffect, useRef, memo } from 'react'
 import { gsap } from 'gsap'
-import ux from '../assets/ux.png'
-import innovation from '../assets/innovate.png'
+import { ScrollToPlugin } from 'gsap/ScrollToPlugin'
+import { ArrowRight } from 'lucide-react'
+import heroVideo from '../assets/hero-video.mp4'
+import heroPoster from '../assets/hero-video-poster.jpg'
 import T from './T'
 import { useTranslation } from '../contexts/TranslationContext'
 import { wordReveal } from '../utils/textAnimations'
+
+gsap.registerPlugin(ScrollToPlugin);
+
+const smoothScrollTo = (id) => {
+    const el = document.getElementById(id);
+    if (!el) return;
+    gsap.to(window, {
+        duration: 1.45,
+        scrollTo: { y: el, offsetY: 12 },
+        ease: 'power3.inOut',
+    });
+};
 
 // ── Inline SVG tech icons — official Simple Icons paths ──────────────────────
 const icons = [
@@ -178,25 +192,49 @@ const IconMarquee = memo(() => {
     );
 });
 
-const Hero = () => {
-    const [currentImageIndex, setCurrentImageIndex] = useState(0);
-    const [isVisible, setIsVisible] = useState(true);
+// ── Video showcase — inset into the hero, not a floating device frame ──────
+const VideoShowcase = memo(() => {
+    return (
+        <div className="relative w-full max-w-[280px] sm:max-w-[320px] mx-auto">
+            <div className="relative overflow-hidden rounded-lg">
+                <div className="relative aspect-[9/16]">
+                    <video
+                        className="w-full h-full object-cover"
+                        src={heroVideo}
+                        poster={heroPoster}
+                        autoPlay
+                        muted
+                        loop
+                        playsInline
+                        preload="metadata"
+                    />
+                    {/* Soft edge fade into the page */}
+                    <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-secondary via-transparent to-secondary/40" />
+                    <div className="pointer-events-none absolute inset-0 bg-gradient-to-r from-secondary/50 via-transparent to-secondary/50" />
+                    <div className="pointer-events-none absolute inset-0 hero-scanlines opacity-40" />
+                </div>
+            </div>
+        </div>
+    );
+});
 
+const Hero = () => {
     const sectionRef    = useRef(null);
-    const imagesRef     = useRef(null);
+    const videoBoxRef   = useRef(null);
     const subtitleRef   = useRef(null);
+    const ctaRef        = useRef(null);
 
     const phrasesRaw = ["Web Development", "Mobile Development", "UI/UX Design"];
     const { language, translateText } = useTranslation();
     const [phrases, setPhrases] = useState(phrasesRaw);
-    const heroImages = [ux, innovation];
 
     // GSAP entrance animation
     useEffect(() => {
         const ctx = gsap.context(() => {
             const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
             tl.from('.hero-typewriter', { y: -40, opacity: 0, duration: 0.8 })
-              .from(imagesRef.current, { y: 50, opacity: 0, duration: 0.9 }, '-=0.4');
+              .from(videoBoxRef.current, { y: 24, opacity: 0, duration: 0.85 }, '-=0.4')
+              .from(ctaRef.current, { y: 20, opacity: 0, duration: 0.6 }, '-=0.5');
 
             wordReveal(subtitleRef.current, { y: 20, duration: 0.8, delay: 0.5, start: 'top 100%' });
         }, sectionRef);
@@ -215,44 +253,61 @@ const Hero = () => {
         return () => { mounted = false; };
     }, [language, translateText]);
 
-    // Mobile image transition
-    useEffect(() => {
-        const interval = setInterval(() => {
-            setIsVisible(false);
-            setTimeout(() => {
-                setCurrentImageIndex(prev => (prev + 1) % heroImages.length);
-                setIsVisible(true);
-            }, 500);
-        }, 5000);
-        return () => clearInterval(interval);
-    }, []);
-
     return (
-        <div ref={sectionRef} className="w-full h-auto flex flex-col items-center bg-secondary pt-16">
-            <div className="hero-typewriter">
-                <Typewriter phrases={phrases} />
-            </div>
+        <div ref={sectionRef} className="relative w-full h-auto overflow-hidden pt-16">
+            <div className="relative z-10 max-w-6xl mx-auto px-4 flex flex-col md:flex-row items-center gap-10 md:gap-16 py-10 md:py-16">
+                {/* ── Left: copy ── */}
+                <div className="w-full md:w-1/2 flex flex-col items-center md:items-start text-center md:text-left">
+                    <div className="hero-typewriter">
+                        <Typewriter phrases={phrases} />
+                    </div>
 
-            <div ref={imagesRef} className="hidden md:flex gap-8 h-[45vh] px-8 my-4">
-                <img src={ux} alt="ux" className="h-full object-contain hover:scale-95 transition-all duration-300" />
-                <img src={innovation} alt="Innovate" className="h-full object-contain hover:scale-95 transition-all duration-300" />
-            </div>
-            <div className="flex md:hidden h-[45vh] px-8 my-4">
-                <div className={`w-full h-full transition-opacity duration-500 ${isVisible ? 'opacity-100' : 'opacity-0'}`}>
-                    <img
-                        src={heroImages[currentImageIndex]}
-                        alt={currentImageIndex === 0 ? "ux" : "Innovate"}
-                        className="w-full h-full object-contain"
-                    />
+                    <p ref={subtitleRef} className="text-white max-w-xl mx-auto md:mx-0 mb-8 mt-2">
+                        <T>We are a team of experienced developers and designers who are passionate about creating beautiful and functional websites and mobile apps.</T>
+                    </p>
+
+                    <div ref={ctaRef} className="flex flex-col sm:flex-row gap-4">
+                        <a
+                            href="#portfolio"
+                            onClick={(e) => { e.preventDefault(); smoothScrollTo('portfolio'); }}
+                            className="group inline-flex items-center justify-center gap-2 px-7 py-3.5 bg-primary text-secondary rounded-lg font-semibold shadow-[0_0_25px_rgba(0,187,229,0.35)] hover:shadow-[0_0_35px_rgba(0,187,229,0.55)] hover:scale-105 transition-all"
+                        >
+                            <T>View Our Work</T>
+                            <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                        </a>
+                        <a
+                            href="#contact"
+                            onClick={(e) => { e.preventDefault(); smoothScrollTo('contact'); }}
+                            className="inline-flex items-center justify-center px-7 py-3.5 bg-transparent text-primary rounded-lg font-semibold border-2 border-primary/60 hover:border-primary hover:bg-primary/10 transition-all"
+                        >
+                            <T>Get Started</T>
+                        </a>
+                    </div>
+                </div>
+
+                {/* ── Right: video showcase ── */}
+                <div ref={videoBoxRef} className="w-full md:w-1/2 flex justify-center">
+                    <VideoShowcase />
                 </div>
             </div>
 
-            <p ref={subtitleRef} className="text-white text-center max-w-2xl mx-auto mb-6 px-4 mt-4">
-                <T>We are a team of experienced developers and designers who are passionate about creating beautiful and functional websites and mobile apps.</T>
-            </p>
-
             {/* Icon marquee — isolated memo component, never re-renders */}
-            <IconMarquee />
+            <div className="relative z-10">
+                <IconMarquee />
+            </div>
+
+            <style>{`
+                .hero-scanlines {
+                    background: repeating-linear-gradient(
+                        to bottom,
+                        rgba(0,187,229,0.04) 0px,
+                        rgba(0,187,229,0.04) 1px,
+                        transparent 1px,
+                        transparent 3px
+                    );
+                    mix-blend-mode: overlay;
+                }
+            `}</style>
         </div>
     );
 };

@@ -47,6 +47,14 @@ const serviceNodes = [
         description: 'We create AI-powered ad concepts and visual campaigns for any type of product or business. We focus on clear messaging, creative testing, and conversion-ready ad assets for social and search platforms.',
         icon: `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9.75 3v2.25M14.25 3v2.25M4.5 8.25h15M6.75 21h10.5a2.25 2.25 0 002.25-2.25V8.25A2.25 2.25 0 0017.25 6H6.75A2.25 2.25 0 004.5 8.25v10.5A2.25 2.25 0 006.75 21zm2.25-6h6"/></svg>`,
     },
+    {
+        number: '07',
+        title: 'Full Stack Software',
+        slug: 'full-stack-software',
+        shortDesc: 'End-to-end systems that manage client bookings and data.',
+        description: 'We build and own the full stack — frontend, backend, and database — for custom software that handles client bookings, appointment dates, and secure data storage. From scheduling tools to CRM-style dashboards, you get one team responsible for the entire system, from the interface down to how your data is held.',
+        icon: `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 3l9 4.5-9 4.5-9-4.5L12 3zm-9 9l9 4.5 9-4.5M3 16.5l9 4.5 9-4.5"/></svg>`,
+    },
 ];
 
 export default serviceNodes;

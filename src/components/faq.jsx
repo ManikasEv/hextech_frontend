@@ -81,7 +81,7 @@ const FAQ = () => {
     };
 
     return (
-        <section ref={sectionRef} id="faq" className="bg-secondary min-h-screen py-16 flex items-center">
+        <section ref={sectionRef} id="faq" className="min-h-screen py-16 flex items-center">
             <div className="container mx-auto px-4">
                 <div ref={headerRef} className="text-center mb-16">
                     <h2 ref={h2Ref} className="text-5xl font-bold text-primary mb-4"><T>Frequently Asked Questions</T></h2>

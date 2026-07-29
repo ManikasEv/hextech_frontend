@@ -37,6 +37,10 @@ const FlipCard = ({ service, index }) => {
         <svg xmlns="http://www.w3.org/2000/svg" className="w-16 h-16" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 3v2m0 14v2M5 12H3m18 0h-2M7.5 7.5l-1.5-1.5m12 12-1.5-1.5M7.5 16.5L6 18m12-12-1.5 1.5M9 12a3 3 0 106 0 3 3 0 00-6 0z" />
         </svg>,
+        // Full Stack Software
+        <svg xmlns="http://www.w3.org/2000/svg" className="w-16 h-16" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 3l9 4.5-9 4.5-9-4.5L12 3zm-9 9l9 4.5 9-4.5M3 16.5l9 4.5 9-4.5" />
+        </svg>,
     ];
 
     const handleMouseLeave = () => {
@@ -204,7 +208,7 @@ const Services = () => {
     }, []);
 
     return (
-        <section ref={sectionRef} id="services" className="bg-secondary min-h-screen py-20 flex flex-col justify-center items-center">
+        <section ref={sectionRef} id="services" className="min-h-screen py-20 flex flex-col justify-center items-center">
             <div className="w-full max-w-6xl mx-auto px-4">
                 {/* Header */}
                 <div ref={headerRef} className="text-center mb-16">
@@ -218,9 +222,14 @@ const Services = () => {
                         ? 'md:grid-cols-3'
                         : 'md:grid-cols-2'
                 }`}>
-                    {serviceNodes.map((service, index) => (
-                        <FlipCard key={service.slug} service={service} index={index} />
-                    ))}
+                    {serviceNodes.map((service, index) => {
+                        const isLoneLastCard = serviceNodes.length >= 5 && index === serviceNodes.length - 1 && serviceNodes.length % 3 === 1;
+                        return (
+                            <div key={service.slug} className={isLoneLastCard ? 'md:col-start-2' : ''}>
+                                <FlipCard service={service} index={index} />
+                            </div>
+                        );
+                    })}
                 </div>
             </div>
         </section>

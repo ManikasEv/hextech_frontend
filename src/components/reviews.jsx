@@ -266,7 +266,7 @@ const Reviews = () => {
     const totalCount  = googleData.total + testimonials.length;
 
     return (
-        <section ref={sectionRef} id="reviews" className="py-20 bg-secondary overflow-hidden">
+        <section ref={sectionRef} id="reviews" className="py-20 overflow-hidden">
             <div className="w-full max-w-5xl mx-auto px-4">
 
                 {/* ── Header ── */}

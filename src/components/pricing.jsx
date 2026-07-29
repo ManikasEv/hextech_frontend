@@ -22,7 +22,7 @@ const Pricing = () => {
     ];
 
     return (
-        <section id="pricing" className="bg-secondary min-h-screen py-16 flex items-center">
+        <section id="pricing" className="min-h-screen py-16 flex items-center">
             <div className="container mx-auto px-4">
                 {/* Section Header */}
                 <motion.div 
