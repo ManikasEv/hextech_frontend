@@ -1,6 +1,5 @@
 import { useState, useEffect, useRef, memo } from 'react'
 import { gsap } from 'gsap'
-import { ScrollToPlugin } from 'gsap/ScrollToPlugin'
 import { ArrowRight } from 'lucide-react'
 import heroVideo from '../assets/hero-video.mp4'
 import heroPoster from '../assets/hero-video-poster.jpg'
@@ -8,16 +7,11 @@ import T from './T'
 import { useTranslation } from '../contexts/TranslationContext'
 import { wordReveal } from '../utils/textAnimations'
 
-gsap.registerPlugin(ScrollToPlugin);
-
 const smoothScrollTo = (id) => {
     const el = document.getElementById(id);
     if (!el) return;
-    gsap.to(window, {
-        duration: 1.45,
-        scrollTo: { y: el, offsetY: 12 },
-        ease: 'power3.inOut',
-    });
+    const top = el.getBoundingClientRect().top + window.scrollY - 8;
+    window.scrollTo({ top, behavior: 'smooth' });
 };
 
 // ── Inline SVG tech icons — official Simple Icons paths ──────────────────────
@@ -104,7 +98,7 @@ const Typewriter = memo(({ phrases }) => {
     }, [text, isDeleting, loopNum, typingSpeed, phrases]);
 
     return (
-        <div className="text-4xl font-bold text-primary text-center mt-8 mb-4">
+        <div className="text-2xl sm:text-3xl md:text-4xl font-bold text-primary text-center mt-6 sm:mt-8 mb-3 sm:mb-4">
             {text}<span className="cursor-blink">_</span>
         </div>
     );
@@ -208,7 +202,6 @@ const VideoShowcase = memo(() => {
                         playsInline
                         preload="metadata"
                     />
-                    {/* Soft edge fade into the page */}
                     <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-secondary via-transparent to-secondary/40" />
                     <div className="pointer-events-none absolute inset-0 bg-gradient-to-r from-secondary/50 via-transparent to-secondary/50" />
                     <div className="pointer-events-none absolute inset-0 hero-scanlines opacity-40" />
@@ -228,7 +221,6 @@ const Hero = () => {
     const { language, translateText } = useTranslation();
     const [phrases, setPhrases] = useState(phrasesRaw);
 
-    // GSAP entrance animation
     useEffect(() => {
         const ctx = gsap.context(() => {
             const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
@@ -241,7 +233,6 @@ const Hero = () => {
         return () => ctx.revert();
     }, []);
 
-    // Translate typewriter phrases
     useEffect(() => {
         let mounted = true;
         const hydratePhrases = async () => {
@@ -256,7 +247,6 @@ const Hero = () => {
     return (
         <div ref={sectionRef} className="relative w-full h-auto overflow-hidden pt-16">
             <div className="relative z-10 max-w-6xl mx-auto px-4 flex flex-col md:flex-row items-center gap-10 md:gap-16 py-10 md:py-16">
-                {/* ── Left: copy ── */}
                 <div className="w-full md:w-1/2 flex flex-col items-center md:items-start text-center md:text-left">
                     <div className="hero-typewriter">
                         <Typewriter phrases={phrases} />
@@ -285,13 +275,11 @@ const Hero = () => {
                     </div>
                 </div>
 
-                {/* ── Right: video showcase ── */}
                 <div ref={videoBoxRef} className="w-full md:w-1/2 flex justify-center">
                     <VideoShowcase />
                 </div>
             </div>
 
-            {/* Icon marquee — isolated memo component, never re-renders */}
             <div className="relative z-10">
                 <IconMarquee />
             </div>

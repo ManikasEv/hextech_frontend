@@ -97,7 +97,7 @@ const ALL_STRINGS = [
     // CTA
     'Ready to Transform Your Digital Presence?',
     "Let's build something amazing together. Get in touch with our team and start your journey to digital success.",
-    'Get Started Now', 'View Our Services',
+    'Get Started Now', 'View Our Services', 'Swipe to explore',
     'Based in Switzerland',
     'Projects Delivered', 'Client Satisfaction', 'Support Available', 'Years Experience',
     // Contact

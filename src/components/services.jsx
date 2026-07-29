@@ -52,7 +52,7 @@ const FlipCard = ({ service, index }) => {
     return (
         <div
             className="service-flip-card cursor-pointer w-full"
-            style={{ perspective: '1200px', height: 'clamp(420px, 60vw, 480px)' }}
+            style={{ perspective: '1200px', height: 'clamp(320px, 72vw, 480px)' }}
             onClick={() => setFlipped(!flipped)}
             onMouseEnter={() => setFlipped(true)}
             onMouseLeave={handleMouseLeave}
@@ -75,24 +75,24 @@ const FlipCard = ({ service, index }) => {
                         backfaceVisibility: 'hidden',
                         WebkitBackfaceVisibility: 'hidden',
                     }}
-                    className="rounded-2xl border border-primary/25 bg-white/5 backdrop-blur-sm flex flex-col items-center justify-center gap-7 p-10 shadow-xl hover:border-primary/60 transition-colors duration-300"
+                    className="rounded-2xl border border-primary/25 bg-white/5 backdrop-blur-sm flex flex-col items-center justify-center gap-4 sm:gap-7 p-6 sm:p-10 shadow-xl hover:border-primary/60 transition-colors duration-300"
                 >
                     {/* Number badge */}
-                    <div className="absolute top-5 right-5 w-9 h-9 rounded-full bg-primary/20 border border-primary/40 flex items-center justify-center">
+                    <div className="absolute top-4 right-4 sm:top-5 sm:right-5 w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-primary/20 border border-primary/40 flex items-center justify-center">
                         <span className="text-primary text-xs font-bold">{service.number}</span>
                     </div>
 
                     {/* Icon */}
-                    <div className="text-primary">
+                    <div className="text-primary scale-75 sm:scale-100">
                         {icons[index % icons.length]}
                     </div>
 
                     {/* Title + short desc */}
                     <div className="text-center">
-                        <h3 className="text-2xl font-bold text-white mb-3">
+                        <h3 className="text-xl sm:text-2xl font-bold text-white mb-2 sm:mb-3">
                             <T>{service.title}</T>
                         </h3>
-                        <p className="text-gray-400 text-sm leading-relaxed">
+                        <p className="text-gray-400 text-xs sm:text-sm leading-relaxed px-1">
                             <T>{service.shortDesc}</T>
                         </p>
                     </div>
@@ -208,30 +208,49 @@ const Services = () => {
     }, []);
 
     return (
-        <section ref={sectionRef} id="services" className="min-h-screen py-20 flex flex-col justify-center items-center">
+        <section ref={sectionRef} id="services" className="py-12 sm:py-16 md:min-h-screen md:py-20 flex flex-col justify-center items-center">
             <div className="w-full max-w-6xl mx-auto px-4">
                 {/* Header */}
-                <div ref={headerRef} className="text-center mb-16">
-                    <h2 ref={h2Ref} className="text-5xl font-bold text-primary mb-4"><T>Services</T></h2>
-                    <p ref={subRef} className="text-xl text-gray-400"><T>We build digital experiences that set you apart from the competition.</T></p>
+                <div ref={headerRef} className="text-center mb-8 sm:mb-12 md:mb-16">
+                    <h2 ref={h2Ref} className="text-3xl sm:text-4xl md:text-5xl font-bold text-primary mb-3 sm:mb-4"><T>Services</T></h2>
+                    <p ref={subRef} className="text-base sm:text-xl text-gray-400"><T>We build digital experiences that set you apart from the competition.</T></p>
+                    <p className="mt-3 text-xs text-primary/60 lg:hidden"><T>Swipe to explore</T></p>
                 </div>
+            </div>
 
-                {/* Cards grid — 1 col mobile, 2 col desktop (3 col if 5+ services) */}
-                <div className={`services-grid grid grid-cols-1 gap-8 ${
-                    serviceNodes.length >= 5
-                        ? 'md:grid-cols-3'
-                        : 'md:grid-cols-2'
-                }`}>
+            {/* Mobile / tablet: horizontal scroll · Desktop: grid */}
+            <div className="w-full">
+                <div
+                    className={`services-grid ${
+                        serviceNodes.length >= 5 ? 'lg:grid lg:grid-cols-3' : 'lg:grid lg:grid-cols-2'
+                    } flex lg:grid overflow-x-auto lg:overflow-visible snap-x snap-mandatory lg:snap-none gap-5 sm:gap-6 lg:gap-8 px-4 sm:px-6 lg:px-4 lg:max-w-6xl lg:mx-auto pb-4 lg:pb-0 scrollbar-none`}
+                >
                     {serviceNodes.map((service, index) => {
                         const isLoneLastCard = serviceNodes.length >= 5 && index === serviceNodes.length - 1 && serviceNodes.length % 3 === 1;
                         return (
-                            <div key={service.slug} className={isLoneLastCard ? 'md:col-start-2' : ''}>
+                            <div
+                                key={service.slug}
+                                className={`flex-shrink-0 w-[min(82vw,340px)] sm:w-[min(70vw,380px)] lg:w-auto snap-center ${
+                                    isLoneLastCard ? 'lg:col-start-2' : ''
+                                }`}
+                            >
                                 <FlipCard service={service} index={index} />
                             </div>
                         );
                     })}
+                    {/* End spacer so last card can center on mobile */}
+                    <div className="flex-shrink-0 w-2 lg:hidden" aria-hidden="true" />
                 </div>
             </div>
+
+            <style>{`
+                .scrollbar-none {
+                    scrollbar-width: none;
+                    -ms-overflow-style: none;
+                    -webkit-overflow-scrolling: touch;
+                }
+                .scrollbar-none::-webkit-scrollbar { display: none; }
+            `}</style>
         </section>
     );
 };
