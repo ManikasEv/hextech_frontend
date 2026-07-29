@@ -83,7 +83,7 @@ const Process = () => {
     }, []);
 
     return (
-        <section ref={sectionRef} id="process" className="bg-secondary min-h-screen py-16">
+        <section ref={sectionRef} id="process" className="min-h-screen py-16">
             <div className="container mx-auto px-4">
                 <div ref={headerRef} className="text-center mb-16">
                     <h2 ref={h2Ref} className="text-5xl font-bold text-primary mb-4"><T>Our Process</T></h2>

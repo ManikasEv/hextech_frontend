@@ -62,7 +62,7 @@ const Careers = () => {
     }, []);
 
     return (
-        <div className="bg-secondary min-h-screen">
+        <div className="min-h-screen">
             <NavbarCareers />
 
             {/* Hero */}
@@ -80,7 +80,7 @@ const Careers = () => {
             </section>
 
             {/* Benefits */}
-            <section className="py-16 px-4 bg-secondary">
+            <section className="py-16 px-4">
                 <div className="container mx-auto max-w-6xl">
                     <h2 ref={benefitsHeaderRef} className="text-4xl font-bold text-primary text-center mb-12">
                         <T>Why Work With Us?</T>
@@ -90,7 +90,7 @@ const Careers = () => {
                             <div
                                 key={index}
                                 ref={el => benefitCardsRef.current[index] = el}
-                                className="bg-secondary border border-primary/20 rounded-lg p-6 hover:border-primary/50 transition-colors duration-300"
+                                className="bg-white/5 border border-primary/20 rounded-lg p-6 hover:border-primary/50 transition-colors duration-300"
                             >
                                 <h3 className="text-xl font-bold text-primary mb-2"><T>{benefit.title}</T></h3>
                                 <p className="text-gray-300"><T>{benefit.description}</T></p>
@@ -132,7 +132,7 @@ const Careers = () => {
             </section>
 
             {/* Application CTA */}
-            <section id="apply" className="py-16 px-4 bg-secondary border-t border-primary/20">
+            <section id="apply" className="py-16 px-4 border-t border-primary/20">
                 <div className="container mx-auto max-w-4xl text-center">
                     <div ref={ctaRef}>
                         <Mail className="w-16 h-16 mx-auto mb-6 text-primary" />

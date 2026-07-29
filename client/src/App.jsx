@@ -4,6 +4,7 @@ import Home from './pages/Home'
 import Careers from './pages/Careers'
 import ServiceDetail from './components/ServiceDetail'
 import ScrollToTop from './components/ScrollToTop'
+import Starfield from './components/Starfield'
 import { TranslationProvider } from './contexts/TranslationContext'
 
 function App() {
@@ -125,6 +126,7 @@ function App() {
 
   return (
     <TranslationProvider>
+      <Starfield />
       <div ref={dotRef} className="custom-cursor-dot" />
       <canvas ref={trailRef} className="custom-cursor-trail" />
 

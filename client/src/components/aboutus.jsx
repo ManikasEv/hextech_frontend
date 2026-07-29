@@ -28,7 +28,7 @@ const AboutUs = () => {
     }, []);
 
     return (
-        <section ref={sectionRef} id="about" className="py-16 bg-secondary">
+        <section ref={sectionRef} id="about" className="py-16">
             <div className="w-full max-w-5xl mx-auto px-4">
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
 

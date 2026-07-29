@@ -53,7 +53,7 @@ const CTA = () => {
     }, []);
 
     return (
-        <section ref={sectionRef} className="bg-secondary py-20 border-t border-primary/20">
+        <section ref={sectionRef} className="py-20 border-t border-primary/20">
             <div className="container mx-auto px-4">
                 <div ref={boxRef} className="max-w-5xl mx-auto bg-gradient-to-br from-primary/10 via-primary/5 to-transparent rounded-3xl p-12 border border-primary/30">
                     <div className="text-center">

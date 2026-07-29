@@ -1,5 +1,6 @@
 import React from 'react';
 import T from './T';
+import hextechLogo from '../assets/Hextech_full_logo.png';
 
 const Footer = () => {
     const currentYear = new Date().getFullYear();
@@ -9,12 +10,12 @@ const Footer = () => {
         : `${startYear}-${currentYear}`;
 
     return (
-        <footer className="bg-secondary text-white py-12">
+        <footer className="text-white py-12 border-t border-white/5">
             <div className="container mx-auto px-4">
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-12 max-w-7xl mx-auto items-start">
                     {/* Column 1 - Company Info */}
                     <div className="flex flex-col space-y-4">
-                        <h3 className="text-2xl font-bold text-primary mb-4">HEXTECH</h3>
+                        <img src={hextechLogo} alt="Hextech" className="h-7 w-auto mb-2" />
                         <p className="mb-4">
                             <T>We specialize in creating beautiful and functional websites and mobile applications that help businesses grow and succeed in the digital world.</T>
                         </p>
@@ -32,7 +33,7 @@ const Footer = () => {
                         <h3 className="text-lg font-semibold mb-4"><T>Quick Links</T></h3>
                         <a href="/" className="hover:text-primary transition-colors"><T>Home</T></a>
                         <a href="#services" className="hover:text-primary transition-colors"><T>Services</T></a>
-                        <a href="#projects" className="hover:text-primary transition-colors"><T>Projects</T></a>
+                        <a href="#portfolio" className="hover:text-primary transition-colors"><T>Portfolio</T></a>
                         <a href="#about" className="hover:text-primary transition-colors"><T>About Us</T></a>
                         <a href="#contact" className="hover:text-primary transition-colors"><T>Contact</T></a>
                         <a href="/careers" className="hover:text-primary transition-colors"><T>Careers</T></a>
