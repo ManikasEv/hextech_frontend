@@ -213,12 +213,9 @@ const Pricing = () => {
                         <T>Packages are based on how many ads you need and how much creative effort each one takes — from simple product shots to full cinematic commercials. Media ad spend is paid to the platforms separately.</T>
                     </p>
 
-                    <div className="flex lg:grid lg:grid-cols-3 overflow-x-auto lg:overflow-visible snap-x snap-mandatory lg:snap-none gap-5 lg:gap-6 -mx-4 px-4 sm:mx-0 sm:px-0 pb-2 lg:pb-0 scrollbar-none items-stretch">
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 lg:gap-6 items-stretch">
                         {adPlans.map((plan, index) => (
-                            <div
-                                key={plan.name}
-                                className="flex-shrink-0 w-[min(85vw,320px)] sm:w-[min(70vw,340px)] lg:w-auto snap-center pt-4"
-                            >
+                            <div key={plan.name} className="pt-4">
                                 <PlanCard plan={plan} index={index} />
                             </div>
                         ))}
@@ -245,15 +242,6 @@ const Pricing = () => {
                     </a>
                 </motion.div>
             </div>
-
-            <style>{`
-                .scrollbar-none {
-                    scrollbar-width: none;
-                    -ms-overflow-style: none;
-                    -webkit-overflow-scrolling: touch;
-                }
-                .scrollbar-none::-webkit-scrollbar { display: none; }
-            `}</style>
         </section>
     );
 };
