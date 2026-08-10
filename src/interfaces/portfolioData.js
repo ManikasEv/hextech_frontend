@@ -2,6 +2,8 @@ import meraki from '../assets/meraki.png';
 import labellaelena from '../assets/labellaelena.png';
 import steki from '../assets/steki.png';
 import meracosmetics from '../assets/meracosmetics.png';
+import biscottowelt from '../assets/biscottowelt.png';
+import holidaybase from '../assets/holidaybase.png';
 import portfoliomani from '../assets/portfoliomani.png';
 import ioinside from '../assets/ioinside.png';
 import projecpapa from '../assets/projecpapa.png';
@@ -32,6 +34,22 @@ const localPortfolio = [
         type: 'Restaurant',
         image: steki,
         link: 'https://steki.ch/',
+    },
+    {
+        id: 'local-biscottowelt',
+        title: 'Biscottowelt',
+        description: 'Greek & Swiss patisserie in Schwerzenbach — handmade cakes, sweets, and custom order flow.',
+        type: 'Website',
+        image: biscottowelt,
+        link: 'https://biscottowelt.ch/',
+    },
+    {
+        id: 'local-holidaybase',
+        title: 'Holiday Base Chania',
+        description: 'Beachfront apartment rental site in Stalos, Crete — booking-ready stays steps from the sea.',
+        type: 'Website',
+        image: holidaybase,
+        link: 'https://holidaybase-chania.com/',
     },
     {
         id: 'local-meracosmetics',
