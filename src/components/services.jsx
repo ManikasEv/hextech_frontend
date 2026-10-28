@@ -52,7 +52,11 @@ const FlipCard = ({ service, index }) => {
     return (
         <div
             className="service-flip-card cursor-pointer w-full"
-            style={{ perspective: '1200px', height: 'clamp(320px, 72vw, 480px)' }}
+            style={{
+                perspective: '1200px',
+                height: 'clamp(320px, 72vw, 480px)',
+                touchAction: flipped ? 'auto' : 'pan-y',
+            }}
             onClick={() => setFlipped(!flipped)}
             onMouseEnter={() => setFlipped(true)}
             onMouseLeave={handleMouseLeave}
@@ -74,6 +78,7 @@ const FlipCard = ({ service, index }) => {
                         inset: 0,
                         backfaceVisibility: 'hidden',
                         WebkitBackfaceVisibility: 'hidden',
+                        pointerEvents: flipped ? 'none' : 'auto',
                     }}
                     className="rounded-2xl border border-primary/25 bg-white/5 backdrop-blur-sm flex flex-col items-center justify-center gap-4 sm:gap-7 p-6 sm:p-10 shadow-xl hover:border-primary/60 transition-colors duration-300"
                 >
@@ -115,6 +120,7 @@ const FlipCard = ({ service, index }) => {
                         backfaceVisibility: 'hidden',
                         WebkitBackfaceVisibility: 'hidden',
                         transform: 'rotateY(180deg)',
+                        pointerEvents: flipped ? 'auto' : 'none',
                     }}
                     className="rounded-2xl border border-primary bg-secondary flex flex-col p-8 shadow-2xl overflow-hidden"
                 >
@@ -134,7 +140,7 @@ const FlipCard = ({ service, index }) => {
                     {/* Scrollable description — stops card from flipping back while scrolling */}
                     <div
                         ref={scrollRef}
-                        className="flex-1 overflow-y-auto pr-1 back-scroll"
+                        className={`flex-1 pr-1 back-scroll ${flipped ? 'overflow-y-auto' : 'overflow-hidden'}`}
                         style={{ scrollBehavior: 'smooth' }}
                         onScroll={() => {
                             isScrollingRef.current = true;
@@ -214,43 +220,26 @@ const Services = () => {
                 <div ref={headerRef} className="text-center mb-8 sm:mb-12 md:mb-16">
                     <h2 ref={h2Ref} className="text-3xl sm:text-4xl md:text-5xl font-bold text-primary mb-3 sm:mb-4"><T>Services</T></h2>
                     <p ref={subRef} className="text-base sm:text-xl text-gray-400"><T>We build digital experiences that set you apart from the competition.</T></p>
-                    <p className="mt-3 text-xs text-primary/60 lg:hidden"><T>Swipe to explore</T></p>
                 </div>
-            </div>
 
-            {/* Mobile / tablet: horizontal scroll · Desktop: grid */}
-            <div className="w-full">
                 <div
-                    className={`services-grid ${
-                        serviceNodes.length >= 5 ? 'lg:grid lg:grid-cols-3' : 'lg:grid lg:grid-cols-2'
-                    } flex lg:grid overflow-x-auto lg:overflow-visible snap-x snap-mandatory lg:snap-none gap-5 sm:gap-6 lg:gap-8 px-4 sm:px-6 lg:px-4 lg:max-w-6xl lg:mx-auto pb-4 lg:pb-0 scrollbar-none`}
+                    className={`services-grid grid grid-cols-1 sm:grid-cols-2 ${
+                        serviceNodes.length >= 5 ? 'lg:grid-cols-3' : 'lg:grid-cols-2'
+                    } gap-5 sm:gap-6 lg:gap-8`}
                 >
                     {serviceNodes.map((service, index) => {
                         const isLoneLastCard = serviceNodes.length >= 5 && index === serviceNodes.length - 1 && serviceNodes.length % 3 === 1;
                         return (
                             <div
                                 key={service.slug}
-                                className={`flex-shrink-0 w-[min(82vw,340px)] sm:w-[min(70vw,380px)] lg:w-auto snap-center ${
-                                    isLoneLastCard ? 'lg:col-start-2' : ''
-                                }`}
+                                className={isLoneLastCard ? 'lg:col-start-2' : ''}
                             >
                                 <FlipCard service={service} index={index} />
                             </div>
                         );
                     })}
-                    {/* End spacer so last card can center on mobile */}
-                    <div className="flex-shrink-0 w-2 lg:hidden" aria-hidden="true" />
                 </div>
             </div>
-
-            <style>{`
-                .scrollbar-none {
-                    scrollbar-width: none;
-                    -ms-overflow-style: none;
-                    -webkit-overflow-scrolling: touch;
-                }
-                .scrollbar-none::-webkit-scrollbar { display: none; }
-            `}</style>
         </section>
     );
 };

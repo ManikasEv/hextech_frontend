@@ -43,11 +43,10 @@ const Process = () => {
                 },
             });
 
-            // Steps stagger in with alternating left/right
-            stepsRef.current.forEach((el, i) => {
+            stepsRef.current.forEach((el) => {
                 if (!el) return;
                 gsap.from(el, {
-                    x: i % 2 === 0 ? -60 : 60,
+                    y: 40,
                     opacity: 0,
                     duration: 0.7,
                     ease: 'power3.out',
@@ -88,20 +87,16 @@ const Process = () => {
                 <div ref={headerRef} className="text-center mb-8 sm:mb-12 md:mb-16">
                     <h2 ref={h2Ref} className="text-3xl sm:text-4xl md:text-5xl font-bold text-primary mb-3 sm:mb-4"><T>Our Process</T></h2>
                     <p ref={subRef} className="text-base sm:text-xl text-gray-400"><T>A proven methodology to bring your ideas to life</T></p>
-                    <p className="mt-3 text-xs text-primary/60 lg:hidden"><T>Swipe to explore</T></p>
                 </div>
-            </div>
 
-            {/* Mobile / tablet: horizontal scroll · Desktop: 3-col grid */}
-            <div className="w-full">
-                <div className="flex lg:grid lg:grid-cols-3 overflow-x-auto lg:overflow-visible snap-x snap-mandatory lg:snap-none gap-5 sm:gap-6 lg:gap-8 px-4 sm:px-6 lg:px-4 lg:max-w-6xl lg:mx-auto pb-4 lg:pb-0 scrollbar-none">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6 lg:gap-8 max-w-6xl mx-auto">
                     {steps.map((step, index) => {
                         const Icon = step.icon;
                         return (
                             <div
                                 key={index}
                                 ref={el => stepsRef.current[index] = el}
-                                className="relative group flex-shrink-0 w-[min(82vw,340px)] sm:w-[min(70vw,380px)] lg:w-auto snap-center"
+                                className="relative group"
                             >
                                 <div className="bg-white/5 rounded-2xl p-6 sm:p-8 h-full shadow-lg hover:shadow-2xl transition-all duration-300 border border-primary/20">
                                     <div className="absolute -top-3 -left-3 sm:-top-4 sm:-left-4 w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-br from-primary to-cyan-600 rounded-full flex items-center justify-center text-white font-bold text-base sm:text-lg shadow-lg">
@@ -121,11 +116,8 @@ const Process = () => {
                             </div>
                         );
                     })}
-                    <div className="flex-shrink-0 w-2 lg:hidden" aria-hidden="true" />
                 </div>
-            </div>
 
-            <div className="container mx-auto px-4">
                 <div ref={ctaRef} className="text-center mt-10 sm:mt-14 md:mt-16">
                     <a
                         href="#contact"
@@ -135,15 +127,6 @@ const Process = () => {
                     </a>
                 </div>
             </div>
-
-            <style>{`
-                .scrollbar-none {
-                    scrollbar-width: none;
-                    -ms-overflow-style: none;
-                    -webkit-overflow-scrolling: touch;
-                }
-                .scrollbar-none::-webkit-scrollbar { display: none; }
-            `}</style>
         </section>
     );
 };

@@ -7,10 +7,16 @@
   --font-sans: 'Space Grotesk', sans-serif;
 }
 
-/* ── Prevent horizontal overflow globally ──────────────────── */
-html, body {
-  overflow-x: hidden;
+/* ── Prevent horizontal overflow without trapping vertical scroll ── */
+html {
   max-width: 100%;
+}
+body {
+  overflow-x: clip;
+  max-width: 100%;
+}
+@supports not (overflow-x: clip) {
+  body { overflow-x: hidden; }
 }
 
 html {

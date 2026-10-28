@@ -223,9 +223,8 @@ const Portfolio = () => {
                     </p>
                 </div>
 
-                {/* Filters — scrollable row on mobile, wrap on desktop */}
-                <div className="-mx-4 px-4 mb-7 sm:mb-10 sm:mx-0 sm:px-0">
-                    <div className="flex sm:flex-wrap sm:justify-center gap-2 sm:gap-3 overflow-x-auto scrollbar-none pb-1 sm:pb-0">
+                <div className="mb-7 sm:mb-10">
+                    <div className="flex flex-wrap justify-center gap-2 sm:gap-3 pb-1 sm:pb-0">
                         {FILTERS.map((f) => {
                             const active = filter === f.id;
                             const count = f.id === 'all'
@@ -323,16 +322,6 @@ const Portfolio = () => {
                     </div>
                 )}
             </div>
-
-            <style>{`
-                .scrollbar-none {
-                    scrollbar-width: none;
-                    -ms-overflow-style: none;
-                }
-                .scrollbar-none::-webkit-scrollbar {
-                    display: none;
-                }
-            `}</style>
         </section>
     );
 };
